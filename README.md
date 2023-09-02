@@ -8,3 +8,5 @@ You will act as the captain of a submarine, and launch nukes all over the world 
 
 - React.js
 - Vite
+- TypeScript
+- Sass

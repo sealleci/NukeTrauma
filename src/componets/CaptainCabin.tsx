@@ -1,75 +1,96 @@
 import '../css/CaptainCabin.css'
 
 function DialogueBubble() {
-    return <></>;
+    return (
+        <div className='dialogue_bubble'>
+        </div>
+    )
 }
 
 function SecretaryCharacter() {
-    return <></>;
+    return (
+        <div className='character'>
+        </div>
+    )
 }
 
 function SecretaryMain() {
     return (
-        <>
+        <div>
             <DialogueBubble />
             <SecretaryCharacter />
-        </>
-    );
+        </div>
+    )
 }
 
 function SecretaryBackground() {
-    return <></>;
+    return (
+        <div>
+        </div>
+    )
 }
 
 function SecretaryDisplay() {
     return (
-        <>
+        <div>
             <SecretaryMain />
             <SecretaryBackground />
-        </>
-    );
+        </div>
+    )
 }
 
 function SecretaryChangeBar() {
-    return <></>;
+    return (
+        <div>
+        </div>
+    )
 }
 
 function SecretaryScene() {
     return (
-        <>
+        <div>
             <SecretaryDisplay />
             <SecretaryChangeBar />
-        </>
-    );
+        </div>
+    )
 }
 
 function LaunchCancelBtn() {
-    return <></>;
+    return (
+        <div>
+        </div>
+    )
 }
 
 function SelectedRegionsCountDisplay() {
-    return <></>;
+    return (
+        <div>
+        </div>
+    )
 }
 
 function LaunchConfirmBtn() {
-    return <></>;
+    return (
+        <div>
+        </div>
+    )
 }
 
 function CaptainConsole() {
     return (
-        <>
+        <div>
             <LaunchCancelBtn />
             <SelectedRegionsCountDisplay />
             <LaunchConfirmBtn />
-        </>
-    );
+        </div>
+    )
 }
 
 export default function CaptainCabin() {
     return (
-        <>
+        <div className='captain_cabin'>
             <SecretaryScene />
             <CaptainConsole />
-        </>
-    );
+        </div>
+    )
 }
