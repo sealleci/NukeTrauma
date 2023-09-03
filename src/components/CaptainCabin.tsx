@@ -9,7 +9,7 @@ function DialogueBubble() {
 
 function SecretaryCharacter() {
     return (
-        <div className='character'>
+        <div className='secretary_character'>
         </div>
     )
 }
