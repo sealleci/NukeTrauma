@@ -1,5 +1,164 @@
+$head_height: 256px;
+$body_height: 192px;
+$bubble_height: 6rem;
+
 .captain_cabin {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    height: 100vh;
+    // TODO
+    min-height: 500px;
     border: 1px solid red;
-    width: 2rem;
-    height: 2rem;
+}
+
+.secretary_scene {
+    position: relative;
+    width: 100%;
+    height: 80%;
+    min-height: calc($head_height + $body_height + $bubble_height);
+    overflow: hidden;
+    border: 1px solid green;
+}
+
+.secretary_display {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.secretary_change_bar {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    border: 1px solid yellow;
+
+    &__icon {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 4rem;
+        height: 100%;
+    }
+}
+
+.secretary_list {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-around;
+    align-items: center;
+
+    &__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 2rem;
+        width: 2rem;
+        border: 1px solid red;
+    }
+}
+
+.secretary_bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    z-index: -100;
+}
+
+.secretary_main {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.dialogue_bubble {
+    position: relative;
+    width: 90%;
+    height: $bubble_height;
+    border: 1px solid red;
+
+    &__body {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        border-radius: .5rem;
+    }
+
+    &__tail {
+        $bubble_tail_height: 1rem;
+
+        position: absolute;
+        bottom: (-$bubble_tail_height);
+        left: .5rem;
+        height: $bubble_tail_height;
+        width: 1rem;
+        border: 1px solid red;
+    }
+}
+
+.secretary {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-bottom;
+    align-items: center;
+    width: 256px;
+
+    &__head {
+        width: 100%;
+        height: $head_height;
+        border: 1px solid blue;
+    }
+
+    &__body {
+        width: 100%;
+        height: $body_height;
+        border: 1px solid green;
+    }
+}
+
+.captain_console {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 20%;
+    min-height: 5rem;
+    border: 1px solid yellow;
+}
+
+.launch_cancel_btn {
+    width: 100%;
+    height: 100%;
+    border: 1px solid blue;
+}
+
+.selected_region_cnt {
+    width: 100%;
+    height: 100%;
+    border: 1px solid blue;
+}
+
+.launch_confirm_btn {
+    width: 100%;
+    height: 100%;
+    border: 1px solid blue;
 }

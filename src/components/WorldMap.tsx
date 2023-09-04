@@ -1,15 +1,17 @@
 import '../css/WorldMap.css'
 
-function DeathCountDisplay() {
+function DeathCnt() {
     return (
-        <div>
+        <div className='death_cnt'>
+            <div className="death_cnt__icon">icon</div>
+            <div className="death_cnt__value">0</div>
         </div>
     )
 }
 
 function WorldMapMain() {
     return (
-        <div>
+        <div className='world_map__main'>
         </div>
     )
 }
@@ -17,7 +19,7 @@ function WorldMapMain() {
 export default function WorldMap() {
     return (
         <div className='world_map'>
-            <DeathCountDisplay />
+            <DeathCnt />
             <WorldMapMain />
         </div>
     )
