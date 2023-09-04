@@ -1,10 +1,11 @@
-$head_height: 256px;
-$body_height: 192px;
-$bubble_height: 6rem;
+$secretary_head_height: 256px;
+$secretary_body_height: 192px;
+$dialogue_bubble_height: 6rem;
 
 .captain_cabin {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     width: 320px;
     height: 100vh;
     // TODO
@@ -16,7 +17,7 @@ $bubble_height: 6rem;
     position: relative;
     width: 100%;
     height: 80%;
-    min-height: calc($head_height + $body_height + $bubble_height);
+    min-height: calc($secretary_head_height + $secretary_body_height + $dialogue_bubble_height);
     overflow: hidden;
     border: 1px solid green;
 }
@@ -91,7 +92,7 @@ $bubble_height: 6rem;
 .dialogue_bubble {
     position: relative;
     width: 90%;
-    height: $bubble_height;
+    height: $dialogue_bubble_height;
     border: 1px solid red;
 
     &__body {
@@ -105,13 +106,14 @@ $bubble_height: 6rem;
     }
 
     &__tail {
-        $bubble_tail_height: 1rem;
+        $bubble_tail_height: 2rem;
 
         position: absolute;
         bottom: (-$bubble_tail_height);
         left: .5rem;
         height: $bubble_tail_height;
-        width: 1rem;
+        width: 2rem;
+        background-color: white;
         border: 1px solid red;
     }
 }
@@ -125,13 +127,13 @@ $bubble_height: 6rem;
 
     &__head {
         width: 100%;
-        height: $head_height;
+        height: $secretary_head_height;
         border: 1px solid blue;
     }
 
     &__body {
         width: 100%;
-        height: $body_height;
+        height: $secretary_body_height;
         border: 1px solid green;
     }
 }
@@ -152,13 +154,65 @@ $bubble_height: 6rem;
 }
 
 .selected_region_cnt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     border: 1px solid blue;
+    user-select: none;
+
+    &__value {
+        $cnt_value_height: 1rem;
+
+        width: 60%;
+        height: $cnt_value_height;
+        margin: 2rem 0;
+        text-align: center;
+        line-height: $cnt_value_height;
+        border: 1px solid black;
+        border-radius: $cnt_value_height;
+    }
+
+    &__text {
+        width: 80%;
+        height: 1rem;
+        text-align: center;
+        border: 1px solid red;
+        user-select: none;
+    }
 }
 
 .launch_confirm_btn {
     width: 100%;
     height: 100%;
     border: 1px solid blue;
+}
+
+.launch_btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__circle {
+        $circle_radius: 5rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: $circle_radius;
+        height: $circle_radius;
+        border: 1px solid red;
+        border-radius: 50%;
+    }
+
+    &__text {
+        width: 80%;
+        height: 1rem;
+        text-align: center;
+        border: 1px solid red;
+        user-select: none;
+    }
 }

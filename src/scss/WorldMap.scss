@@ -5,6 +5,7 @@
     min-width: 320px;
     height: 100vh;
     border: 1px solid blue;
+    overflow: hidden;
 
     &__main {
         width: 100%;
@@ -24,4 +25,8 @@
     width: 5rem;
     height: 2rem;
     border: 1px solid red;
+
+    &__value {
+        user-select: none;
+    }
 }
