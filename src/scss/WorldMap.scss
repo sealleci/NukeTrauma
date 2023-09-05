@@ -1,6 +1,5 @@
 .world_map {
     position: relative;
-    display: flex;
     flex-grow: 1;
     min-width: 320px;
     height: 100vh;
@@ -14,18 +13,37 @@
 }
 
 .death_cnt {
+    $display_height: 2.5rem;
+    $display_margin: .5rem;
+
     position: absolute;
+
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    top: 0;
-    left: 0;
-    width: 5rem;
-    height: 2rem;
-    border: 1px solid red;
+    top: $display_margin;
+    left: $display_margin;
+    min-width: 4rem;
+    padding: 0 calc($display_margin * 2);
+    height: $display_height;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: $display_height;
+    box-shadow: rgba(142, 142, 142, .4) 0 0 $display_margin 0;
+
+    &__icon {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 2rem;
+        width: 2rem;
+        margin-right: 1rem;
+    }
 
     &__value {
+        color: rgba(black, .6);
         user-select: none;
     }
 }

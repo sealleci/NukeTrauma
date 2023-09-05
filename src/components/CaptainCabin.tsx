@@ -10,8 +10,7 @@ function LanguageSelect() {
 function DialogueBubble() {
     return (
         <div className='dialogue_bubble'>
-            <div className='dialogue_bubble__body'>哎呀，真是不得了呢~船长，真是厉害的工作呢。十分威风。</div>
-            <div className='dialogue_bubble__tail'></div>
+            Aya，真是不得了呢~船长，真是厉害的工作呢。神气十足。бля。嗨，怎么回事呢，我也不知道哦。向下。<br />向下。<br />
         </div>
     )
 }
@@ -115,7 +114,7 @@ function LaunchCancelBtn() {
 function SelectedRegionCnt() {
     return (
         <div className='selected_region_cnt'>
-            <div className='selected_region_cnt__value'>0</div>
+            <div className='selected_region_cnt__value'>200</div>
             <div className='selected_region_cnt__text'>SELECTED</div>
         </div>
     )
