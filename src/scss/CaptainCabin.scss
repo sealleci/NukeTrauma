@@ -5,13 +5,13 @@ $white_color: rgb(233, 242, 248);
 $transition_duration: .15s;
 $secretary_head_height: 256px;
 $secretary_body_height: 192px;
-$dialogue_bubble_height: 4rem;
+$dialogue_bubble_min_height: 4rem;
 $language_select_height: 2rem;
 $launch_btn_circle_diameter: 4rem;
 $launch_btn_text_height: 1rem;
-$launch_btn_inner_margin: 5px;
-$secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height + $dialogue_bubble_height + $language_select_height);
-$captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text_height + $launch_btn_inner_margin * 4);
+$launch_btn_vertical_margin: 5px;
+$secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height + $dialogue_bubble_min_height + $language_select_height);
+$captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text_height + $launch_btn_vertical_margin * 4);
 
 .language_select {
     display: flex;
@@ -60,7 +60,8 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     left: calc(-100% + $bar_icon_width);
     width: 100%;
     height: $bar_height;
-    background-color: rgba($white_color, .8);
+    // background-color: rgba($white_color, .8);
+    background: linear-gradient(225deg, rgba(#f0f0f0, .8), rgba(#cacaca, .8));
     border-radius: 0 $bar_height $bar_height 0;
     transition: left $transition_duration, border-radius $transition_duration;
     overflow: hidden;
@@ -153,16 +154,24 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     position: relative;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     top: .5rem;
     width: 90%;
-    min-height: $dialogue_bubble_height;
+    min-height: $dialogue_bubble_min_height;
     padding: .25rem .5rem;
     box-sizing: border-box;
-    font-family: Georgia, "等线";
-    word-break: keep-all;
     background-color: $white_color;
     border-radius: $bubble_border_radius;
+
+    span {
+        min-width: 0%;
+        max-width: 100%;
+        color: rgb(43, 55, 68);
+        font-family: Georgia, "等线";
+        word-break: normal;
+        word-wrap: break-word;
+    }
 
     &::after {
         $bubble_tail_height: 10px;
@@ -176,6 +185,11 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         width: 8px;
         background-color: $white_color;
         border-radius: 0 0 0 100%;
+    }
+
+    &,
+    &::after {
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, .25);
     }
 }
 
@@ -198,7 +212,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         flex-grow: 0;
         width: 100%;
         height: $secretary_body_height;
-        border: 1px solid green;
+        // border: 1px solid green;
     }
 }
 
@@ -212,6 +226,8 @@ $captain_console_dark_color: rgb(29, 33, 36);
     height: 20%;
     min-height: $captain_console_min_height;
     background-color: $captain_console_theme_color;
+    box-shadow: 0 -2px 8px rgba(black, .4);
+    z-index: 500;
 }
 
 @mixin btn_hover_and_active($bg_color) {
@@ -228,7 +244,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
     width: 100%;
     height: 100%;
 
-    .launch_btn__circle {
+    .launch_btn__circle>div {
         $cancel_btn_bg_color: rgb(146, 114, 74);
 
         background-color: $cancel_btn_bg_color;
@@ -241,7 +257,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
     width: 100%;
     height: 100%;
 
-    .launch_btn__circle {
+    .launch_btn__circle>div {
         $confirm_btn_bg_color: rgb(133, 69, 68);
 
         background-color: $confirm_btn_bg_color;
@@ -257,16 +273,25 @@ $captain_console_dark_color: rgb(29, 33, 36);
     align-items: center;
 
     &__circle {
+        $border_width: 4px;
+
         display: flex;
         justify-content: center;
         align-items: center;
         width: $launch_btn_circle_diameter;
         height: $launch_btn_circle_diameter;
-        margin: $launch_btn_inner_margin 0;
-        outline: 4px solid $captain_console_dark_color;
+        margin: $launch_btn_vertical_margin 0;
+        background-color: $captain_console_dark_color;
         border-radius: 50%;
+        box-shadow: 0 calc($launch_btn_vertical_margin + 2px) 0 rgba(black, .3);
         cursor: pointer;
-        transition: background-color $transition_duration;
+
+        &>div {
+            width: calc($launch_btn_circle_diameter - $border_width * 2);
+            height: calc($launch_btn_circle_diameter - $border_width * 2);
+            border-radius: 50%;
+            transition: background-color $transition_duration;
+        }
     }
 }
 
@@ -285,7 +310,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
 
         width: 75%;
         height: $cnt_value_height;
-        margin: calc(math.div($launch_btn_circle_diameter - $cnt_value_height, 2) + $launch_btn_inner_margin) 0;
+        margin: calc(math.div($launch_btn_circle_diameter - $cnt_value_height, 2) + $launch_btn_vertical_margin) 0;
         text-align: center;
         line-height: $cnt_value_height;
         font-family: "Digital Numbers", sans-serif;
@@ -301,7 +326,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
     &__text {
         width: 80%;
         height: $launch_btn_text_height;
-        margin: $launch_btn_inner_margin 0;
+        margin: $launch_btn_vertical_margin 0;
         text-align: center;
         line-height: $launch_btn_text_height;
         color: $captain_console_dark_color;

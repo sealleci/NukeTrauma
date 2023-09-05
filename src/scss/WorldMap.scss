@@ -4,6 +4,8 @@
     min-width: 320px;
     height: 100vh;
     overflow: hidden;
+    box-shadow: -2px 0 8px rgba(black, .4);
+    z-index: 1000;
 
     &__main {
         width: 100%;
@@ -30,7 +32,7 @@
     background-color: rgba(255, 255, 255, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: $display_height;
-    box-shadow: rgba(142, 142, 142, .4) 0 0 $display_margin 0;
+    box-shadow: 0 0 $display_margin rgba(142, 142, 142, .4);
 
     &__icon {
         display: flex;

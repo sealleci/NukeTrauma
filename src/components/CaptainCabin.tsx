@@ -10,7 +10,7 @@ function LanguageSelect() {
 function DialogueBubble() {
     return (
         <div className='dialogue_bubble'>
-            Aya，真是不得了呢~船长，真是厉害的工作呢。神气十足。бля。嗨，怎么回事呢，我也不知道哦。向下。<br />向下。<br />
+            <span>喵。123，哈哈</span>
         </div>
     )
 }
@@ -105,6 +105,7 @@ function LaunchCancelBtn() {
     return (
         <div className='launch_cancel_btn launch_btn'>
             <div className='launch_btn__circle'>
+                <div></div>
             </div>
             <div className='launch_btn__text'>终止</div>
         </div>
@@ -124,6 +125,7 @@ function LaunchConfirmBtn() {
     return (
         <div className='launch_confirm_btn launch_btn'>
             <div className='launch_btn__circle'>
+                <div></div>
             </div>
             <div className='launch_btn__text'>ЗПУСК</div>
         </div>
