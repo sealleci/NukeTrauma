@@ -1,6 +1,26 @@
+@use "sass:math";
+
+$white_color: rgb(233, 242, 248);
+$transition_duration: .15s;
 $secretary_head_height: 256px;
 $secretary_body_height: 192px;
-$dialogue_bubble_height: 6rem;
+$dialogue_bubble_height: 4rem;
+$language_select_height: 2rem;
+$launch_btn_circle_diameter: 4rem;
+$launch_btn_text_height: 1rem;
+$launch_btn_inner_margin: 5px;
+$secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height + $dialogue_bubble_height + $language_select_height);
+$captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text_height + $launch_btn_inner_margin * 4);
+
+.language_select {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: $language_select_height;
+    border: 1px solid red;
+}
 
 .captain_cabin {
     display: flex;
@@ -8,18 +28,15 @@ $dialogue_bubble_height: 6rem;
     flex-shrink: 0;
     width: 320px;
     height: 100vh;
-    // TODO
-    min-height: 500px;
-    border: 1px solid red;
+    min-height: calc($secretary_scene_min_height + $captain_console_min_height);
 }
 
 .secretary_scene {
     position: relative;
     width: 100%;
     height: 80%;
-    min-height: calc($secretary_head_height + $secretary_body_height + $dialogue_bubble_height);
+    min-height: $secretary_scene_min_height;
     overflow: hidden;
-    border: 1px solid green;
 }
 
 .secretary_display {
@@ -29,24 +46,56 @@ $dialogue_bubble_height: 6rem;
 }
 
 .secretary_change_bar {
+    $bar_height: 64px;
+    $transition_duration: .3s;
+    $bar_icon_width: 3rem;
+
     position: absolute;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    bottom: 0;
-    left: 0;
+    bottom: 10px;
+    left: calc(-100% + $bar_icon_width);
     width: 100%;
-    height: 64px;
-    border: 1px solid yellow;
+    height: $bar_height;
+    background-color: rgba($white_color, .75);
+    border-radius: 0 $bar_height $bar_height 0;
+    transition: left $transition_duration, border-radius $transition_duration;
+    overflow: hidden;
+
+    &.secretary_change_bar--extended {
+        left: 0;
+        border-radius: 0;
+
+        .secretary_change_bar__icon>div {
+            left: 0;
+        }
+    }
 
     &__icon {
+        position: relative;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        width: 4rem;
-        height: 100%;
+        height: $bar_icon_width;
+        width: $bar_icon_width;
+        overflow: hidden;
+        cursor: pointer;
+
+        &>div {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            left: (-$bar_icon_width);
+            height: 100%;
+            width: $bar_icon_width;
+            transition: left $transition_duration;
+        }
     }
 }
 
@@ -58,12 +107,20 @@ $dialogue_bubble_height: 6rem;
     align-items: center;
 
     &__item {
+        $list_item_dimeter: 3rem;
+
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 2rem;
-        width: 2rem;
-        border: 1px solid red;
+        height: $list_item_dimeter;
+        width: $list_item_dimeter;
+        cursor: pointer;
+        border-radius: 50%;
+        transition: background-color $transition_duration;
+
+        &:hover {
+            background-color: rgba(lighten(black, 10%), .1);
+        }
     }
 }
 
@@ -73,7 +130,7 @@ $dialogue_bubble_height: 6rem;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: gray;
+    background-color: rgb(47, 43, 76);
     z-index: -100;
 }
 
@@ -90,31 +147,31 @@ $dialogue_bubble_height: 6rem;
 }
 
 .dialogue_bubble {
+    $bubble_border_radius: .6rem;
+
     position: relative;
     width: 90%;
-    height: $dialogue_bubble_height;
-    border: 1px solid red;
 
     &__body {
         display: flex;
         flex-direction: row;
         align-items: center;
         width: 100%;
-        height: 100%;
-        background-color: white;
-        border-radius: .5rem;
+        min-height: $dialogue_bubble_height;
+        background-color: $white_color;
+        border-radius: $bubble_border_radius;
     }
 
     &__tail {
-        $bubble_tail_height: 2rem;
+        $bubble_tail_height: 10px;
 
         position: absolute;
         bottom: (-$bubble_tail_height);
-        left: .5rem;
+        left: calc($bubble_border_radius + 4px);
         height: $bubble_tail_height;
-        width: 2rem;
-        background-color: white;
-        border: 1px solid red;
+        width: 8px;
+        background-color: $white_color;
+        border-radius: 0 0 0 100%;
     }
 }
 
@@ -138,56 +195,52 @@ $dialogue_bubble_height: 6rem;
     }
 }
 
+$captain_console_theme_color: rgb(93, 110, 91);
+$captain_console_dark_color: rgb(29, 33, 36);
+
 .captain_console {
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 20%;
-    min-height: 5rem;
-    border: 1px solid yellow;
+    min-height: $captain_console_min_height;
+    background-color: $captain_console_theme_color;
+}
+
+@mixin btn_hover_and_active($bg_color) {
+    &:hover {
+        background-color: darken($bg_color, 3%);
+    }
+
+    &:active {
+        background-color: darken($bg_color, 6%);
+    }
 }
 
 .launch_cancel_btn {
     width: 100%;
     height: 100%;
-    border: 1px solid blue;
-}
 
-.selected_region_cnt {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    border: 1px solid blue;
-    user-select: none;
+    .launch_btn__circle {
+        $cancel_btn_bg_color: rgb(146, 114, 74);
 
-    &__value {
-        $cnt_value_height: 1rem;
+        background-color: $cancel_btn_bg_color;
 
-        width: 60%;
-        height: $cnt_value_height;
-        margin: 2rem 0;
-        text-align: center;
-        line-height: $cnt_value_height;
-        border: 1px solid black;
-        border-radius: $cnt_value_height;
-    }
-
-    &__text {
-        width: 80%;
-        height: 1rem;
-        text-align: center;
-        border: 1px solid red;
-        user-select: none;
+        @include btn_hover_and_active($cancel_btn_bg_color);
     }
 }
 
 .launch_confirm_btn {
     width: 100%;
     height: 100%;
-    border: 1px solid blue;
+
+    .launch_btn__circle {
+        $confirm_btn_bg_color: rgb(133, 69, 68);
+
+        background-color: $confirm_btn_bg_color;
+
+        @include btn_hover_and_active($confirm_btn_bg_color);
+    }
 }
 
 .launch_btn {
@@ -197,22 +250,54 @@ $dialogue_bubble_height: 6rem;
     align-items: center;
 
     &__circle {
-        $circle_radius: 5rem;
-
         display: flex;
         justify-content: center;
         align-items: center;
-        width: $circle_radius;
-        height: $circle_radius;
-        border: 1px solid red;
+        width: $launch_btn_circle_diameter;
+        height: $launch_btn_circle_diameter;
+        margin: $launch_btn_inner_margin 0;
+        outline: 4px solid $captain_console_dark_color;
         border-radius: 50%;
+        cursor: pointer;
+        transition: background-color $transition_duration;
     }
+}
 
+.selected_region_cnt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: darken($captain_console_theme_color, 8%);
+    user-select: none;
+
+    &__value {
+        $cnt_value_height: 1.2rem;
+
+        width: 60%;
+        height: $cnt_value_height;
+        margin: calc(math.div($launch_btn_circle_diameter - $cnt_value_height, 2) + $launch_btn_inner_margin) 0;
+        text-align: center;
+        line-height: $cnt_value_height;
+        color: rgba(255, 255, 255, .75);
+        background-color: rgb(54, 66, 68);
+        outline: 2px solid $captain_console_dark_color;
+        border-radius: $cnt_value_height;
+    }
+}
+
+.launch_btn,
+.selected_region_cnt {
     &__text {
         width: 80%;
-        height: 1rem;
+        height: $launch_btn_text_height;
+        margin: $launch_btn_inner_margin 0;
         text-align: center;
-        border: 1px solid red;
+        line-height: $launch_btn_text_height;
+        color: $captain_console_dark_color;
+        font-family: sans-serif, "黑体";
         user-select: none;
     }
 }

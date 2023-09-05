@@ -10,5 +10,6 @@
             "savePath": "~/../css"
         }
     ],
-    "liveSassCompile.settings.compileOnWatch": false
+    "liveSassCompile.settings.compileOnWatch": false,
+    "liveSassCompile.settings.showOutputWindowOn": "Debug"
 }

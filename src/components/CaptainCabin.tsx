@@ -1,10 +1,17 @@
+import { useRef, useState } from 'react'
 import '../css/CaptainCabin.css'
+
+function LanguageSelect() {
+    return (
+        <div className='language_select'></div>
+    )
+}
 
 function DialogueBubble() {
     return (
         <div className='dialogue_bubble'>
-            <div className="dialogue_bubble__body">text</div>
-            <div className="dialogue_bubble__tail"></div>
+            <div className='dialogue_bubble__body'>哎呀，真是不得了呢~船长，真是厉害的工作呢。十分威风。</div>
+            <div className='dialogue_bubble__tail'></div>
         </div>
     )
 }
@@ -12,8 +19,8 @@ function DialogueBubble() {
 function Secretary() {
     return (
         <div className='secretary'>
-            <div className="secretary__head"></div>
-            <div className="secretary__body"></div>
+            <div className='secretary__head'></div>
+            <div className='secretary__body'></div>
         </div>
     )
 }
@@ -21,6 +28,7 @@ function Secretary() {
 function SecretaryMain() {
     return (
         <div className='secretary_main'>
+            <LanguageSelect />
             <DialogueBubble />
             <Secretary />
         </div>
@@ -45,23 +53,41 @@ function SecretaryDisplay() {
 
 function SecretaryList() {
     return (
-        <div className="secretary_list">
-            <div className="secretary_list__item">1</div>
-            <div className="secretary_list__item">2</div>
-            <div className="secretary_list__item">3</div>
-            <div className="secretary_list__item">4</div>
+        <div className='secretary_list'>
+            <div className='secretary_list__item'></div>
+            <div className='secretary_list__item'></div>
+            <div className='secretary_list__item'></div>
+            <div className='secretary_list__item'></div>
         </div>
     )
 }
 
 function SecretaryChangeBar() {
+    const [isExtended, setIsExtended] = useState<boolean>(false)
+    const barRef = useRef<HTMLDivElement>(null)
+
+    function handleClick() {
+        if (!barRef.current) { return }
+
+        if (isExtended) {
+            barRef.current.classList.remove('secretary_change_bar--extended')
+        } else {
+            barRef.current.classList.add('secretary_change_bar--extended')
+        }
+
+        setIsExtended(!isExtended)
+    }
+
     return (
-        <div className='secretary_change_bar'>
+        <div className='secretary_change_bar' ref={barRef}>
             <SecretaryList />
-            <div className="secretary_change_bar__icon">
-                <div>&lt;</div>
-                <div>bow</div>
-                <div>&gt;</div>
+            <div className='secretary_change_bar__icon' onClick={handleClick}>
+                <div>
+                    <span>&lt;</span>
+                </div>
+                <div>
+                    <span>bow</span>
+                </div>
             </div>
         </div>
     )
@@ -80,7 +106,6 @@ function LaunchCancelBtn() {
     return (
         <div className='launch_cancel_btn launch_btn'>
             <div className='launch_btn__circle'>
-                <div>icon</div>
             </div>
             <div className='launch_btn__text'>终止</div>
         </div>
@@ -90,8 +115,8 @@ function LaunchCancelBtn() {
 function SelectedRegionCnt() {
     return (
         <div className='selected_region_cnt'>
-            <div className="selected_region_cnt__value">0</div>
-            <div className="selected_region_cnt__text">已选区域</div>
+            <div className='selected_region_cnt__value'>0</div>
+            <div className='selected_region_cnt__text'>SELECTED</div>
         </div>
     )
 }
@@ -100,9 +125,8 @@ function LaunchConfirmBtn() {
     return (
         <div className='launch_confirm_btn launch_btn'>
             <div className='launch_btn__circle'>
-                <div>icon</div>
             </div>
-            <div className='launch_btn__text'>发射</div>
+            <div className='launch_btn__text'>ЗПУСК</div>
         </div>
     )
 }
