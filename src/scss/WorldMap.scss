@@ -30,6 +30,7 @@
     padding: 0 calc($display_margin * 2);
     height: $display_height;
     background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: $display_height;
     box-shadow: 0 0 $display_margin rgba(142, 142, 142, .4);
@@ -42,6 +43,13 @@
         height: 2rem;
         width: 2rem;
         margin-right: 1rem;
+
+        img {
+            width: 80%;
+            height: 80%;
+            opacity: 75%;
+            user-select: none;
+        }
     }
 
     &__value {

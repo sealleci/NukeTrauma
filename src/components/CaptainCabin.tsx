@@ -1,12 +1,30 @@
 import { useRef, useState } from 'react'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import type { SelectChangeEvent } from '@mui/material'
 import Icon from '@mui/material/Icon'
 import CancelIcon from '../assets/icon/cancel.svg'
 import LaunchIcon from '../assets/icon/launch.svg'
 import '../css/CaptainCabin.css'
 
 function LanguageSelect() {
+    const [language, setLanguage] = useState<string>('zh_cn');
+
+    function handleChange(event: SelectChangeEvent) {
+        setLanguage(event.target.value)
+    }
+
     return (
-        <div className='language_select'></div>
+        <div className='language_select'>
+            <Select
+                value={language}
+                onChange={handleChange}
+            >
+                <MenuItem value={'en'}>English</MenuItem>
+                <MenuItem value={'zh_cn'}>中文</MenuItem>
+                <MenuItem value={'ru'}>Русский</MenuItem>
+            </Select>
+        </div>
     )
 }
 
@@ -85,10 +103,10 @@ function SecretaryChangeBar() {
             <SecretaryList />
             <div className='secretary_change_bar__icon' onClick={handleClick}>
                 <div>
-                    <Icon sx={{ color: 'white', opacity: .6 }}>arrow_back_ios_new</Icon>
+                    <Icon sx={{ fontSize: '2rem', color: 'white', opacity: .6 }}>arrow_back_ios_new</Icon>
                 </div>
                 <div>
-                    <Icon sx={{ color: 'white', opacity: .6 }}>favorite</Icon>
+                    <Icon sx={{ fontSize: '2rem', color: 'white', opacity: .6 }}>favorite</Icon>
                 </div>
             </div>
         </div>
@@ -112,7 +130,7 @@ function LaunchCancelBtn() {
                     <img src={CancelIcon} alt="cancel" />
                 </div>
             </div>
-            <div className='launch_btn__text'>终止</div>
+            <div className='console_label'>终止</div>
         </div>
     )
 }
@@ -121,7 +139,7 @@ function SelectedRegionCnt() {
     return (
         <div className='selected_region_cnt'>
             <div className='selected_region_cnt__value'>200</div>
-            <div className='selected_region_cnt__text'>SELECTED</div>
+            <div className='console_label'>SELECTED</div>
         </div>
     )
 }
@@ -134,7 +152,7 @@ function LaunchConfirmBtn() {
                     <img src={LaunchIcon} alt="launch" />
                 </div>
             </div>
-            <div className='launch_btn__text'>ЗПУСК</div>
+            <div className='console_label'>ЗПУСК</div>
         </div>
     )
 }
