@@ -1,4 +1,7 @@
 import { useRef, useState } from 'react'
+import Icon from '@mui/material/Icon'
+import CancelIcon from '../assets/icon/cancel.svg'
+import LaunchIcon from '../assets/icon/launch.svg'
 import '../css/CaptainCabin.css'
 
 function LanguageSelect() {
@@ -82,10 +85,10 @@ function SecretaryChangeBar() {
             <SecretaryList />
             <div className='secretary_change_bar__icon' onClick={handleClick}>
                 <div>
-                    <span>&lt;</span>
+                    <Icon sx={{ color: 'white', opacity: .6 }}>arrow_back_ios_new</Icon>
                 </div>
                 <div>
-                    <span>bow</span>
+                    <Icon sx={{ color: 'white', opacity: .6 }}>favorite</Icon>
                 </div>
             </div>
         </div>
@@ -105,7 +108,9 @@ function LaunchCancelBtn() {
     return (
         <div className='launch_cancel_btn launch_btn'>
             <div className='launch_btn__circle'>
-                <div></div>
+                <div>
+                    <img src={CancelIcon} alt="cancel" />
+                </div>
             </div>
             <div className='launch_btn__text'>终止</div>
         </div>
@@ -125,7 +130,9 @@ function LaunchConfirmBtn() {
     return (
         <div className='launch_confirm_btn launch_btn'>
             <div className='launch_btn__circle'>
-                <div></div>
+                <div>
+                    <img src={LaunchIcon} alt="launch" />
+                </div>
             </div>
             <div className='launch_btn__text'>ЗПУСК</div>
         </div>

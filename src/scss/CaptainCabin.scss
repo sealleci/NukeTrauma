@@ -50,6 +50,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     $bar_height: 64px;
     $transition_duration: .3s;
     $bar_icon_width: 3rem;
+    $bg_opacity: .8;
 
     position: absolute;
     display: flex;
@@ -60,8 +61,8 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     left: calc(-100% + $bar_icon_width);
     width: 100%;
     height: $bar_height;
-    // background-color: rgba($white_color, .8);
-    background: linear-gradient(225deg, rgba(#f0f0f0, .8), rgba(#cacaca, .8));
+    // background: linear-gradient(225deg, rgba(#f0f0f0, $bg_opacity), rgba(#cacaca, $bg_opacity));
+    background: linear-gradient(225deg, rgba(#505e6e, $bg_opacity), rgba(#444f5d, $bg_opacity));
     border-radius: 0 $bar_height $bar_height 0;
     transition: left $transition_duration, border-radius $transition_duration;
     overflow: hidden;
@@ -121,7 +122,8 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         transition: background-color $transition_duration;
 
         &:hover {
-            background-color: rgba(lighten(black, 10%), .1);
+            // background-color: rgba(lighten(black, 10%), .1);
+            background-color: rgba(darken(white, 20%), .06);
         }
     }
 }
@@ -287,10 +289,21 @@ $captain_console_dark_color: rgb(29, 33, 36);
         cursor: pointer;
 
         &>div {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
             width: calc($launch_btn_circle_diameter - $border_width * 2);
             height: calc($launch_btn_circle_diameter - $border_width * 2);
             border-radius: 50%;
             transition: background-color $transition_duration;
+
+            img {
+                width: 60%;
+                height: 60%;
+                opacity: 80%;
+                user-select: none;
+            }
         }
     }
 }
@@ -318,6 +331,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
         background-color: rgb(54, 66, 68);
         outline: 2px solid $captain_console_dark_color;
         border-radius: $cnt_value_height;
+        box-shadow: inset 0 0 5px rgba(black, .4);
     }
 }
 
@@ -329,7 +343,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
         margin: $launch_btn_vertical_margin 0;
         text-align: center;
         line-height: $launch_btn_text_height;
-        color: $captain_console_dark_color;
+        color: rgba($captain_console_dark_color, .75);
         font-family: sans-serif, "黑体";
         user-select: none;
     }
