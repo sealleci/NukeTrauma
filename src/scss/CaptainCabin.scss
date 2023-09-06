@@ -7,11 +7,12 @@ $transition_duration: .15s;
 $secretary_head_height: 256px;
 $secretary_body_height: 192px;
 $dialogue_bubble_min_height: 4rem;
-$language_select_height: 4rem;
+$language_select_height: 3.5rem;
 $launch_btn_circle_diameter: 4rem;
 $launch_btn_text_height: 1rem;
-$launch_btn_vertical_margin: 5px;
+$launch_btn_vertical_margin: .75rem;
 $console_border_width: 4px;
+$captain_console_height_percentage: 20%;
 $secretary_neck_height: math.div($secretary_body_height, 4.5);
 $secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height - $secretary_neck_height + $dialogue_bubble_min_height + $language_select_height);
 $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text_height + $launch_btn_vertical_margin * 4);
@@ -92,7 +93,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
 .secretary_scene {
     position: relative;
     width: 100%;
-    height: 80%;
+    height: calc(100% - $captain_console_height_percentage);
     min-height: $secretary_scene_min_height;
     overflow: hidden;
 }
@@ -300,7 +301,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 20%;
+    height: $captain_console_height_percentage;
     min-height: $captain_console_min_height;
     background-color: $captain_console_theme_color;
     // box-shadow: 0 -2px 8px rgba(black, .4);
@@ -360,7 +361,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
         margin: $launch_btn_vertical_margin 0;
         background-color: $captain_console_dark_color;
         border-radius: 50%;
-        box-shadow: 0 calc($launch_btn_vertical_margin + 2px) 0 rgba(black, .3);
+        box-shadow: 0 8px 0 rgba(black, .3);
         cursor: pointer;
 
         &>div {
