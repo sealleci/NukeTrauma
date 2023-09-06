@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
-import type { SelectChangeEvent } from '@mui/material'
+import type { SelectChangeEvent } from '@mui/material/Select'
 import Icon from '@mui/material/Icon'
 import CancelIcon from '../assets/icon/cancel.svg'
 import LaunchIcon from '../assets/icon/launch.svg'
+import SecretaryBody from '../assets/img/body.svg'
+import Meowscarada from '../assets/img/meowscarada.svg'
 import '../css/CaptainCabin.css'
 
 function LanguageSelect() {
@@ -39,8 +41,12 @@ function DialogueBubble() {
 function Secretary() {
     return (
         <div className='secretary'>
-            <div className='secretary__head'></div>
-            <div className='secretary__body'></div>
+            <div className='secretary__head'>
+                <img src={Meowscarada} alt="meowscarada" />
+            </div>
+            <div className='secretary__body'>
+                <img src={SecretaryBody} alt="body" />
+            </div>
         </div>
     )
 }
@@ -103,10 +109,10 @@ function SecretaryChangeBar() {
             <SecretaryList />
             <div className='secretary_change_bar__icon' onClick={handleClick}>
                 <div>
-                    <Icon sx={{ fontSize: '2rem', color: 'white', opacity: .6 }}>arrow_back_ios_new</Icon>
+                    <Icon>arrow_back_ios_new</Icon>
                 </div>
                 <div>
-                    <Icon sx={{ fontSize: '2rem', color: 'white', opacity: .6 }}>favorite</Icon>
+                    <Icon>favorite</Icon>
                 </div>
             </div>
         </div>
@@ -138,7 +144,7 @@ function LaunchCancelBtn() {
 function SelectedRegionCnt() {
     return (
         <div className='selected_region_cnt'>
-            <div className='selected_region_cnt__value'>200</div>
+            <div className='selected_region_cnt__value'>0</div>
             <div className='console_label'>SELECTED</div>
         </div>
     )

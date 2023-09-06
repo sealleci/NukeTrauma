@@ -1,23 +1,22 @@
 @use "sass:math";
 @import url('https://fonts.cdnfonts.com/css/digital-numbers');
 
-$white_color: rgb(233, 242, 248);
-$bg_color_light: #505e6e;
+$bubble_white_color: rgb(233, 242, 248);
+$font_white_color: darken(white, 20%);
 $transition_duration: .15s;
 $secretary_head_height: 256px;
 $secretary_body_height: 192px;
 $dialogue_bubble_min_height: 4rem;
-$language_select_height: 2.5rem;
+$language_select_height: 4rem;
 $launch_btn_circle_diameter: 4rem;
 $launch_btn_text_height: 1rem;
 $launch_btn_vertical_margin: 5px;
 $console_border_width: 4px;
-$secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height + $dialogue_bubble_min_height + $language_select_height);
+$secretary_neck_height: math.div($secretary_body_height, 4.5);
+$secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height - $secretary_neck_height + $dialogue_bubble_min_height + $language_select_height);
 $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text_height + $launch_btn_vertical_margin * 4);
 
 .language_select {
-    $color_opacity: .75;
-
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -38,12 +37,14 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     }
 
     .MuiInputBase-root {
+        min-width: 6.5rem;
+
         fieldset {
             border: none;
         }
 
         svg {
-            fill: rgba(white, $color_opacity);
+            fill: $font_white_color;
             transition: transform $transition_duration;
         }
     }
@@ -51,22 +52,22 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     .MuiSelect-select {
         padding: .25rem .5rem;
         font-size: 1rem;
-        color: rgba(white, $color_opacity);
+        color: $font_white_color;
     }
 
 }
 
 .MuiPaper-root {
-    background-color: rgba($bg_color_light, .75) !important;
+    background-color: rgba(#505e6e, .8) !important;
     backdrop-filter: blur(2px);
 
     li {
-        color: rgba(white, .8);
+        color: darken(white, 5%);
         background-color: transparent;
         transition: background-color $transition_duration;
 
         &:hover {
-            background-color: rgba(white, .2);
+            background-color: rgba(white, .1);
         }
 
         &.Mui-selected,
@@ -74,8 +75,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         &:active,
         &:focus,
         &.Mui-selected:focus {
-            background-color: rgba(#FCC8D1, .4);
-
+            background-color: rgba(#CD6688, .4);
         }
     }
 }
@@ -120,7 +120,8 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     width: 100%;
     height: $bar_height;
     // background: linear-gradient(225deg, rgba(#f0f0f0, $bg_opacity), rgba(#cacaca, $bg_opacity));
-    background: linear-gradient(225deg, rgba($bg_color_light, $bg_opacity), rgba(#444f5d, $bg_opacity));
+    // background: linear-gradient(225deg, rgba($bg_color_light, $bg_opacity), rgba(#444f5d, $bg_opacity));
+    background: rgba(#444f5d, $bg_opacity);
     border-radius: 0 $bar_height $bar_height 0;
     transition: left $transition_duration, border-radius $transition_duration;
     overflow: hidden;
@@ -157,6 +158,11 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
             width: $bar_icon_width;
             transition: left $transition_duration;
 
+            &>span {
+                font-size: 2rem;
+                color: $font_white_color;
+            }
+
             &:last-child {
                 transform: translateX(-.25rem);
             }
@@ -184,8 +190,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         transition: background-color $transition_duration;
 
         &:hover {
-            // background-color: rgba(lighten(black, 10%), .1);
-            background-color: rgba(darken(white, 20%), .06);
+            background-color: rgba(darken(white, 10%), .1);
         }
     }
 }
@@ -204,7 +209,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     position: absolute;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     top: 0;
     left: 0;
@@ -220,12 +225,12 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    top: .5rem;
+    top: $secretary_neck_height;
     width: 90%;
     min-height: $dialogue_bubble_min_height;
     padding: .25rem .5rem;
     box-sizing: border-box;
-    background-color: $white_color;
+    background-color: $bubble_white_color;
     border-radius: $bubble_border_radius;
 
     span {
@@ -247,31 +252,44 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         left: calc($bubble_border_radius + 4px);
         height: $bubble_tail_height;
         width: 8px;
-        background-color: $white_color;
+        background-color: $bubble_white_color;
         border-radius: 0 0 0 100%;
     }
 }
 
 .secretary {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    flex-grow: 1;
+    // flex-grow: 1;
     width: 256px;
 
-    &__head {
+    &>div {
         flex-grow: 0;
         width: 100%;
+
+        img {
+            position: relative;
+            width: 100%;
+        }
+    }
+
+    &__head {
+        position: relative;
+        top: $secretary_neck_height;
         height: $secretary_head_height;
-        border: 1px solid blue;
+        overflow: visible;
+        z-index: 100;
+
+        img {
+            top: 0;
+        }
     }
 
     &__body {
-        flex-grow: 0;
-        width: 100%;
         height: $secretary_body_height;
-        // border: 1px solid green;
     }
 }
 

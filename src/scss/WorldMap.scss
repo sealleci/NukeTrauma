@@ -47,13 +47,12 @@
         img {
             width: 80%;
             height: 80%;
-            opacity: 75%;
             user-select: none;
         }
     }
 
     &__value {
-        color: rgba(black, .6);
+        color: lighten(black, 40%);
         font-family: "Trebuchet MS";
         user-select: none;
     }
