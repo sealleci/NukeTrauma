@@ -6,7 +6,7 @@ import Icon from '@mui/material/Icon'
 import CancelIcon from '../assets/icon/cancel.svg'
 import LaunchIcon from '../assets/icon/launch.svg'
 import SecretaryBody from '../assets/img/body.svg'
-import Meowscarada from '../assets/img/meowscarada.svg'
+import Meowscarada from '../assets/img/lopunny.svg'
 import '../css/CaptainCabin.css'
 
 function LanguageSelect() {
