@@ -3,23 +3,31 @@
 
 $bubble_white_color: rgb(233, 242, 248);
 $font_white_color: darken(white, 20%);
+$font_black_color: rgb(43, 55, 68);
 $border_white_color: rgba(white, .2);
 $transition_duration: .15s;
 $secretary_head_height: 256px;
 $secretary_body_height: 192px;
-$dialogue_bubble_min_height: 4rem;
+$dialogue_bubble_switch_height: 2rem;
+$dialogue_bubble_content_min_height: 4rem;
 $language_select_height: 3.5rem;
 $launch_btn_circle_diameter: 4rem;
 $launch_btn_text_height: 1rem;
-$launch_btn_vertical_margin: .75rem;
+$launch_btn_vertical_margin: .25rem;
 $console_border_width: 4px;
 $captain_console_height_percentage: 20%;
 $secretary_neck_height: math.div($secretary_head_height, 6);
-$secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height - $secretary_neck_height + $dialogue_bubble_min_height + $language_select_height);
+$secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height - $secretary_neck_height * 2 + $dialogue_bubble_content_min_height + $dialogue_bubble_switch_height + $language_select_height);
 $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text_height + $launch_btn_vertical_margin * 4);
 
-@mixin hover_light {
-    transition: background-color $transition_duration;
+@mixin hover_light($is_custom_transition: false) {
+    @if $is_custom_transition {
+        @content;
+    }
+
+    @else {
+        transition: background-color $transition_duration;
+    }
 
     &:hover {
         background-color: rgba(white, .05);
@@ -27,7 +35,6 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
 }
 
 .language_select {
-    @debug $secretary_neck_height;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -52,7 +59,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
 
         svg {
             fill: $font_white_color;
-            transition: transform $transition_duration;
+            transition: transform calc($transition_duration * 2);
         }
     }
 
@@ -110,7 +117,6 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     height: 100%;
 }
 
-
 .secretary_change_bar {
     $bar_height: 64px;
     $transition_duration: .3s;
@@ -150,6 +156,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         height: 100%;
         width: $bar_icon_width;
         overflow: hidden;
+        user-select: none;
         cursor: pointer;
 
         &>div {
@@ -184,22 +191,22 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     flex-grow: 1;
     justify-content: space-around;
     align-items: center;
+    user-select: none;
 
     &__item {
         $list_item_dimeter: 3rem;
-        $border_width: 2px;
 
         display: flex;
         justify-content: center;
         align-items: center;
         height: $list_item_dimeter;
         width: $list_item_dimeter;
-        outline: $border_width solid transparent;
+        outline: 2px solid transparent;
         border-radius: 50%;
         background-color: rgba(white, .15);
         backdrop-filter: blur(2px);
         cursor: pointer;
-        transition: outline $transition_duration;
+        transition: outline-color $transition_duration;
 
         img {
             width: 90%;
@@ -207,7 +214,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         }
 
         &:hover {
-            outline: $border_width solid $font_white_color;
+            outline-color: $font_white_color;
         }
     }
 }
@@ -223,7 +230,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
 }
 
 .secretary_main {
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -235,45 +242,138 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
 }
 
 .dialogue_bubble {
-    $bubble_border_radius: .6rem;
+    $padding_left: 5%;
 
-    position: relative;
+    position: absolute;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    top: $secretary_neck_height;
-    width: 90%;
-    min-height: $dialogue_bubble_min_height;
-    padding: .25rem .5rem;
-    box-sizing: border-box;
-    background-color: $bubble_white_color;
-    border-radius: $bubble_border_radius;
+    align-items: flex-start;
+    top: $language_select_height;
+    width: 100%;
     z-index: 200;
 
-    span {
-        min-width: 0%;
-        max-width: 100%;
-        color: rgb(43, 55, 68);
-        font-family: Georgia, "等线";
-        word-break: normal;
-        word-wrap: break-word;
+    &.dialogue_bubble--collapsed {
+        .dialogue_bubble__switch {
+            left: 0;
+            outline-color: $border_white_color;
+            border-radius: 0 $dialogue_bubble_switch_height $dialogue_bubble_switch_height 0;
+
+            span {
+                &:nth-child(2) {
+                    transform: rotateY(180deg);
+                }
+            }
+        }
+
+        .dialogue_bubble__content {
+            opacity: 0;
+            user-select: none;
+        }
     }
 
-    &::after {
-        $bubble_tail_height: 10px;
+    &__switch {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        left: $padding_left;
+        height: $dialogue_bubble_switch_height;
+        width: 5rem;
+        padding: 0 .25rem;
+        outline: 2px solid transparent;
+        border-radius: $dialogue_bubble_switch_height;
+        cursor: pointer;
 
-        content: "";
-        display: block;
-        position: absolute;
-        bottom: (-$bubble_tail_height);
-        left: calc($bubble_border_radius + 4px);
-        height: $bubble_tail_height;
-        width: 8px;
+        span {
+            color: $font_white_color;
+            font-size: 1.25rem;
+            user-select: none;
+            transition: transform calc($transition_duration * 2);
+        }
+
+        @include hover_light(true) {
+            transition: outline-color calc($transition_duration * 2),
+                background-color $transition_duration ,
+                left $transition_duration,
+                border-radius $transition_duration;
+        }
+    }
+
+    &__content {
+        $bubble_border_radius: .6rem;
+
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        left: $padding_left;
+        width: calc(100% - $padding_left * 2);
+        min-height: $dialogue_bubble_content_min_height;
+        padding: .25rem .5rem;
+        box-sizing: border-box;
         background-color: $bubble_white_color;
-        border-radius: 0 0 0 100%;
+        border-radius: $bubble_border_radius;
+        transition: opacity calc($transition_duration * 2);
+
+        span {
+            display: inline-block;
+            min-width: 0%;
+            max-width: 100%;
+            color: $font_black_color;
+            font-family: Georgia, "等线";
+            word-break: normal;
+            word-wrap: break-word;
+        }
+
+
+
+        &::after {
+            $bubble_tail_height: 10px;
+
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: (-$bubble_tail_height);
+            left: calc($bubble_border_radius + 4px);
+            height: $bubble_tail_height;
+            width: 8px;
+            background-color: $bubble_white_color;
+            border-radius: 0 0 0 100%;
+        }
     }
 }
+
+@mixin head_nodding_mixin($init_top) {
+    $offset: 6px;
+
+    @keyframes head_nodding {
+        0% {
+            top: $init_top;
+        }
+
+        10% {
+            top: calc($init_top + $offset);
+        }
+
+        50% {
+            top: calc($init_top + $offset);
+        }
+
+        60% {
+            top: $init_top;
+        }
+
+        100% {
+            top: $init_top;
+        }
+    }
+
+    animation: head_nodding linear 8s infinite;
+}
+
 
 .secretary {
     position: relative;
@@ -281,8 +381,8 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    // flex-grow: 1;
     width: 256px;
+    user-select: none;
 
     &>div {
         flex-grow: 0;
@@ -300,6 +400,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         height: $secretary_head_height;
         overflow: visible;
         z-index: 100;
+        @include head_nodding_mixin($secretary_neck_height);
 
         img {
             top: 0;
@@ -368,6 +469,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    user-select: none;
 
     &__circle {
         display: flex;
@@ -378,7 +480,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
         margin: $launch_btn_vertical_margin 0;
         background-color: $captain_console_dark_color;
         border-radius: 50%;
-        box-shadow: 0 8px 0 rgba(black, .3);
+        box-shadow: 0 calc($launch_btn_vertical_margin * 2 * 0.8) 0 rgba(black, .3);
         cursor: pointer;
 
         &>div {

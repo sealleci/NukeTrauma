@@ -1,4 +1,6 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect, useMemo } from 'react'
+import useHeadImageStore from '../store/image_store.ts'
+import useLanguageStore from '../store/language_store.ts'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import type { SelectChangeEvent } from '@mui/material/Select'
@@ -17,11 +19,16 @@ import VaporeonIcon from '../assets/icon/vaporeon.svg'
 import '../css/CaptainCabin.css'
 
 function LanguageSelect() {
-    const [language, setLanguage] = useState<string>('zh_cn');
+    const language = useLanguageStore((state) => state.language)
+    const setLanguage = useLanguageStore((state) => state.setLanguage)
 
     function handleChange(event: SelectChangeEvent) {
         setLanguage(event.target.value)
     }
+
+    useEffect(() => {
+        setLanguage('zh_cn')
+    }, [setLanguage])
 
     return (
         <div className='language_select'>
@@ -38,18 +45,35 @@ function LanguageSelect() {
 }
 
 function DialogueBubble() {
+    const bubble = useRef<HTMLDivElement>(null)
+
+    function handleClick() {
+        if (!bubble.current) return
+
+        bubble.current.classList.toggle('dialogue_bubble--collapsed')
+    }
+
     return (
-        <div className='dialogue_bubble'>
-            <span>喵。123，哈哈</span>
+        <div className='dialogue_bubble' ref={bubble}>
+            <div className='dialogue_bubble__switch' onClick={handleClick}>
+                <Icon>visibility</Icon>
+                <Icon>forward</Icon>
+                <Icon>visibility_off</Icon>
+            </div>
+            <div className='dialogue_bubble__content'>
+                <span>喵。123，哈哈</span>
+            </div>
         </div>
     )
 }
 
 function Secretary() {
+    const headImage = useHeadImageStore((state) => state.headImage)
+
     return (
         <div className='secretary' style={{ opacity: 0 }}>
             <div className='secretary__head'>
-                <img src={Meowscarada} alt="meowscarada" />
+                <img src={headImage} alt="head" />
             </div>
             <div className='secretary__body'>
                 <img src={SecretaryBody} alt="body" />
@@ -85,20 +109,44 @@ function SecretaryDisplay() {
 }
 
 function SecretaryList() {
+    interface SecretaryListItem {
+        icon: string
+        name: string
+        headImage: string
+    }
+
+    const setHeadImage = useHeadImageStore((state) => state.setHeadImage)
+    const secretaryList = useMemo<SecretaryListItem[]>(() => [
+        {
+            icon: NecoArcIcon,
+            name: 'Neco Arc',
+            headImage: NecoArc
+        }, {
+            icon: VaporeonIcon,
+            name: 'Vaporeon',
+            headImage: Vaporeon
+        }, {
+            icon: LopunnyIcon,
+            name: 'Lopunny',
+            headImage: Lopunny
+        }, {
+            icon: MeowscaradaIcon,
+            name: 'Meowscarada',
+            headImage: Meowscarada
+        }
+    ], [])
+
+    useEffect(() => {
+        setHeadImage(secretaryList[0].headImage)
+    }, [setHeadImage, secretaryList])
+
     return (
         <div className='secretary_list'>
-            <div className='secretary_list__item'>
-                <img src={NecoArcIcon} alt="neco_arc" />
-            </div>
-            <div className='secretary_list__item'>
-                <img src={VaporeonIcon} alt="vaporeon" />
-            </div>
-            <div className='secretary_list__item'>
-                <img src={LopunnyIcon} alt="lopunny" />
-            </div>
-            <div className='secretary_list__item'>
-                <img src={MeowscaradaIcon} alt="meowscarada" />
-            </div>
+            {secretaryList.map((item, index) => (
+                <div className='secretary_list__item' onClick={() => setHeadImage(item.headImage)} key={index}>
+                    <img src={item.icon} alt={item.name} />
+                </div>
+            ))}
         </div>
     )
 }
