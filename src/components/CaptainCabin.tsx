@@ -71,7 +71,7 @@ function Secretary() {
     const headImage = useHeadImageStore((state) => state.headImage)
 
     return (
-        <div className='secretary' style={{ opacity: 0 }}>
+        <div className='secretary' style={{ opacity: 1 }}>
             <div className='secretary__head'>
                 <img src={headImage} alt="head" />
             </div>

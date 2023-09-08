@@ -1,3 +1,5 @@
+import GeoChart from './GeoChart.tsx'
+import type { ReactEChartsProps } from './GeoChart.tsx'
 import DeathIcon from '../assets/icon/death.svg'
 import '../css/WorldMap.css'
 
@@ -13,8 +15,12 @@ function DeathCnt() {
 }
 
 function WorldMapMain() {
+    const option: ReactEChartsProps["option"] = {
+    }
+
     return (
         <div className='world_map__main'>
+            <GeoChart option={option} />
         </div>
     )
 }

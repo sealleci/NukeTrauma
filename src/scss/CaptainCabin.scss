@@ -255,15 +255,10 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
 
     &.dialogue_bubble--collapsed {
         .dialogue_bubble__switch {
+            flex-direction: row-reverse;
             left: 0;
             outline-color: $border_white_color;
             border-radius: 0 $dialogue_bubble_switch_height $dialogue_bubble_switch_height 0;
-
-            span {
-                &:nth-child(2) {
-                    transform: rotateY(180deg);
-                }
-            }
         }
 
         .dialogue_bubble__content {
@@ -290,14 +285,13 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
             color: $font_white_color;
             font-size: 1.25rem;
             user-select: none;
-            transition: transform calc($transition_duration * 2);
         }
 
         @include hover_light(true) {
             transition: outline-color calc($transition_duration * 2),
-                background-color $transition_duration ,
-                left $transition_duration,
-                border-radius $transition_duration;
+                left calc($transition_duration * 2),
+                border-radius calc($transition_duration * 2),
+                background-color $transition_duration ;
         }
     }
 
