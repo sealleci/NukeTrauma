@@ -18,6 +18,14 @@ $secretary_neck_height: math.div($secretary_head_height, 6);
 $secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height - $secretary_neck_height + $dialogue_bubble_min_height + $language_select_height);
 $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text_height + $launch_btn_vertical_margin * 4);
 
+@mixin hover_light {
+    transition: background-color $transition_duration;
+
+    &:hover {
+        background-color: rgba(white, .05);
+    }
+}
+
 .language_select {
     @debug $secretary_neck_height;
     display: flex;
@@ -31,11 +39,8 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         margin-right: 1rem;
         border-radius: .5rem;
         outline: 2px solid $border_white_color;
-        transition: background-color $transition_duration;
 
-        &:hover {
-            background-color: rgba(white, .05);
-        }
+        @include hover_light;
     }
 
     .MuiInputBase-root {
@@ -142,7 +147,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        height: $bar_icon_width;
+        height: 100%;
         width: $bar_icon_width;
         overflow: hidden;
         cursor: pointer;
@@ -168,6 +173,8 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
                 transform: translateX(-.25rem);
             }
         }
+
+        @include hover_light;
     }
 }
 

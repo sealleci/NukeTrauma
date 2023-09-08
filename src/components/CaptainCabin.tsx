@@ -44,7 +44,7 @@ function DialogueBubble() {
 
 function Secretary() {
     return (
-        <div className='secretary'>
+        <div className='secretary' style={{ opacity: 0 }}>
             <div className='secretary__head'>
                 <img src={Meowscarada} alt="meowscarada" />
             </div>
