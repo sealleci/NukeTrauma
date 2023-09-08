@@ -6,7 +6,11 @@ import Icon from '@mui/material/Icon'
 import CancelIcon from '../assets/icon/cancel.svg'
 import LaunchIcon from '../assets/icon/launch.svg'
 import SecretaryBody from '../assets/img/body.svg'
-import Meowscarada from '../assets/img/lopunny.svg'
+import Meowscarada from '../assets/img/neco_arc.svg'
+import NecoArcIcon from '../assets/icon/neco_arc.svg'
+import LopunnyIcon from '../assets/icon/lopunny.svg'
+import MeowscaradaIcon from '../assets/icon/meowscarada.svg'
+import VaporeonIcon from '../assets/icon/vaporeon.svg'
 import '../css/CaptainCabin.css'
 
 function LanguageSelect() {
@@ -80,10 +84,18 @@ function SecretaryDisplay() {
 function SecretaryList() {
     return (
         <div className='secretary_list'>
-            <div className='secretary_list__item'></div>
-            <div className='secretary_list__item'></div>
-            <div className='secretary_list__item'></div>
-            <div className='secretary_list__item'></div>
+            <div className='secretary_list__item'>
+                <img src={NecoArcIcon} alt="neco_arc" />
+            </div>
+            <div className='secretary_list__item'>
+                <img src={VaporeonIcon} alt="vaporeon" />
+            </div>
+            <div className='secretary_list__item'>
+                <img src={LopunnyIcon} alt="lopunny" />
+            </div>
+            <div className='secretary_list__item'>
+                <img src={MeowscaradaIcon} alt="meowscarada" />
+            </div>
         </div>
     )
 }
