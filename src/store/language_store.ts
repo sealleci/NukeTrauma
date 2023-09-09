@@ -6,7 +6,7 @@ interface LanguageState {
     uiTranslation: UiTranslationType | null,
     dialogue: DialogueType | null,
     setLanguage: (newLanguage: LanguageType) => void,
-    setTranslation: (newUiTranslation: UiTranslationType) => void,
+    setUiTranslation: (newUiTranslation: UiTranslationType) => void,
     setDialogue: (newDialogue: DialogueType) => void
 }
 
@@ -17,7 +17,7 @@ const useLanguageStore = create<LanguageState>()((set) => ({
     setLanguage: (newLanguage) => set(() => ({
         language: newLanguage
     })),
-    setTranslation: (newUiTranslation) => set(() => ({
+    setUiTranslation: (newUiTranslation) => set(() => ({
         uiTranslation: newUiTranslation
     })),
     setDialogue: (newDialogue) => set(() => ({

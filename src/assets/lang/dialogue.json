@@ -1,65 +1,65 @@
 {
     "neco_arc": {
         "greeting": {
-            "1": {
-                "zh_cn": "",
-                "en": "",
-                "ru": ""
+            "0": {
+                "zh_cn": "船长，早上好。",
+                "en": "Captain, good morning.",
+                "ru": "Капитан, доброе утро."
             }
         },
         "general": {
-            "1": {
-                "zh_cn": "",
-                "en": "",
-                "ru": ""
+            "0": {
+                "zh_cn": "哎呀，真是惨烈喵！",
+                "en": "Ouch, it was a critical hit!",
+                "ru": "Ой, это был критический удар!"
             }
         }
     },
     "meowscarada": {
         "greeting": {
-            "1": {
-                "zh_cn": "",
-                "en": "",
-                "ru": ""
+            "0": {
+                "zh_cn": "可以摸摸我吗，船长？",
+                "en": "Can you pet me, Captain?",
+                "ru": "Можете погладить меня, Капитан?"
             }
         },
         "general": {
-            "1": {
-                "zh_cn": "",
-                "en": "",
-                "ru": ""
+            "0": {
+                "zh_cn": "呵呵，美丽的世界。",
+                "en": "Such a beautiful world.",
+                "ru": "Великолепный мир."
             }
         }
     },
     "vaporeon": {
         "greeting": {
-            "1": {
-                "zh_cn": "",
-                "en": "",
-                "ru": ""
+            "0": {
+                "zh_cn": "船长，想喝咖啡吗？",
+                "en": "Captain, would you like a coffee?",
+                "ru": "Капитан, хотите кофе?"
             }
         },
         "general": {
-            "1": {
-                "zh_cn": "",
-                "en": "",
-                "ru": ""
+            "0": {
+                "zh_cn": "大海比陆地好。",
+                "en": "The sea is better than land.",
+                "ru": "Море лучше чем земля."
             }
         }
     },
     "lopunny": {
         "greeting": {
-            "1": {
-                "zh_cn": "",
-                "en": "",
-                "ru": ""
+            "0": {
+                "zh_cn": "请下达指令，船长。",
+                "en": "Please issue orders, Captain.",
+                "ru": "Пожалуйста, выдать указания, Капитан."
             }
         },
         "general": {
-            "1": {
-                "zh_cn": "",
-                "en": "",
-                "ru": ""
+            "0": {
+                "zh_cn": "我感觉好热。",
+                "en": "I feel hot.",
+                "ru": "Мне жарко."
             }
         }
     }

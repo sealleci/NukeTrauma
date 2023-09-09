@@ -24,6 +24,13 @@ function WorldMapMain() {
     )
 }
 
+function ExplosionScene() {
+    return (
+        <div>
+        </div>
+    )
+}
+
 export default function WorldMap() {
     return (
         <div className='world_map'>

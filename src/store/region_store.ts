@@ -4,7 +4,7 @@ interface RegionState {
     regionList: string[],
     finalRegionList: string[],
     setRegionList: (newRegionList: string[]) => void,
-    setFinalRegionList: () => void,
+    updateFinalRegionList: () => void,
     clearFinalRegionList: () => void
 }
 
@@ -15,7 +15,7 @@ const useRegionStore = create<RegionState>()((set, get) => ({
     setRegionList: (newRegionList) => set(() => ({
         regionList: newRegionList
     })),
-    setFinalRegionList: () => set(() => ({
+    updateFinalRegionList: () => set(() => ({
         finalRegionList: get().regionList
     })),
     clearFinalRegionList: () => set(() => ({

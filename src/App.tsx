@@ -7,7 +7,7 @@ import dialogue from './assets/lang/dialogue.json'
 
 export default function App() {
   const setLanguage = useLanguageStore((state) => state.setLanguage)
-  const setUiTranslation = useLanguageStore((state) => state.setTranslation)
+  const setUiTranslation = useLanguageStore((state) => state.setUiTranslation)
   const setDialogue = useLanguageStore((state) => state.setDialogue)
 
   useEffect(() => {

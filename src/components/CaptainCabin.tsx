@@ -1,9 +1,9 @@
-import { useRef, useState, useEffect, useMemo } from 'react'
+import { useRef, useState, useEffect, useMemo, useCallback } from 'react'
 import useCharacterStore from '../store/character_store.ts'
 import useLanguageStore from '../store/language_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
 import useCounterStore from '../store/counter_store.ts'
-// import useRegionStore from '../store/region_store.ts'
+import useRegionStore from '../store/region_store.ts'
 import { shuffle, getRangeRandom } from '../utils/tool.ts'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
@@ -22,7 +22,6 @@ import LopunnyIcon from '../assets/icon/lopunny.svg'
 import MeowscaradaIcon from '../assets/icon/meowscarada.svg'
 import VaporeonIcon from '../assets/icon/vaporeon.svg'
 import '../css/CaptainCabin.css'
-import useRegionStore from '../store/region_store.ts'
 
 function LanguageSelect() {
     const language = useLanguageStore((state) => state.language)
@@ -48,16 +47,16 @@ function LanguageSelect() {
 
 function DialogueBubble() {
     const bubbleRef = useRef<HTMLDivElement>(null)
-    // const [prevCharacter, setPrevCharacter] = useState<string>('')
-    // const [prevRegion, setPrevRegion] = useState<string>('')
-    // const [prevSubNumeric, setPrevNumeric] = useState<string>('')
-    // const [curSentence, setCurSentence] = useState<string>('')
-    // const dialogueData = useLanguageStore((state) => state.dialogue)
-    // const character = useCharacterStore((state) => state.type)
-    // const finalRegionList = useRegionStore((state) => state.finalRegionList)
-    // const language = useLanguageStore((state) => state.language)
-    // const setFinalRegionList = useRegionStore((state) => state.setFinalRegionList)
-
+    const dialogueData = useLanguageStore((state) => state.dialogue)
+    const [prevCharacter, setPrevCharacter] = useState<CharacterType>('neco_arc')
+    const [prevRegion, setPrevRegion] = useState<string>('greeting')
+    const [prevSubNumeric, setPrevSubNumeric] = useState<string>('')
+    const [prevLanguage, setPrevLanguage] = useState<LanguageType>('zh_cn')
+    const [curSentence, setCurSentence] = useState<string>('')
+    const character = useCharacterStore((state) => state.type)
+    const finalRegionList = useRegionStore((state) => state.finalRegionList)
+    const language = useLanguageStore((state) => state.language)
+    const clearFinalRegionList = useRegionStore((state) => state.clearFinalRegionList)
 
     function handleClick() {
         if (!bubbleRef.current) return
@@ -65,52 +64,72 @@ function DialogueBubble() {
         bubbleRef.current.classList.toggle('dialogue_bubble--collapsed')
     }
 
-    // function getSentence(characterName: string, region: string, subNumeric: string, language: string): string {
-    //     if (!dialogueData) return ''
+    const getSentence = useCallback((_character: CharacterType, _regionList: string[], _subNumeric: string, _language: LanguageType): string => {
+        if (!dialogueData) return ''
 
-    //     const curCharacterDialogue = dialogueData[characterName]
-    //     if (!curCharacterDialogue) return curSentence
+        const curCharacterDialogue = dialogueData[_character]
+        if (!curCharacterDialogue) return ''
 
-    //     let selectedRegionList = Array.from(finalRegionList)
-    //     let selectedRegion: string = ''
+        let selectedRegion: string = ''
 
-    //     while (selectedRegionList.length > 0) {
-    //         selectedRegionList = shuffle(selectedRegionList)
-    //         if (curCharacterDialogue[selectedRegionList[0]]) {
-    //             selectedRegion = selectedRegionList[0]
-    //             break
-    //         }
-    //         selectedRegionList.shift()
-    //     }
+        while (_regionList.length > 0) {
+            _regionList = shuffle(_regionList)
+            if (curCharacterDialogue[_regionList[0]]) {
+                selectedRegion = _regionList[0]
+                break
+            }
+            _regionList.shift()
+        }
 
-    //     if (!curCharacterDialogue[selectedRegion]) return curSentence
+        if (!curCharacterDialogue[selectedRegion]) return ''
 
-    //     const curRegionDialogue = curCharacterDialogue[selectedRegion]
-    //     const subNumericList = shuffle(Object.keys(curRegionDialogue))
+        const curRegionDialogue = curCharacterDialogue[selectedRegion]
+        let curSubNumeric = ''
 
-    //     setPrevRegion(selectedRegion)
-    //     if (subNumericList.length <= 0) return curSentence
-    //     setPrevNumeric(subNumericList[0])
+        if (_subNumeric === '') {
+            const subNumericList = shuffle(Object.keys(curRegionDialogue))
+            if (subNumericList.length <= 0) return ''
+            curSubNumeric = subNumericList[0]
+        } else {
+            curSubNumeric = _subNumeric
+        }
 
-    //     const curSubNumericDialogue = curRegionDialogue[subNumericList[0]]
+        const curSubNumericDialogue = curRegionDialogue[curSubNumeric]
 
-    //     if (!curSubNumericDialogue || !curSubNumericDialogue[language]) return curSentence
-    //     // setCurSentence(curSubNumericDialogue[language])
+        if (!curSubNumericDialogue || !curSubNumericDialogue[_language]) return ''
 
-    //     return curSubNumericDialogue[language]
-    // }
+        setPrevRegion(selectedRegion)
+        setPrevSubNumeric(curSubNumeric)
 
-    // useEffect(() => {
-    //     setCurSentence(() => getSentence(character, prevRegion, prevSubNumeric, language))
-    // }, [character])
+        return curSubNumericDialogue[_language]
+    }, [dialogueData])
 
-    // useEffect(() => {
-    //     setCurSentence(() => getSentence())
-    // }, [finalRegionList])
+    useEffect(() => {
+        if (!dialogueData) return
 
-    // useEffect(() => {
-    //     setCurSentence(() => getSentence(prevCharacter, prevRegion, prevSubNumeric, language))
-    // }, [language])
+        setCurSentence(() => dialogueData['neco_arc']['greeting']['0']['zh_cn'])
+    }, [dialogueData])
+
+    useEffect(() => {
+        if (character === prevCharacter) return
+
+        setCurSentence(() => getSentence(character, ['greeting'], '', prevLanguage))
+        setPrevCharacter(character)
+    }, [character, prevLanguage, prevCharacter, getSentence])
+
+    useEffect(() => {
+        if (finalRegionList.length <= 0) return
+
+        setCurSentence(() => getSentence(prevCharacter, ['general', ...finalRegionList], '', prevLanguage))
+        clearFinalRegionList()
+    }, [finalRegionList, prevCharacter, prevLanguage, getSentence, clearFinalRegionList])
+
+    useEffect(() => {
+        if (language === prevLanguage) return
+
+        setCurSentence(() => getSentence(prevCharacter, [prevRegion], prevSubNumeric, language))
+        setPrevLanguage(language)
+    }, [language, prevCharacter, prevRegion, prevSubNumeric, prevLanguage, getSentence])
 
     return (
         <div className='dialogue_bubble' ref={bubbleRef}>
@@ -120,7 +139,7 @@ function DialogueBubble() {
                 <Icon>visibility_off</Icon>
             </div>
             <div className='dialogue_bubble__content'>
-                {/* <span>{curSentence}</span> */}
+                <span>{curSentence}</span>
             </div>
         </div>
     )
@@ -132,10 +151,10 @@ function Secretary() {
     return (
         <div className='secretary' style={{ opacity: 1 }}>
             <div className='secretary__head'>
-                <img src={headImage} alt="head" />
+                <img src={headImage} alt='head' />
             </div>
             <div className='secretary__body'>
-                <img src={SecretaryBody} alt="body" />
+                <img src={SecretaryBody} alt='body' />
             </div>
         </div>
     )
@@ -261,7 +280,7 @@ function LaunchCancelBtn({ text }: { text: string }) {
         <div className='launch_cancel_btn launch_btn' onClick={handleClick}>
             <div className='launch_btn__circle'>
                 <div>
-                    <img src={CancelIcon} alt="cancel" />
+                    <img src={CancelIcon} alt='cancel' />
                 </div>
             </div>
             <div className='console_label'>{text}</div>
@@ -294,7 +313,7 @@ function getIncrement(regionList: string[]): number {
                 value += 666
                 break
             default:
-                value += getRangeRandom(1000, 50000)
+                value += getRangeRandom(5000, 20000)
                 break
         }
     })
@@ -305,20 +324,22 @@ function getIncrement(regionList: string[]): number {
 function LaunchConfirmBtn({ text }: { text: string }) {
     const setLaunchSignal = useLaunchStore((state) => state.setLaunchSignal)
     const regionList = useRegionStore((state) => state.regionList)
-    const clearFinalRegionList = useRegionStore((state) => state.clearFinalRegionList)
+    const updateFinalRegionList = useRegionStore((state) => state.updateFinalRegionList)
     const increase = useCounterStore((state) => state.increase)
 
     function handleClick() {
         setLaunchSignal(true)
+        updateFinalRegionList()
+
+        if (regionList.length === 0) return
         increase(getIncrement(regionList))
-        clearFinalRegionList()
     }
 
     return (
         <div className='launch_confirm_btn launch_btn' onClick={handleClick}>
             <div className='launch_btn__circle'>
                 <div>
-                    <img src={LaunchIcon} alt="launch" />
+                    <img src={LaunchIcon} alt='launch' />
                 </div>
             </div>
             <div className='console_label'>{text}</div>
