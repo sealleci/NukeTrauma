@@ -1,5 +1,12 @@
 {
     "neco_arc": {
+        "greeting": {
+            "1": {
+                "zh_cn": "",
+                "en": "",
+                "ru": ""
+            }
+        },
         "general": {
             "1": {
                 "zh_cn": "",
@@ -9,6 +16,13 @@
         }
     },
     "meowscarada": {
+        "greeting": {
+            "1": {
+                "zh_cn": "",
+                "en": "",
+                "ru": ""
+            }
+        },
         "general": {
             "1": {
                 "zh_cn": "",
@@ -18,6 +32,13 @@
         }
     },
     "vaporeon": {
+        "greeting": {
+            "1": {
+                "zh_cn": "",
+                "en": "",
+                "ru": ""
+            }
+        },
         "general": {
             "1": {
                 "zh_cn": "",
@@ -27,6 +48,13 @@
         }
     },
     "lopunny": {
+        "greeting": {
+            "1": {
+                "zh_cn": "",
+                "en": "",
+                "ru": ""
+            }
+        },
         "general": {
             "1": {
                 "zh_cn": "",
