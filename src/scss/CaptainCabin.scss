@@ -341,14 +341,14 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
 }
 
 @mixin head_nodding_mixin($init_top) {
-    $offset: 6px;
+    $offset: 5px;
 
     @keyframes head_nodding {
         0% {
             top: $init_top;
         }
 
-        10% {
+        25% {
             top: calc($init_top + $offset);
         }
 
@@ -356,7 +356,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
             top: calc($init_top + $offset);
         }
 
-        60% {
+        75% {
             top: $init_top;
         }
 
@@ -365,7 +365,7 @@ $captain_console_min_height: calc($launch_btn_circle_diameter + $launch_btn_text
         }
     }
 
-    animation: head_nodding linear 8s infinite;
+    animation: head_nodding linear 5s infinite;
 }
 
 

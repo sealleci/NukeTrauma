@@ -10,7 +10,7 @@
     &__main {
         width: 100%;
         height: 100%;
-        background-color: #DAD4B5;
+        background-color: #F0F0F0;
     }
 }
 
@@ -62,4 +62,73 @@
 .geo_chart {
     width: 100%;
     height: 100%;
+    z-index: 0;
+}
+
+@keyframes explosion {
+    $color_opacity: .8;
+    $red_color : rgba(#630606, $color_opacity);
+
+    0% {
+        background-color: transparent;
+        opacity: 0;
+    }
+
+    10% {
+        background-color: $red_color;
+        opacity: 1;
+    }
+
+    60% {
+        background-color: $red_color;
+    }
+
+    80% {
+        background-color: rgba(white, $color_opacity);
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+@keyframes cloud {
+    0% {
+        height: 90%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        height: 93%;
+        opacity: 0;
+    }
+}
+
+.explosion_scene {
+    $animation_duration: 3s;
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    animation: explosion linear $animation_duration 1;
+
+    img {
+        height: 90%;
+        animation: cloud linear $animation_duration 1;
+    }
 }

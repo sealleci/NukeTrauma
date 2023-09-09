@@ -81,7 +81,9 @@ function DialogueBubble() {
             _regionList.shift()
         }
 
-        if (!curCharacterDialogue[selectedRegion]) return ''
+        if (!curCharacterDialogue[selectedRegion]) {
+            selectedRegion = 'general'
+        }
 
         const curRegionDialogue = curCharacterDialogue[selectedRegion]
         let curSubNumeric = ''
@@ -120,7 +122,7 @@ function DialogueBubble() {
     useEffect(() => {
         if (finalRegionList.length <= 0) return
 
-        setCurSentence(() => getSentence(prevCharacter, ['general', ...finalRegionList], '', prevLanguage))
+        setCurSentence(() => getSentence(prevCharacter, finalRegionList, '', prevLanguage))
         clearFinalRegionList()
     }, [finalRegionList, prevCharacter, prevLanguage, getSentence, clearFinalRegionList])
 
@@ -328,10 +330,11 @@ function LaunchConfirmBtn({ text }: { text: string }) {
     const increase = useCounterStore((state) => state.increase)
 
     function handleClick() {
-        setLaunchSignal(true)
         updateFinalRegionList()
 
         if (regionList.length === 0) return
+
+        setLaunchSignal(true)
         increase(getIncrement(regionList))
     }
 
