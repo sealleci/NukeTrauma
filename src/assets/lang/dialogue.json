@@ -1,6 +1,38 @@
 {
-    "neco_arc": {},
-    "meowscarada": {},
-    "vaporeon": {},
-    "lopunny": {}
+    "neco_arc": {
+        "general": {
+            "1": {
+                "zh_cn": "",
+                "en": "",
+                "ru": ""
+            }
+        }
+    },
+    "meowscarada": {
+        "general": {
+            "1": {
+                "zh_cn": "",
+                "en": "",
+                "ru": ""
+            }
+        }
+    },
+    "vaporeon": {
+        "general": {
+            "1": {
+                "zh_cn": "",
+                "en": "",
+                "ru": ""
+            }
+        }
+    },
+    "lopunny": {
+        "general": {
+            "1": {
+                "zh_cn": "",
+                "en": "",
+                "ru": ""
+            }
+        }
+    }
 }

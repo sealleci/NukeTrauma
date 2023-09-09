@@ -1,5 +1,17 @@
 {
-    "launch_cancel": {},
-    "launch_confirm": {},
-    "selected_region": {}
+    "launch_cancel": {
+        "zh_cn": "终止",
+        "en": "CANCEL",
+        "ru": "ОТМЕНА"
+    },
+    "launch_confirm": {
+        "zh_cn": "发射",
+        "en": "LAUNCH",
+        "ru": "ЗАПУСК"
+    },
+    "selected_region": {
+        "zh_cn": "已选区域",
+        "en": "SELECTED",
+        "ru": "ВЫБРАН"
+    }
 }

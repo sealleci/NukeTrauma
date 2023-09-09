@@ -4,6 +4,7 @@ import useLanguageStore from '../store/language_store.ts'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import type { SelectChangeEvent } from '@mui/material/Select'
+import type { LanguageType, CharacterType } from '../types/data.ts'
 import Icon from '@mui/material/Icon'
 import CancelIcon from '../assets/icon/cancel.svg'
 import LaunchIcon from '../assets/icon/launch.svg'
@@ -23,7 +24,7 @@ function LanguageSelect() {
     const setLanguage = useLanguageStore((state) => state.setLanguage)
 
     function handleChange(event: SelectChangeEvent) {
-        setLanguage(event.target.value)
+        setLanguage(event.target.value as LanguageType)
     }
 
     useEffect(() => {
@@ -45,16 +46,16 @@ function LanguageSelect() {
 }
 
 function DialogueBubble() {
-    const bubble = useRef<HTMLDivElement>(null)
+    const bubbleRef = useRef<HTMLDivElement>(null)
 
     function handleClick() {
-        if (!bubble.current) return
+        if (!bubbleRef.current) return
 
-        bubble.current.classList.toggle('dialogue_bubble--collapsed')
+        bubbleRef.current.classList.toggle('dialogue_bubble--collapsed')
     }
 
     return (
-        <div className='dialogue_bubble' ref={bubble}>
+        <div className='dialogue_bubble' ref={bubbleRef}>
             <div className='dialogue_bubble__switch' onClick={handleClick}>
                 <Icon>visibility</Icon>
                 <Icon>forward</Icon>
@@ -111,7 +112,7 @@ function SecretaryDisplay() {
 function SecretaryList() {
     interface SecretaryListItem {
         icon: string
-        name: string
+        name: CharacterType
         headImage: string
     }
 
@@ -119,31 +120,31 @@ function SecretaryList() {
     const secretaryList = useMemo<SecretaryListItem[]>(() => [
         {
             icon: NecoArcIcon,
-            name: 'Neco Arc',
+            name: 'neco_arc',
             headImage: NecoArc
         }, {
             icon: VaporeonIcon,
-            name: 'Vaporeon',
+            name: 'vaporeon',
             headImage: Vaporeon
         }, {
             icon: LopunnyIcon,
-            name: 'Lopunny',
+            name: 'lopunny',
             headImage: Lopunny
         }, {
             icon: MeowscaradaIcon,
-            name: 'Meowscarada',
+            name: 'meowscarada',
             headImage: Meowscarada
         }
     ], [])
 
     useEffect(() => {
-        setHeadImage(secretaryList[0].headImage)
+        setHeadImage(secretaryList[0].name, secretaryList[0].headImage)
     }, [setHeadImage, secretaryList])
 
     return (
         <div className='secretary_list'>
             {secretaryList.map((item, index) => (
-                <div className='secretary_list__item' onClick={() => setHeadImage(item.headImage)} key={index}>
+                <div className='secretary_list__item' onClick={() => setHeadImage(item.name, item.headImage)} key={index}>
                     <img src={item.icon} alt={item.name} />
                 </div>
             ))}
@@ -191,7 +192,8 @@ function SecretaryScene() {
     )
 }
 
-function LaunchCancelBtn() {
+function LaunchCancelBtn({ text }: { text: string }) {
+
     return (
         <div className='launch_cancel_btn launch_btn'>
             <div className='launch_btn__circle'>
@@ -199,21 +201,21 @@ function LaunchCancelBtn() {
                     <img src={CancelIcon} alt="cancel" />
                 </div>
             </div>
-            <div className='console_label'>终止</div>
+            <div className='console_label'>{text}</div>
         </div>
     )
 }
 
-function SelectedRegionCnt() {
+function SelectedRegionCnt({ text }: { text: string }) {
     return (
         <div className='selected_region_cnt'>
             <div className='selected_region_cnt__value'>0</div>
-            <div className='console_label'>SELECTED</div>
+            <div className='console_label'>{text}</div>
         </div>
     )
 }
 
-function LaunchConfirmBtn() {
+function LaunchConfirmBtn({ text }: { text: string }) {
     return (
         <div className='launch_confirm_btn launch_btn'>
             <div className='launch_btn__circle'>
@@ -221,17 +223,20 @@ function LaunchConfirmBtn() {
                     <img src={LaunchIcon} alt="launch" />
                 </div>
             </div>
-            <div className='console_label'>ЗПУСК</div>
+            <div className='console_label'>{text}</div>
         </div>
     )
 }
 
 function CaptainConsole() {
+    const language = useLanguageStore((state) => state.language)
+    const uiTranslation = useLanguageStore((state) => state.uiTranslation)
+
     return (
         <div className='captain_console'>
-            <LaunchCancelBtn />
-            <SelectedRegionCnt />
-            <LaunchConfirmBtn />
+            <LaunchCancelBtn text={uiTranslation['launch_cancel'][language]} />
+            <SelectedRegionCnt text={uiTranslation['selected_region'][language]} />
+            <LaunchConfirmBtn text={uiTranslation['launch_confirm'][language]} />
         </div>
     )
 }
