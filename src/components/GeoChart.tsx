@@ -1,10 +1,16 @@
 import { useRef, useEffect } from 'react'
-import { init, getInstanceByDom, registerMap } from 'echarts'
+import type { CSSProperties } from 'react'
+import { init, getInstanceByDom, registerMap, use } from 'echarts/core'
+import { MapChart } from 'echarts/charts'
+import { LabelLayout, UniversalTransition } from 'echarts/features'
+import { CanvasRenderer } from 'echarts/renderers'
+import type { MapSeriesOption } from 'echarts/charts'
+import type { ComposeOption, EChartsType, SetOptionOpts } from 'echarts/core'
 import useRegionStore from '../store/region_store'
 import useLaunchStore from '../store/launch_store.ts'
 import world from '../assets/map/world.json'
-import type { CSSProperties } from 'react'
-import type { EChartsOption, ECharts, SetOptionOpts, GeoJSON } from 'echarts'
+
+type ECOption = ComposeOption<MapSeriesOption>
 
 interface ReactEChartsProps {
     style?: CSSProperties
@@ -21,7 +27,14 @@ interface GeoSelectChangedEvent {
     seriesId?: string
 }
 
-const geoOption: EChartsOption = {
+use([
+    MapChart,
+    LabelLayout,
+    UniversalTransition,
+    CanvasRenderer
+])
+
+const geoOption: ECOption = {
     backgroundColor: 'transparent',
     geo: {
         show: true,
@@ -83,7 +96,7 @@ export default function GeoCharts({ style, settings, loading, theme }: ReactECha
     const setCancelSignal = useLaunchStore((state) => state.setCancelSignal)
 
     useEffect(() => {
-        let chart: ECharts | null = null
+        let chart: EChartsType | null = null
 
         function resizeChart() {
             chart?.resize()
@@ -97,7 +110,8 @@ export default function GeoCharts({ style, settings, loading, theme }: ReactECha
         }
 
         if (chart) {
-            registerMap('world', world as unknown as GeoJSON)
+            // eslint-disable-next-line
+            registerMap('world', world as any)
         }
 
         window.addEventListener('resize', resizeChart)

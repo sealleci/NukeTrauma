@@ -1,15 +1,15 @@
-import { useRef, useState, useEffect, useMemo, useCallback } from 'react'
+import { useRef, useState, useEffect, useMemo, useCallback, memo } from 'react'
 import useCharacterStore from '../store/character_store.ts'
 import useLanguageStore from '../store/language_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
 import useCounterStore from '../store/counter_store.ts'
 import useRegionStore from '../store/region_store.ts'
 import { shuffle, getRangeRandom } from '../utils/tool.ts'
+import Icon from '@mui/material/Icon'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import type { SelectChangeEvent } from '@mui/material/Select'
 import type { LanguageType, CharacterType } from '../types/data.ts'
-import Icon from '@mui/material/Icon'
 import CancelIcon from '../assets/icon/cancel.svg'
 import LaunchIcon from '../assets/icon/launch.svg'
 import SecretaryBody from '../assets/img/body.svg'
@@ -68,7 +68,9 @@ function DialogueBubble() {
         if (!dialogueData) return ''
 
         const curCharacterDialogue = dialogueData[_character]
-        if (!curCharacterDialogue) return ''
+        if (!curCharacterDialogue) {
+            return ''
+        }
 
         let selectedRegion: string = ''
 
@@ -90,7 +92,9 @@ function DialogueBubble() {
 
         if (_subNumeric === '') {
             const subNumericList = shuffle(Object.keys(curRegionDialogue))
-            if (subNumericList.length <= 0) return ''
+            if (subNumericList.length <= 0) {
+                return ''
+            }
             curSubNumeric = subNumericList[0]
         } else {
             curSubNumeric = _subNumeric
@@ -98,7 +102,9 @@ function DialogueBubble() {
 
         const curSubNumericDialogue = curRegionDialogue[curSubNumeric]
 
-        if (!curSubNumericDialogue || !curSubNumericDialogue[_language]) return ''
+        if (!curSubNumericDialogue || !curSubNumericDialogue[_language]) {
+            return ''
+        }
 
         setPrevRegion(selectedRegion)
         setPrevSubNumeric(curSubNumeric)
@@ -117,6 +123,7 @@ function DialogueBubble() {
 
         setCurSentence(() => getSentence(character, ['greeting'], '', prevLanguage))
         setPrevCharacter(character)
+
     }, [character, prevLanguage, prevCharacter, getSentence])
 
     useEffect(() => {
@@ -271,7 +278,7 @@ function SecretaryScene() {
     )
 }
 
-function LaunchCancelBtn({ text }: { text: string }) {
+const LaunchCancelBtn = memo(({ text }: { text: string }) => {
     const setCancelSignal = useLaunchStore((state) => state.setCancelSignal)
 
     function handleClick() {
@@ -288,7 +295,7 @@ function LaunchCancelBtn({ text }: { text: string }) {
             <div className='console_label'>{text}</div>
         </div>
     )
-}
+})
 
 function SelectedRegionCnt({ text }: { text: string }) {
     const regionList = useRegionStore((state) => state.regionList)
@@ -323,7 +330,7 @@ function getIncrement(regionList: string[]): number {
     return value
 }
 
-function LaunchConfirmBtn({ text }: { text: string }) {
+const LaunchConfirmBtn = memo(({ text }: { text: string }) => {
     const setLaunchSignal = useLaunchStore((state) => state.setLaunchSignal)
     const regionList = useRegionStore((state) => state.regionList)
     const updateFinalRegionList = useRegionStore((state) => state.updateFinalRegionList)
@@ -348,7 +355,7 @@ function LaunchConfirmBtn({ text }: { text: string }) {
             <div className='console_label'>{text}</div>
         </div>
     )
-}
+})
 
 function CaptainConsole() {
     const language = useLanguageStore((state) => state.language)

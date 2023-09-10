@@ -474,7 +474,7 @@ $captain_console_dark_color: rgb(29, 33, 36);
         margin: $launch_btn_vertical_margin 0;
         background-color: $captain_console_dark_color;
         border-radius: 50%;
-        box-shadow: 0 calc($launch_btn_vertical_margin * 2 * 0.8) 0 rgba(black, .3);
+        // box-shadow: 0 calc($launch_btn_vertical_margin * 2 * 0.8) 0 rgba(black, .3);
         cursor: pointer;
 
         &>div {

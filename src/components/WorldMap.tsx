@@ -17,7 +17,7 @@ function DeathCnt() {
         if (count <= prevCount) return
 
         const interval: number = 50
-        const times = Math.ceil(animationDuration / interval)
+        const times = Math.floor(animationDuration / interval / 2)
         const diff = count - prevCount
         const tmpIncrement = Math.floor(diff / times)
         const remain = diff % times

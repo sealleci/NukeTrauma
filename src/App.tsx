@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, StrictMode } from 'react'
 import CaptainCabin from './components/CaptainCabin.tsx'
 import WorldMap from './components/WorldMap.tsx'
 import useLanguageStore from './store/language_store.ts'
@@ -17,9 +17,9 @@ export default function App() {
   }, [setLanguage, setUiTranslation, setDialogue])
 
   return (
-    <>
+    <StrictMode>
       <CaptainCabin />
       <WorldMap />
-    </>
+    </StrictMode>
   )
 }
