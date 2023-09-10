@@ -132,6 +132,7 @@
     img {
         height: 90%;
         opacity: 0;
+        user-select: none;
         animation: cloud linear $animation_duration 1;
     }
 }

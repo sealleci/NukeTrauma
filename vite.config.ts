@@ -12,7 +12,8 @@ export default defineConfig({
           react: ['react', 'react-dom', 'zustand'],
           ui: ['@emotion/react', '@emotion/styled', '@mui/material/Icon', '@mui/material/MenuItem', '@mui/material/Select'],
           echart: ['echarts'],
-          map: ['./src/assets/map/world.json']
+          map: ['./src/assets/map/world.json'],
+          lang: ['./src/assets/lang/dialogue.json', './src/assets/lang/ui.json']
         }
       }
     }
