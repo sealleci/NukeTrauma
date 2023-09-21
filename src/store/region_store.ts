@@ -12,8 +12,8 @@ const useRegionStore = create<RegionState>()((set, get) => ({
     regionList: [],
     geoIndex: 0,
     finalRegionList: [],
-    setRegionList: (newRegionList) => set(() => ({
-        regionList: newRegionList
+    setRegionList: (newValue) => set(() => ({
+        regionList: newValue
     })),
     updateFinalRegionList: () => set(() => ({
         finalRegionList: get().regionList

@@ -1,12 +1,22 @@
+@use './general' as g;
+
 body {
   margin: 0;
+  padding: 0;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
 }
 
 #root {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 100%;
+
+  @media screen and (max-width: g.$small_screen_width) {
+    flex-direction: column;
+  }
 }

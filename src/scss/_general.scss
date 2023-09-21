@@ -1,0 +1,31 @@
+$border_white_color: rgba(white, .2);
+$font_white_color: darken(white, 20%);
+$captain_console_theme_color: rgb(93, 110, 91);
+$captain_console_dark_color: rgb(29, 33, 36);
+$font_black_color: rgb(43, 55, 68);
+$language_select_height: 3.5rem;
+$dialogue_bubble_switch_height: 2rem;
+$dialogue_bubble_content_min_height: 4rem;
+$launch_btn_circle_diameter: 4rem;
+$launch_btn_text_height: 1rem;
+$launch_btn_vertical_margin: .25rem;
+$console_border_width: 4px;
+$change_bar_height: 4rem;
+$secretary_scene_mobile_height: 6rem;
+$captain_cabin_mobile_height: calc($change_bar_height + $secretary_scene_mobile_height);
+$transition_duration: .15s;
+$small_screen_width : 640px;
+
+@mixin hover_light($is_custom_transition: false) {
+    @if $is_custom_transition {
+        @content;
+    }
+
+    @else {
+        transition: background-color $transition_duration;
+    }
+
+    &:hover {
+        background-color: rgba(white, .05);
+    }
+}

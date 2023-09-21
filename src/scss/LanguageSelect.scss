@@ -1,0 +1,67 @@
+@use './general' as g;
+
+.language_select {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: g.$language_select_height;
+
+    &>div {
+        margin-right: 1rem;
+        border-radius: .5rem;
+        outline: 2px solid g.$border_white_color;
+
+        @include g.hover_light;
+    }
+
+    .MuiInputBase-root {
+        min-width: 6.5rem;
+
+        fieldset {
+            border: none;
+        }
+
+        svg {
+            fill: g.$font_white_color;
+            transition: transform calc(g.$transition_duration * 2);
+        }
+    }
+
+    .MuiSelect-select {
+        padding: .25rem .5rem;
+        font-size: 1rem;
+        color: g.$font_white_color;
+    }
+
+    @media screen and (max-width: g.$small_screen_width) {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1200;
+    }
+}
+
+.MuiPaper-root {
+    background-color: rgba(#505e6e, .8) !important;
+    backdrop-filter: blur(2px);
+
+    li {
+        color: darken(white, 5%);
+        background-color: transparent;
+        transition: background-color g.$transition_duration;
+
+        &:hover {
+            background-color: rgba(white, .1);
+        }
+
+        &.Mui-selected,
+        &.Mui-selected:hover,
+        &:active,
+        &:focus,
+        &.Mui-selected:focus {
+            background-color: rgba(#CD6688, .4);
+        }
+    }
+}

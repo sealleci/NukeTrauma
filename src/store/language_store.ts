@@ -5,23 +5,23 @@ interface LanguageState {
     language: LanguageType,
     uiTranslation: UiTranslationType | null,
     dialogue: DialogueType | null,
-    setLanguage: (newLanguage: LanguageType) => void,
-    setUiTranslation: (newUiTranslation: UiTranslationType) => void,
-    setDialogue: (newDialogue: DialogueType) => void
+    setLanguage: (newValue: LanguageType) => void,
+    setUiTranslation: (newValue: UiTranslationType) => void,
+    setDialogue: (newValue: DialogueType) => void
 }
 
 const useLanguageStore = create<LanguageState>()((set) => ({
     language: 'zh_cn',
     uiTranslation: null,
     dialogue: null,
-    setLanguage: (newLanguage) => set(() => ({
-        language: newLanguage
+    setLanguage: (newValue) => set(() => ({
+        language: newValue
     })),
-    setUiTranslation: (newUiTranslation) => set(() => ({
-        uiTranslation: newUiTranslation
+    setUiTranslation: (newValue) => set(() => ({
+        uiTranslation: newValue
     })),
-    setDialogue: (newDialogue) => set(() => ({
-        dialogue: newDialogue
+    setDialogue: (newValue) => set(() => ({
+        dialogue: newValue
     }))
 }))
 

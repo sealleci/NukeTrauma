@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import GeoChart from './GeoChart.tsx'
 import useCounterStore from '../store/counter_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
+import useWidthStore from '../store/width_stroe.ts'
+import GeoChart from './GeoChart.tsx'
+import LanguageSelect from './LanguageSelect.tsx'
 import DeathIcon from '../assets/icon/death.svg'
 import Cloud from '../assets/img/cloud.svg'
 import '../css/WorldMap.css'
@@ -65,6 +67,7 @@ function ExplosionScene() {
 export default function WorldMap() {
     const [explosion, setExplosion] = useState<JSX.Element>(<></>)
     const launchSignal = useLaunchStore((state) => state.launchSignal)
+    const isSmallScreen = useWidthStore((state) => state.isSmallScreen)
 
     useEffect(() => {
         if (launchSignal) {
@@ -82,6 +85,17 @@ export default function WorldMap() {
     //         setExplosion(<></>)
     //     }, animationDuraion)
     // }, [])
+
+    if (isSmallScreen) {
+        return (
+            <div className='world_map'>
+                <DeathCnt />
+                <LanguageSelect />
+                {explosion}
+                <WorldMapMain />
+            </div>
+        )
+    }
 
     return (
         <div className='world_map'>

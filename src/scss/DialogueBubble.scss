@@ -1,0 +1,112 @@
+@use './general' as g;
+
+.dialogue_bubble {
+    $bubble_white_color: rgb(233, 242, 248);
+    $padding_left: 5%;
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    top: g.$language_select_height;
+    width: 100%;
+    z-index: 200;
+
+    @media screen and (max-width: g.$small_screen_width) {
+        position: relative;
+        flex-grow: 1;
+        width: 50%;
+        top: 0;
+
+        & &__switch {
+            display: none;
+        }
+    }
+
+    &.dialogue_bubble--invisible {
+        .dialogue_bubble__switch {
+            flex-direction: row-reverse;
+            left: 0;
+            outline-color: g.$border_white_color;
+            border-radius: 0 g.$dialogue_bubble_switch_height g.$dialogue_bubble_switch_height 0;
+        }
+
+        .dialogue_bubble__content {
+            visibility: hidden;
+            user-select: none;
+        }
+    }
+
+    &__switch {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        left: $padding_left;
+        height: g.$dialogue_bubble_switch_height;
+        width: 5rem;
+        padding: 0 .25rem;
+        outline: 2px solid transparent;
+        border-radius: g.$dialogue_bubble_switch_height;
+        cursor: pointer;
+
+        span {
+            color: g.$font_white_color;
+            font-size: 1.25rem;
+            user-select: none;
+        }
+
+        @include g.hover_light(true) {
+            transition: outline-color calc(g.$transition_duration * 2),
+                left calc(g.$transition_duration * 2),
+                border-radius calc(g.$transition_duration * 2),
+                background-color g.$transition_duration ;
+        }
+    }
+
+    &__content {
+        $bubble_border_radius: .6rem;
+
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        left: $padding_left;
+        width: calc(100% - $padding_left * 2);
+        min-height: g.$dialogue_bubble_content_min_height;
+        padding: .25rem .5rem;
+        box-sizing: border-box;
+        background-color: $bubble_white_color;
+        border-radius: $bubble_border_radius;
+        transition: opacity calc(g.$transition_duration * 2);
+
+        span {
+            display: inline-block;
+            min-width: 0%;
+            max-width: 100%;
+            color: g.$font_black_color;
+            font-family: Georgia, "等线";
+            word-break: normal;
+            word-wrap: break-word;
+        }
+
+
+
+        &::after {
+            $bubble_tail_height: 10px;
+
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: (-$bubble_tail_height);
+            left: calc($bubble_border_radius + 4px);
+            height: $bubble_tail_height;
+            width: 8px;
+            background-color: $bubble_white_color;
+            border-radius: 0 0 0 100%;
+        }
+    }
+}

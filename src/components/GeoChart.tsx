@@ -4,10 +4,12 @@ import { init, getInstanceByDom, registerMap, use } from 'echarts/core'
 import { MapChart } from 'echarts/charts'
 import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
+import { getRangeRandom } from '../utils/tool.ts'
 import type { MapSeriesOption } from 'echarts/charts'
 import type { ComposeOption, EChartsType, SetOptionOpts } from 'echarts/core'
 import useRegionStore from '../store/region_store'
 import useLaunchStore from '../store/launch_store.ts'
+import useCounterStore from '../store/counter_store.ts'
 import world from '../assets/map/world.json'
 
 type ECOption = ComposeOption<MapSeriesOption>
@@ -86,6 +88,29 @@ const defaultStyle: CSSProperties = {
     margin: '0'
 }
 
+function getIncrement(regionList: string[]): number {
+    let value = 0
+
+    regionList.forEach((region) => {
+        switch (region) {
+            case 'Russia':
+                value += getRangeRandom(0, 5000)
+                break
+            case 'Greenland':
+                value += 0
+                break
+            case 'Venezuela':
+                value += 666
+                break
+            default:
+                value += getRangeRandom(5000, 20000)
+                break
+        }
+    })
+
+    return value
+}
+
 export default function GeoCharts({ style, settings, loading, theme }: ReactEChartsProps) {
     const chartRef = useRef<HTMLDivElement>(null)
     const regionList = useRegionStore((state) => state.regionList)
@@ -94,12 +119,18 @@ export default function GeoCharts({ style, settings, loading, theme }: ReactECha
     const setLaunchSignal = useLaunchStore((state) => state.setLaunchSignal)
     const cancelSignal = useLaunchStore((state) => state.cancelSignal)
     const setCancelSignal = useLaunchStore((state) => state.setCancelSignal)
+    const increase = useCounterStore((state) => state.increase)
 
     useEffect(() => {
         let chart: EChartsType | null = null
 
         function resizeChart() {
             chart?.resize()
+
+            // if (!chartRef.current) { return }
+
+            // chartRef.current.style.maxHeight = `100%`
+            // chartRef.current.style.height = `80vh`
         }
 
         if (chartRef.current) {
@@ -152,16 +183,21 @@ export default function GeoCharts({ style, settings, loading, theme }: ReactECha
 
         const chart = getInstanceByDom(chartRef.current)!
 
+        if (launchSignal) {
+            increase(getIncrement(regionList))
+        }
+
         regionList.forEach((region) => {
             chart.dispatchAction({
                 type: 'geoUnSelect',
                 name: region
             })
         })
+
         setRegionList([])
         setLaunchSignal(false)
         setCancelSignal(false)
-    }, [launchSignal, setLaunchSignal, cancelSignal, setCancelSignal, regionList, setRegionList])
+    }, [launchSignal, cancelSignal, regionList, setLaunchSignal, setCancelSignal, setRegionList, increase])
 
     return <div ref={chartRef} style={{ ...defaultStyle, ...style }} />
 }

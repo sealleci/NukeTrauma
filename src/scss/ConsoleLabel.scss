@@ -1,0 +1,13 @@
+@use 'general' as g;
+
+.console_label {
+    width: 80%;
+    height: g.$launch_btn_text_height;
+    margin: g.$launch_btn_vertical_margin 0;
+    text-align: center;
+    line-height: g.$launch_btn_text_height;
+    color: rgba(g.$captain_console_dark_color, .6);
+    font-family: sans-serif, "黑体";
+    font-weight: bold;
+    user-select: none;
+}

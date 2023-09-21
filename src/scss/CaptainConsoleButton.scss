@@ -1,0 +1,88 @@
+@use 'general' as g;
+
+@mixin btn_hover_and_active($bg_color) {
+    &:hover {
+        background-color: darken($bg_color, 3%);
+    }
+
+    &:active {
+        background-color: darken($bg_color, 6%);
+        box-shadow: none;
+    }
+}
+
+.launch_cancel_btn {
+    width: 100%;
+    height: 100%;
+
+    .launch_btn__circle>div {
+        $cancel_btn_bg_color: rgb(146, 114, 74);
+
+        background-color: $cancel_btn_bg_color;
+
+        @include btn_hover_and_active($cancel_btn_bg_color);
+    }
+}
+
+.launch_confirm_btn {
+    width: 100%;
+    height: 100%;
+
+    .launch_btn__circle>div {
+        $confirm_btn_bg_color: rgb(133, 69, 68);
+
+        background-color: $confirm_btn_bg_color;
+
+        @include btn_hover_and_active($confirm_btn_bg_color);
+    }
+}
+
+.launch_btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+
+    @media screen and (max-width: g.$small_screen_width) {
+        width: fit-content;
+
+        & &__circle {
+            margin: 0;
+        }
+    }
+
+    &__circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: g.$launch_btn_circle_diameter;
+        height: g.$launch_btn_circle_diameter;
+        margin: g.$launch_btn_vertical_margin 0;
+        background-color: g.$captain_console_dark_color;
+        border-radius: 50%;
+        // box-shadow: 0 calc($launch_btn_vertical_margin * 2 * 0.8) 0 rgba(black, .3);
+        cursor: pointer;
+
+
+
+        &>div {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: calc(g.$launch_btn_circle_diameter - g.$console_border_width * 2);
+            height: calc(g.$launch_btn_circle_diameter - g.$console_border_width * 2);
+            border-radius: 50%;
+            box-shadow: inset 2px 2px 0 rgba(white, .2);
+            transition: background-color g.$transition_duration, box-shadow g.$transition_duration;
+
+            img {
+                width: 75%;
+                height: 75%;
+                opacity: 80%;
+                user-select: none;
+            }
+        }
+    }
+}
