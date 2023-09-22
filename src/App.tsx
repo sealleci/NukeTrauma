@@ -32,19 +32,11 @@ export default function App() {
     })
   }, [setIsSmallScreen])
 
-  if (isSmallScreen) {
-    return (
-      <StrictMode>
-        <WorldMap />
-        <CaptainCabinMobile />
-      </StrictMode>
-    )
-  }
-
   return (
     <StrictMode>
-      <CaptainCabin />
+      {!isSmallScreen && <CaptainCabin />}
       <WorldMap />
+      {isSmallScreen && <CaptainCabinMobile />}
     </StrictMode>
   )
 }

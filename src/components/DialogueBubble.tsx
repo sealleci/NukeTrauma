@@ -1,8 +1,9 @@
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import useCharacterStore from '../store/character_store.ts'
 import useLanguageStore from '../store/language_store.ts'
 import useRegionStore from '../store/region_store.ts'
 import useWidthStore from '../store/width_stroe.ts'
+import useDialogueStore from '../store/dialogue_store.ts'
 import { shuffle } from '../utils/tool.ts'
 import Icon from '@mui/material/Icon'
 import type { LanguageType, CharacterType } from '../types/data.ts'
@@ -11,15 +12,17 @@ import '../css/DialogueBubble.css'
 export default function DialogueBubble() {
     const bubbleRef = useRef<HTMLDivElement>(null)
     const dialogueData = useLanguageStore((state) => state.dialogue)
-    // const [prevCharacter, setPrevCharacter] = useState<CharacterType>('neco_arc')
-    // const [prevRegion, setPrevRegion] = useState<string>('greeting')
-    // const [prevSubNumeric, setPrevSubNumeric] = useState<string>('')
-    // const [prevLanguage, setPrevLanguage] = useState<LanguageType>('zh_cn')
-    const [curSentence, setCurSentence] = useState<string>('')
-    const prevCharacter = useRef<CharacterType>('neco_arc')
-    const prevRegion = useRef<string>('greeting')
-    const prevSubNumeric = useRef<string>('')
-    const prevLanguage = useRef<LanguageType>('zh_cn')
+    const isFirstTime = useRef<boolean>(true)
+    const prevCharacter = useDialogueStore((state) => state.prevCharacter)
+    const prevRegion = useDialogueStore((state) => state.prevRegion)
+    const prevSubNumeric = useDialogueStore((state) => state.prevSubNumeric)
+    const prevLanguage = useDialogueStore((state) => state.prevLanguage)
+    const curSentence = useDialogueStore((state) => state.curSentence)
+    const setPrevCharacter = useDialogueStore((state) => state.setPrevCharacter)
+    const setPrevRegion = useDialogueStore((state) => state.setPrevRegion)
+    const setPrevSubNumeric = useDialogueStore((state) => state.setPrevSubNumeric)
+    const setPrevLanguage = useDialogueStore((state) => state.setPrevLanguage)
+    const setCurSentence = useDialogueStore((state) => state.setCurSentence)
     const character = useCharacterStore((state) => state.type)
     const finalRegionList = useRegionStore((state) => state.finalRegionList)
     const language = useLanguageStore((state) => state.language)
@@ -80,45 +83,41 @@ export default function DialogueBubble() {
             return ''
         }
 
-        // setPrevRegion(selectedRegion)
-        // setPrevSubNumeric(curSubNumeric)
-        prevRegion.current = selectedRegion
-        prevSubNumeric.current = curSubNumeric
+        setPrevRegion(selectedRegion)
+        setPrevSubNumeric(curSubNumeric)
 
         return curSubNumericDialogue[_language]
-    }, [dialogueData])
+    }, [dialogueData, setPrevRegion, setPrevSubNumeric])
 
     useEffect(() => {
-        if (!dialogueData) return
+        if (!isFirstTime.current || !dialogueData) {
+            return
+        }
 
-        setCurSentence(() => dialogueData['neco_arc']['greeting']['0']['zh_cn'])
-    }, [dialogueData])
-
-    useEffect(() => {
-        // if (character === prevCharacter.current) return
-
-        // setCurSentence(() => getSentence(character, ['greeting'], '', prevLanguage))
-        // setPrevCharacter(character)
-        setCurSentence(() => getSentence(character, ['greeting'], '', prevLanguage.current))
-        prevCharacter.current = character
-    }, [character, getSentence])
+        setCurSentence(getSentence(prevCharacter, [prevRegion], prevSubNumeric, prevLanguage))
+        isFirstTime.current = false
+    }, [dialogueData, prevCharacter, prevRegion, prevSubNumeric, prevLanguage, setCurSentence, getSentence])
 
     useEffect(() => {
-        if (finalRegionList.length <= 0) return
+        if (character === prevCharacter) { return }
 
-        // setCurSentence(() => getSentence(prevCharacter, finalRegionList, '', prevLanguage))
-        setCurSentence(() => getSentence(prevCharacter.current, finalRegionList, '', prevLanguage.current))
+        setCurSentence(getSentence(character, ['greeting'], '', prevLanguage))
+        setPrevCharacter(character)
+    }, [character, prevCharacter, prevLanguage, setCurSentence, getSentence, setPrevCharacter])
+
+    useEffect(() => {
+        if (finalRegionList.length <= 0) { return }
+
+        setCurSentence(getSentence(prevCharacter, finalRegionList, '', prevLanguage))
         clearFinalRegionList()
-    }, [finalRegionList, getSentence, clearFinalRegionList])
+    }, [finalRegionList, prevCharacter, prevLanguage, setCurSentence, getSentence, clearFinalRegionList])
 
     useEffect(() => {
-        // if (language === prevLanguage) return
+        if (language === prevLanguage) { return }
 
-        // setCurSentence(() => getSentence(prevCharacter, [prevRegion], prevSubNumeric, language))
-        // setPrevLanguage(language)
-        setCurSentence(() => getSentence(prevCharacter.current, [prevRegion.current], prevSubNumeric.current, language))
-        prevLanguage.current = language
-    }, [language, getSentence])
+        setCurSentence(getSentence(prevCharacter, [prevRegion], prevSubNumeric, language))
+        setPrevLanguage(language)
+    }, [language, prevCharacter, prevRegion, prevSubNumeric, prevLanguage, setCurSentence, getSentence, setPrevLanguage])
 
     useEffect(() => {
         if (isSmallScreen) {

@@ -1,10 +1,10 @@
 import { create } from 'zustand'
 
 interface RegionState {
-    regionList: string[],
-    finalRegionList: string[],
-    setRegionList: (newRegionList: string[]) => void,
-    updateFinalRegionList: () => void,
+    regionList: string[]
+    finalRegionList: string[]
+    setRegionList: (newRegionList: string[]) => void
+    updateFinalRegionList: () => void
     clearFinalRegionList: () => void
 }
 

@@ -82,7 +82,7 @@ const geoOption: ECOption = {
 
 const defaultStyle: CSSProperties = {
     width: '100%',
-    height: '99%',
+    height: '100%',
     border: 'none',
     padding: '0',
     margin: '0'
@@ -126,11 +126,6 @@ export default function GeoCharts({ style, settings, loading, theme }: ReactECha
 
         function resizeChart() {
             chart?.resize()
-
-            // if (!chartRef.current) { return }
-
-            // chartRef.current.style.maxHeight = `100%`
-            // chartRef.current.style.height = `80vh`
         }
 
         if (chartRef.current) {

@@ -65,18 +65,19 @@ function ExplosionScene() {
 }
 
 export default function WorldMap() {
+    // In component GeoChart, when launchSignal is true, 
+    // it will set it to false immediately.
     const [explosion, setExplosion] = useState<JSX.Element>(<></>)
     const launchSignal = useLaunchStore((state) => state.launchSignal)
     const isSmallScreen = useWidthStore((state) => state.isSmallScreen)
 
     useEffect(() => {
-        if (launchSignal) {
-            setExplosion(<ExplosionScene />)
-            setTimeout(() => {
-                setExplosion(<></>)
-            }, animationDuration)
-        }
+        if (!launchSignal) { return }
 
+        setExplosion(<ExplosionScene />)
+        setTimeout(() => {
+            setExplosion(<></>)
+        }, animationDuration)
     }, [launchSignal])
 
     // useEffect(() => {
@@ -86,20 +87,10 @@ export default function WorldMap() {
     //     }, animationDuraion)
     // }, [])
 
-    if (isSmallScreen) {
-        return (
-            <div className='world_map'>
-                <DeathCnt />
-                <LanguageSelect />
-                {explosion}
-                <WorldMapMain />
-            </div>
-        )
-    }
-
     return (
         <div className='world_map'>
             <DeathCnt />
+            {isSmallScreen && <LanguageSelect />}
             {explosion}
             <WorldMapMain />
         </div>

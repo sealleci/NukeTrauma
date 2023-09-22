@@ -2,11 +2,11 @@ import { create } from 'zustand'
 import type { LanguageType, UiTranslationType, DialogueType } from '../types/data.ts'
 
 interface LanguageState {
-    language: LanguageType,
-    uiTranslation: UiTranslationType | null,
-    dialogue: DialogueType | null,
-    setLanguage: (newValue: LanguageType) => void,
-    setUiTranslation: (newValue: UiTranslationType) => void,
+    language: LanguageType
+    uiTranslation: UiTranslationType | null
+    dialogue: DialogueType | null
+    setLanguage: (newValue: LanguageType) => void
+    setUiTranslation: (newValue: UiTranslationType) => void
     setDialogue: (newValue: DialogueType) => void
 }
 

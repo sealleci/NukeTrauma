@@ -1,5 +1,6 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useCallback, useRef } from 'react'
 import useCharacterStore from '../store/character_store.ts'
+import useDialogueStore from '../store/dialogue_store.ts'
 import type { CharacterType } from '../types/data.ts'
 import Meowscarada from '../assets/img/meowscarada.svg'
 import NecoArc from '../assets/img/neco_arc.svg'
@@ -18,7 +19,9 @@ export default function SecretaryList() {
         headImage: string
     }
 
+    const isFirstTime = useRef<boolean>(true)
     const setCharacter = useCharacterStore((state) => state.setCharacter)
+    const prevCharacter = useDialogueStore((state) => state.prevCharacter)
     const secretaryList = useMemo<SecretaryListItem[]>(() => [
         {
             icon: NecoArcIcon,
@@ -39,9 +42,26 @@ export default function SecretaryList() {
         }
     ], [])
 
+    const getImageByName = useCallback((name: CharacterType) => {
+        return secretaryList.find((item) => item.name === name)?.headImage
+    }, [secretaryList])
+
     useEffect(() => {
-        setCharacter(secretaryList[0].name, secretaryList[0].headImage)
-    }, [setCharacter, secretaryList])
+        if (!isFirstTime.current) {
+            return
+        }
+
+        console.log(prevCharacter)
+        const curHeadImage = getImageByName(prevCharacter)
+
+        if (!curHeadImage) {
+            setCharacter(secretaryList[0].name, secretaryList[0].headImage)
+        } else {
+            setCharacter(prevCharacter, curHeadImage)
+        }
+
+        isFirstTime.current = false
+    }, [secretaryList, prevCharacter, setCharacter, getImageByName])
 
     return (
         <div className='secretary_list'>
