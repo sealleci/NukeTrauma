@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import useLanguageStore from '../store/language_store.ts'
 import MenuItem from '@mui/material/MenuItem'
 import Icon from '@mui/material/Icon'
@@ -6,7 +7,7 @@ import type { SelectChangeEvent } from '@mui/material/Select'
 import type { LanguageType } from '../types/data.ts'
 import '../css/LanguageSelect.css'
 
-export default function LanguageSelect() {
+const LanguageSelect = memo(() => {
     const language = useLanguageStore((state) => state.language)
     const setLanguage = useLanguageStore((state) => state.setLanguage)
 
@@ -27,4 +28,6 @@ export default function LanguageSelect() {
             </Select>
         </div>
     )
-}
+})
+
+export default LanguageSelect

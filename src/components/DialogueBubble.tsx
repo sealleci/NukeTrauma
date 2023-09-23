@@ -2,7 +2,6 @@ import { useRef, useEffect, useCallback } from 'react'
 import useCharacterStore from '../store/character_store.ts'
 import useLanguageStore from '../store/language_store.ts'
 import useRegionStore from '../store/region_store.ts'
-import useWidthStore from '../store/width_stroe.ts'
 import useDialogueStore from '../store/dialogue_store.ts'
 import { shuffle } from '../utils/tool.ts'
 import Icon from '@mui/material/Icon'
@@ -27,18 +26,12 @@ export default function DialogueBubble() {
     const finalRegionList = useRegionStore((state) => state.finalRegionList)
     const language = useLanguageStore((state) => state.language)
     const clearFinalRegionList = useRegionStore((state) => state.clearFinalRegionList)
-    const isSmallScreen = useWidthStore((state) => state.isSmallScreen)
+    // const isSmallScreen = useWidthStore((state) => state.isSmallScreen)
 
     function handleClick() {
         if (!bubbleRef.current) { return }
 
         bubbleRef.current.classList.toggle('dialogue_bubble--invisible')
-    }
-
-    function showBubble() {
-        if (!bubbleRef.current) { return }
-
-        bubbleRef.current.classList.remove('dialogue_bubble--invisible')
     }
 
     const getSentence = useCallback((_character: CharacterType, _regionList: string[], _subNumeric: string, _language: LanguageType): string => {
@@ -118,12 +111,6 @@ export default function DialogueBubble() {
         setCurSentence(getSentence(prevCharacter, [prevRegion], prevSubNumeric, language))
         setPrevLanguage(language)
     }, [language, prevCharacter, prevRegion, prevSubNumeric, prevLanguage, setCurSentence, getSentence, setPrevLanguage])
-
-    useEffect(() => {
-        if (isSmallScreen) {
-            showBubble()
-        }
-    }, [isSmallScreen])
 
     return (
         <div className='dialogue_bubble' ref={bubbleRef}>

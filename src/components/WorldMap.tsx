@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, memo } from 'react'
 import useCounterStore from '../store/counter_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
 import useWidthStore from '../store/width_stroe.ts'
@@ -49,13 +49,13 @@ function DeathCnt() {
     )
 }
 
-function WorldMapMain() {
+const WorldMapMain = memo(() => {
     return (
         <div className='world_map__main'>
             <GeoChart />
         </div>
     )
-}
+})
 
 function ExplosionScene() {
     return (

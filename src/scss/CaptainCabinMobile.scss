@@ -1,8 +1,6 @@
 @use './general' as g;
 
 .captain_cabin--mobile {
-    $radius: 1rem;
-
     position: relative;
     display: flex;
     flex-direction: column;
@@ -10,19 +8,20 @@
     align-items: center;
     width: 100%;
     height: g.$captain_cabin_mobile_height;
-    bottom: $radius;
-    padding: calc($radius / 2) 0;
+    bottom: calc(g.$captain_cabin_mobile_border_radius);
+    padding-top: calc(g.$captain_cabin_mobile_border_radius);
+    // padding-bottom: calc(g.$captain_cabin_mobile_border_radius / 2);
     background-color: g.$cabin_bg_color_light;
-    box-shadow: 0 -2px 8px rgba(black, .4);
+    border-radius: g.$captain_cabin_mobile_border_radius g.$captain_cabin_mobile_border_radius 0 0;
+    box-shadow: 0 -2px 4px rgba(black, .25);
     z-index: 1200;
-    border-radius: $radius $radius 0 0;
 }
 
 .console_wrapper {
     $spacing: .25rem;
 
     position: absolute;
-    top: calc(g.$launch_btn_circle_diameter * -1 - $spacing);
+    top: calc(g.$launch_btn_circle_mobile_diameter * -1 - $spacing);
     opacity: 1;
     z-index: 2000;
     transition: opacity g.$transition_duration,
@@ -41,11 +40,11 @@
         opacity: 0;
 
         &.console_wrapper__l {
-            left: (- g.$launch_btn_circle_diameter);
+            left: (- g.$launch_btn_circle_mobile_diameter);
         }
 
         &.console_wrapper__r {
-            right: (- g.$launch_btn_circle_diameter);
+            right: (- g.$launch_btn_circle_mobile_diameter);
         }
     }
 }
@@ -79,7 +78,7 @@
         position: relative;
         height: 100%;
         margin-left: .25rem;
-        width: 5.5rem;
+        width: calc(g.$secretary_scene_mobile_height * .95);
         overflow: hidden;
 
         img {

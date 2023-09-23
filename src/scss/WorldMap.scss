@@ -18,6 +18,8 @@
 
     @media screen and (max-width: g.$small_screen_width) {
         width: 100%;
+        min-width: 100vw;
+
         height: calc(var(--vh, 1vh) * 100 - g.$captain_cabin_mobile_height);
         box-shadow: none;
     }
@@ -25,6 +27,7 @@
 
 .death_cnt {
     $display_height: 2.5rem;
+    $padding_horizontal: .75rem;
 
     position: absolute;
 
@@ -35,7 +38,7 @@
     top: g.$map_nav_display_margin;
     left: g.$map_nav_display_margin;
     min-width: 4rem;
-    padding: 0 .75rem;
+    padding: 0 $padding_horizontal;
     height: calc(g.$language_select_height - g.$map_nav_display_margin * 2);
     background-color: g.$map_nav_bg_color;
     backdrop-filter: blur(2px);
@@ -63,6 +66,20 @@
         color: g.$font_dark_color;
         font-family: "Trebuchet MS";
         user-select: none;
+    }
+
+    @media screen and (max-width: g.$small_screen_width) {
+        min-width: calc(g.$language_select_height - g.$map_nav_display_margin * 2 - $padding_horizontal * 2 + 1rem);
+
+        &__icon {
+            height: 1rem;
+            width: 1rem;
+            margin-right: .25rem;
+        }
+
+        &__value {
+            font-size: .75rem;
+        }
     }
 }
 
@@ -169,5 +186,9 @@
 
     &:active {
         background-color: darken(g.$map_nav_bg_color, 8%);
+    }
+
+    @media screen and (max-width: g.$small_screen_width) {
+        cursor: none;
     }
 }

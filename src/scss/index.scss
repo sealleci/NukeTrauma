@@ -6,6 +6,11 @@ body {
   min-width: 320px;
   min-height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
+  touch-action: none;
+
+  @media screen and (max-width: g.$small_screen_width) {
+    min-width: 100vw;
+  }
 }
 
 #root {

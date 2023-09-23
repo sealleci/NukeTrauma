@@ -1,5 +1,30 @@
 @use './general' as g;
 
+@keyframes bubble_hide {
+    from {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    to {
+        visibility: hidden;
+        opacity: 0;
+    }
+}
+
+@keyframes bubble_appear {
+    from {
+        visibility: hidden;
+        opacity: 0;
+
+    }
+
+    to {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
 .dialogue_bubble {
     $bubble_white_color: rgb(233, 242, 248);
     $padding_left: 5%;
@@ -26,8 +51,11 @@
         }
 
         & &__content {
+            $mobile_height: 3rem;
+
             justify-content: safe center;
-            height: g.$dialogue_bubble_content_min_height;
+            height: $mobile_height;
+            min-height: $mobile_height;
             overflow-y: auto;
             scrollbar-color: transparent transparent !important;
             scrollbar-width: none !important;
@@ -42,7 +70,7 @@
             }
 
             span {
-                $font_size: 1rem;
+                $font_size: .75rem;
 
                 display: inline-block;
                 font-size: $font_size;
@@ -52,6 +80,8 @@
     }
 
     &.dialogue_bubble--invisible {
+
+
         .dialogue_bubble__switch {
             flex-direction: row-reverse;
             left: 0;
@@ -62,6 +92,7 @@
         .dialogue_bubble__content {
             visibility: hidden;
             user-select: none;
+            animation: bubble_hide linear g.$transition_duration 1;
         }
     }
 
@@ -107,6 +138,7 @@
         background-color: $bubble_white_color;
         border-radius: $bubble_border_radius;
         transition: opacity calc(g.$transition_duration * 2);
+        animation: bubble_appear linear g.$transition_duration 1;
 
         span {
             display: inline-block;
