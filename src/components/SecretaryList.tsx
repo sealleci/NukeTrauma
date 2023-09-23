@@ -51,7 +51,6 @@ export default function SecretaryList() {
             return
         }
 
-        console.log(prevCharacter)
         const curHeadImage = getImageByName(prevCharacter)
 
         if (!curHeadImage) {

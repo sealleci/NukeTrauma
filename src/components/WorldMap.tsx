@@ -3,6 +3,7 @@ import useCounterStore from '../store/counter_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
 import useWidthStore from '../store/width_stroe.ts'
 import GeoChart from './GeoChart.tsx'
+import Icon from '@mui/material/Icon'
 import LanguageSelect from './LanguageSelect.tsx'
 import DeathIcon from '../assets/icon/death.svg'
 import Cloud from '../assets/img/cloud.svg'
@@ -64,6 +65,20 @@ function ExplosionScene() {
     )
 }
 
+function RelocateBtn() {
+    const setRelocateSignal = useLaunchStore((state) => state.setRelocateSignal)
+
+    function handleClick() {
+        setRelocateSignal(true)
+    }
+
+    return (
+        <div className="relocate_btn" onClick={handleClick}>
+            <Icon>zoom_out_map</Icon>
+        </div>
+    )
+}
+
 export default function WorldMap() {
     // In component GeoChart, when launchSignal is true, 
     // it will set it to false immediately.
@@ -91,6 +106,7 @@ export default function WorldMap() {
         <div className='world_map'>
             <DeathCnt />
             {isSmallScreen && <LanguageSelect />}
+            {isSmallScreen && <RelocateBtn />}
             {explosion}
             <WorldMapMain />
         </div>

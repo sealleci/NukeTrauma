@@ -1,5 +1,6 @@
 import useLanguageStore from '../store/language_store.ts'
 import MenuItem from '@mui/material/MenuItem'
+import Icon from '@mui/material/Icon'
 import Select from '@mui/material/Select'
 import type { SelectChangeEvent } from '@mui/material/Select'
 import type { LanguageType } from '../types/data.ts'
@@ -15,6 +16,7 @@ export default function LanguageSelect() {
 
     return (
         <div className='language_select'>
+            <Icon>translate</Icon>
             <Select
                 value={language}
                 onChange={handleChange}

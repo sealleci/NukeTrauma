@@ -5,7 +5,7 @@
     flex-grow: 1;
     min-width: 320px;
     height: calc(var(--vh, 1vh) * 100);
-    background-color: #F0F0F0;
+    background-color: g.$map_bg_color;
     overflow: hidden;
     box-shadow: -2px 0 8px rgba(black, .4);
     z-index: 1000;
@@ -25,7 +25,6 @@
 
 .death_cnt {
     $display_height: 2.5rem;
-    $display_margin: .5rem;
 
     position: absolute;
 
@@ -33,16 +32,15 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    top: $display_margin;
-    left: $display_margin;
+    top: g.$map_nav_display_margin;
+    left: g.$map_nav_display_margin;
     min-width: 4rem;
-    padding: 0 calc($display_margin * 2);
-    height: $display_height;
-    background-color: rgba(255, 255, 255, 0.5);
+    padding: 0 .75rem;
+    height: calc(g.$language_select_height - g.$map_nav_display_margin * 2);
+    background-color: g.$map_nav_bg_color;
     backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: $display_height;
-    box-shadow: 0 0 $display_margin rgba(142, 142, 142, .4);
+    box-shadow: 0 0 g.$map_nav_display_margin rgba(142, 142, 142, .4);
     z-index: 1200;
 
     &__icon {
@@ -52,7 +50,7 @@
         align-items: center;
         height: 2rem;
         width: 2rem;
-        margin-right: 1rem;
+        margin-right: .5rem;
 
         img {
             width: 100%;
@@ -62,7 +60,7 @@
     }
 
     &__value {
-        color: lighten(black, 40%);
+        color: g.$font_dark_color;
         font-family: "Trebuchet MS";
         user-select: none;
     }
@@ -137,5 +135,30 @@
         opacity: 0;
         user-select: none;
         animation: cloud linear $animation_duration 1;
+    }
+}
+
+.relocate_btn {
+    $diameter: 2.5rem;
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: $diameter;
+    height: $diameter;
+    top: calc(g.$language_select_height + .5rem);
+    left: g.$map_nav_display_margin;
+    border-radius: 50%;
+    background-color: g.$map_nav_bg_color;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 g.$map_nav_display_margin rgba(142, 142, 142, .4);
+    cursor: pointer;
+    z-index: 1500;
+
+    span {
+        color: g.$gray_color_light;
+        font-size: 1.5rem;
     }
 }

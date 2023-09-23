@@ -7,6 +7,14 @@
     align-items: center;
     width: 100%;
     height: g.$language_select_height;
+    z-index: 1500;
+
+    &>span {
+        color: g.$font_white_color;
+        font-size: 1.25rem;
+        user-select: none;
+        margin-right: .5rem;
+    }
 
     &>div {
         margin-right: 1rem;
@@ -17,7 +25,7 @@
     }
 
     .MuiInputBase-root {
-        min-width: 6.5rem;
+        width: g.$language_select_width;
 
         fieldset {
             border: none;
@@ -37,14 +45,37 @@
 
     @media screen and (max-width: g.$small_screen_width) {
         position: absolute;
+        width: fit-content;
         right: 0;
         top: 0;
-        z-index: 1500;
+
+        &>span {
+            color: g.$gray_color_light;
+            ;
+        }
+
+        &>div {
+            margin-right: g.$map_nav_display_margin;
+            outline: none;
+        }
+
+        .MuiInputBase-root {
+            svg {
+                fill: g.$gray_color_light;
+            }
+        }
+
+        .MuiSelect-select {
+            color: g.$font_dark_color;
+            background-color: g.$map_nav_bg_color;
+            box-shadow: 0 0 g.$map_nav_display_margin rgba(142, 142, 142, .4);
+            backdrop-filter: blur(2px);
+        }
     }
 }
 
 .MuiPaper-root {
-    background-color: rgba(#505e6e, .8) !important;
+    background-color: rgba(lighten(g.$cabin_bg_color_light, 5%), .8) !important;
     backdrop-filter: blur(2px);
 
     li {
@@ -62,6 +93,15 @@
         &:focus,
         &.Mui-selected:focus {
             background-color: rgba(#CD6688, .4);
+        }
+    }
+
+    @media screen and (max-width: g.$small_screen_width) {
+        left: calc(100% - g.$map_nav_display_margin - g.$language_select_width) !important;
+        background-color: g.$map_nav_bg_color !important;
+
+        li {
+            color: g.$font_dark_color;
         }
     }
 }

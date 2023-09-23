@@ -1,26 +1,69 @@
 @use './general' as g;
 
 .captain_cabin--mobile {
+    $radius: 1rem;
+
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: g.$captain_cabin_mobile_height;
-    background-image: linear-gradient(0deg, #29323c 0%, #485563 100%);
+    bottom: $radius;
+    padding: calc($radius / 2) 0;
+    background-color: g.$cabin_bg_color_light;
+    box-shadow: 0 -2px 8px rgba(black, .4);
+    z-index: 1200;
+    border-radius: $radius $radius 0 0;
 }
 
-.captain_console--mobile {
+.console_wrapper {
+    $spacing: .25rem;
+
     position: absolute;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    top: (- g.$launch_btn_circle_diameter);
-    left: 0;
-    width: 100%;
+    top: calc(g.$launch_btn_circle_diameter * -1 - $spacing);
+    opacity: 1;
     z-index: 2000;
+    transition: opacity g.$transition_duration,
+        left g.$transition_duration,
+        right g.$transition_duration;
+
+    &.console_wrapper__l {
+        left: $spacing;
+    }
+
+    &.console_wrapper__r {
+        right: $spacing;
+    }
+
+    &.console_wrapper--invisible {
+        opacity: 0;
+
+        &.console_wrapper__l {
+            left: (- g.$launch_btn_circle_diameter);
+        }
+
+        &.console_wrapper__r {
+            right: (- g.$launch_btn_circle_diameter);
+        }
+    }
+}
+
+@keyframes head_swing {
+    $swing_angle: 3deg;
+
+    from {
+        transform: rotate(- $swing_angle);
+    }
+
+    50% {
+        transform: rotate($swing_angle);
+    }
+
+    to {
+        transform: rotate(- $swing_angle);
+    }
 }
 
 .secretary_scene--mobile {
@@ -35,13 +78,16 @@
     .secretary__head--mobile {
         position: relative;
         height: 100%;
-        width: g.$secretary_scene_mobile_height;
-        overflow: visible;
+        margin-left: .25rem;
+        width: 5.5rem;
+        overflow: hidden;
 
         img {
             position: relative;
             top: 0;
             width: 100%;
+
+            animation: head_swing ease-in-out 4s infinite;
         }
     }
 }

@@ -15,8 +15,10 @@ body {
   align-items: center;
   height: 100%;
   width: 100%;
+  background-color: g.$map_bg_color;
 
   @media screen and (max-width: g.$small_screen_width) {
     flex-direction: column;
+    overflow: hidden;
   }
 }

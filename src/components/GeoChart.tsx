@@ -120,6 +120,8 @@ export default function GeoCharts({ style, settings, loading, theme }: ReactECha
     const cancelSignal = useLaunchStore((state) => state.cancelSignal)
     const setCancelSignal = useLaunchStore((state) => state.setCancelSignal)
     const increase = useCounterStore((state) => state.increase)
+    const relocateSignal = useLaunchStore((state) => state.relocateSignal)
+    const setRelocateSignal = useLaunchStore((state) => state.setRelocateSignal)
 
     useEffect(() => {
         let chart: EChartsType | null = null
@@ -193,6 +195,21 @@ export default function GeoCharts({ style, settings, loading, theme }: ReactECha
         setLaunchSignal(false)
         setCancelSignal(false)
     }, [launchSignal, cancelSignal, regionList, setLaunchSignal, setCancelSignal, setRegionList, increase])
+
+    useEffect(() => {
+        if (!relocateSignal || !chartRef.current) { return }
+
+
+        const chart = getInstanceByDom(chartRef.current)!
+
+        chart.setOption({
+            geo: {
+                center: [37.6175, 55.7519],
+                zoom: 5
+            }
+        })
+        setRelocateSignal(false)
+    }, [relocateSignal, setRelocateSignal])
 
     return <div ref={chartRef} style={{ ...defaultStyle, ...style }} />
 }

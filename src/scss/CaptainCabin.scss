@@ -35,7 +35,7 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
         }
     }
 
-    animation: $name linear 5s infinite;
+    animation: $name ease-in-out 5s infinite;
 }
 
 .captain_cabin {
@@ -134,8 +134,8 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(15deg, #29323c 0%, #485563 100%);
-    z-index: -100;
+    background-image: linear-gradient(15deg, g.$cabin_bg_color_dark 0%, g.$cabin_bg_color_light 100%);
+    z-index: 0;
 }
 
 .secretary_main {
@@ -185,6 +185,7 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
 
     &__body {
         height: $secretary_body_height;
+        z-index: 50;
     }
 }
 

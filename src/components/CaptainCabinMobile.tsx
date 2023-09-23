@@ -1,17 +1,21 @@
 import { } from 'react'
 import useCharacterStore from '../store/character_store.ts'
+import useRegionStore from '../store/region_store.ts'
 import SecretaryList from "./SecretaryList"
 import DialogueBubble from "./DialogueBubble"
 import { LaunchCancelBtn, LaunchConfirmBtn } from "./CaptainConsoleButton"
 import '../css/CaptainCabinMobile.css'
 
-function CaptainConsoleMobile() {
-
+function CaptainConsoleMobile({ regionListLength }: { regionListLength: number }) {
     return (
-        <div className='captain_console--mobile'>
-            <LaunchCancelBtn isWithLabel={false} />
-            <LaunchConfirmBtn isWithLabel={false} />
-        </div>
+        <>
+            <div className={regionListLength > 0 ? 'console_wrapper console_wrapper__l' : 'console_wrapper console_wrapper__l console_wrapper--invisible'}>
+                <LaunchCancelBtn isWithLabel={false} />
+            </div >
+            <div className={regionListLength > 0 ? 'console_wrapper console_wrapper__r' : 'console_wrapper console_wrapper__r console_wrapper--invisible'}>
+                <LaunchConfirmBtn isWithLabel={false} />
+            </div >
+        </>
     )
 }
 
@@ -23,17 +27,19 @@ function SecretarySceneMobile() {
             <div className="secretary__head--mobile">
                 <img src={headImage} alt='head' />
             </div>
-            <DialogueBubble></DialogueBubble>
+            <DialogueBubble />
         </div>
     )
 }
 
 export default function CaptainCabinMobile() {
+    const regionList = useRegionStore((state) => state.regionList)
+
     return (
         <div className='captain_cabin--mobile'>
-            <CaptainConsoleMobile></CaptainConsoleMobile>
-            <SecretarySceneMobile></SecretarySceneMobile>
-            <SecretaryList></SecretaryList>
+            <CaptainConsoleMobile regionListLength={regionList.length} />
+            <SecretarySceneMobile />
+            <SecretaryList />
         </div>
     )
 }

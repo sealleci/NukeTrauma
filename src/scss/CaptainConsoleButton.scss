@@ -1,5 +1,7 @@
 @use 'general' as g;
 
+$saturate_percent: 15%;
+
 @mixin btn_hover_and_active($bg_color) {
     &:hover {
         background-color: darken($bg_color, 3%);
@@ -21,6 +23,10 @@
         background-color: $cancel_btn_bg_color;
 
         @include btn_hover_and_active($cancel_btn_bg_color);
+
+        @media screen and (max-width: g.$small_screen_width) {
+            background-color: saturate($cancel_btn_bg_color, $saturate_percent);
+        }
     }
 }
 
@@ -34,6 +40,10 @@
         background-color: $confirm_btn_bg_color;
 
         @include btn_hover_and_active($confirm_btn_bg_color);
+
+        @media screen and (max-width: g.$small_screen_width) {
+            background-color: saturate($confirm_btn_bg_color, $saturate_percent);
+        }
     }
 }
 
@@ -43,6 +53,7 @@
     justify-content: center;
     align-items: center;
     user-select: none;
+    border-radius: 50%;
 
     @media screen and (max-width: g.$small_screen_width) {
         width: fit-content;

@@ -4,6 +4,7 @@
     $bubble_white_color: rgb(233, 242, 248);
     $padding_left: 5%;
     $inner_padding_vertical: .25rem;
+    $bubble_border_radius: .6rem;
 
     position: absolute;
     display: flex;
@@ -25,16 +26,15 @@
         }
 
         & &__content {
-            justify-content: flex-start;
+            justify-content: safe center;
             height: g.$dialogue_bubble_content_min_height;
-            overflow-y: scroll;
-            scrollbar-width: none !important;
+            overflow-y: auto;
             scrollbar-color: transparent transparent !important;
+            scrollbar-width: none !important;
+            border-radius: $bubble_border_radius $bubble_border_radius $bubble_border_radius 0;
 
             &::-webkit-scrollbar {
-                height: 0 !important;
-                width: 0 !important;
-                display: none !important;
+                display: none;
             }
 
             &::after {
@@ -42,9 +42,11 @@
             }
 
             span {
-                $font_size: .8rem;
+                $font_size: 1rem;
+
+                display: inline-block;
                 font-size: $font_size;
-                padding-top: calc(g.$dialogue_bubble_content_min_height / 2 - $font_size / 2 - $inner_padding_vertical);
+                user-select: none;
             }
         }
     }
@@ -92,8 +94,6 @@
     }
 
     &__content {
-        $bubble_border_radius: .6rem;
-
         position: relative;
         display: flex;
         flex-direction: column;
