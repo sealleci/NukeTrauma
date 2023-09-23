@@ -156,9 +156,18 @@
     box-shadow: 0 0 g.$map_nav_display_margin rgba(142, 142, 142, .4);
     cursor: pointer;
     z-index: 1500;
+    transition: background-color g.$transition_duration;
 
     span {
         color: g.$gray_color_light;
         font-size: 1.5rem;
+    }
+
+    &:hover {
+        background-color: darken(g.$map_nav_bg_color, 4%);
+    }
+
+    &:active {
+        background-color: darken(g.$map_nav_bg_color, 8%);
     }
 }

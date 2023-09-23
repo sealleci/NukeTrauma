@@ -106,7 +106,7 @@ export default function WorldMap() {
         <div className='world_map'>
             <DeathCnt />
             {isSmallScreen && <LanguageSelect />}
-            {isSmallScreen && <RelocateBtn />}
+            <RelocateBtn />
             {explosion}
             <WorldMapMain />
         </div>
