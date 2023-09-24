@@ -243,6 +243,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const handleBlankMove = useCallback((params: ElementEvent) => {
         if (!chartRef.current || params.target || !prevMoveCoord.current) { return }
 
+        const BASE_SCALE = 5
         const chart = getInstanceByDom(chartRef.current)!
         const center = (chart.getOption() as unknown as TmpGeoChartOption).geo[0].center
 
@@ -250,8 +251,8 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
             chart.setOption({
                 geo: {
                     center: [
-                        center[0] - (params.offsetX - prevMoveCoord.current.x),
-                        center[1] + (params.offsetY - prevMoveCoord.current.y)
+                        center[0] - (params.offsetX - prevMoveCoord.current.x) * (BASE_SCALE / scaleCoef.current),
+                        center[1] + (params.offsetY - prevMoveCoord.current.y) * (BASE_SCALE / scaleCoef.current)
                     ]
                 }
             }, {
