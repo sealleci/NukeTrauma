@@ -234,19 +234,19 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
         const COMPENSATION: number = 6
         const chart = getInstanceByDom(chartRef.current)!
         const center = ((chart.getOption() as unknown as EChartsOption).geo as GeoOption[])[0].center as number[]
+        const convertedPrevCoord = chart.convertFromPixel({ geoIndex: 0 }, [prevMoveCoord.current.x, prevMoveCoord.current.y])
+        const convertedCurCoord = chart.convertFromPixel({ geoIndex: 0 }, [params.offsetX, params.offsetY])
         const dist = getDistance(
             { x: params.offsetX, y: params.offsetY },
             { x: prevMoveCoord.current.x, y: prevMoveCoord.current.y }
         )
-        const convertedPrev = chart.convertFromPixel({ geoIndex: 0 }, [prevMoveCoord.current.x, prevMoveCoord.current.y])
-        const convertedCur = chart.convertFromPixel({ geoIndex: 0 }, [params.offsetX, params.offsetY])
 
         if (dist > 1e-6 && blankMoveThrottlingSignal.current) {
             chart.setOption({
                 geo: {
                     center: [
-                        center[0] - (convertedCur[0] - convertedPrev[0]) * COMPENSATION,
-                        center[1] - (convertedCur[1] - convertedPrev[1]) * COMPENSATION
+                        center[0] - (convertedCurCoord[0] - convertedPrevCoord[0]) * COMPENSATION,
+                        center[1] - (convertedCurCoord[1] - convertedPrevCoord[1]) * COMPENSATION
                     ]
                 }
             }, {
