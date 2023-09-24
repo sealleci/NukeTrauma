@@ -6,7 +6,7 @@ import GeoChart from './GeoChart.tsx'
 import Icon from '@mui/material/Icon'
 import LanguageSelect from './LanguageSelect.tsx'
 import DeathIcon from '../assets/icon/death.svg'
-import Cloud from '../assets/img/cloud.svg'
+import CloudImage from '../assets/img/cloud.svg'
 import '../css/WorldMap.css'
 
 const animationDuration: number = 3000
@@ -60,7 +60,7 @@ const WorldMapMain = memo(() => {
 function ExplosionScene() {
     return (
         <div className='explosion_scene'>
-            <img src={Cloud} alt="cloud" />
+            <img src={CloudImage} alt="cloud" />
         </div>
     )
 }

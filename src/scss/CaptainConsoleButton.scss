@@ -26,6 +26,8 @@ $saturate_percent: 15%;
 
         @media screen and (max-width: g.$small_screen_width) {
             background-color: saturate($cancel_btn_bg_color, $saturate_percent);
+
+            @include btn_hover_and_active(saturate($cancel_btn_bg_color, $saturate_percent));
         }
     }
 }
@@ -43,6 +45,8 @@ $saturate_percent: 15%;
 
         @media screen and (max-width: g.$small_screen_width) {
             background-color: saturate($confirm_btn_bg_color, $saturate_percent);
+
+            @include btn_hover_and_active(saturate($confirm_btn_bg_color, $saturate_percent));
         }
     }
 }

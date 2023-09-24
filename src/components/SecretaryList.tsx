@@ -2,10 +2,10 @@ import { useEffect, useCallback, useRef, memo } from 'react'
 import useCharacterStore from '../store/character_store.ts'
 import useDialogueStore from '../store/dialogue_store.ts'
 import type { CharacterType } from '../types/data.ts'
-import Meowscarada from '../assets/img/meowscarada.svg'
-import NecoArc from '../assets/img/neco_arc.svg'
-import Lopunny from '../assets/img/lopunny.svg'
-import Vaporeon from '../assets/img/vaporeon.svg'
+import MeowscaradaImage from '../assets/img/meowscarada.svg'
+import NecoArcImage from '../assets/img/neco_arc.svg'
+import LopunnyImage from '../assets/img/lopunny.svg'
+import VaporeonImage from '../assets/img/vaporeon.svg'
 import NecoArcIcon from '../assets/icon/neco_arc.svg'
 import LopunnyIcon from '../assets/icon/lopunny.svg'
 import MeowscaradaIcon from '../assets/icon/meowscarada.svg'
@@ -22,19 +22,19 @@ const secretaryList: SecretaryListItem[] = [
     {
         icon: NecoArcIcon,
         name: 'neco_arc',
-        headImage: NecoArc
+        headImage: NecoArcImage
     }, {
         icon: VaporeonIcon,
         name: 'vaporeon',
-        headImage: Vaporeon
+        headImage: VaporeonImage
     }, {
         icon: LopunnyIcon,
         name: 'lopunny',
-        headImage: Lopunny
+        headImage: LopunnyImage
     }, {
         icon: MeowscaradaIcon,
         name: 'meowscarada',
-        headImage: Meowscarada
+        headImage: MeowscaradaImage
     }
 ]
 
