@@ -47,7 +47,6 @@ const EVENT_INTERVAL: number = 68
 
 const geoOption: EChartsOption = {
     backgroundColor: 'transparent',
-    // animation: false,
     animationDelayUpdate: 0,
     animationDurationUpdate: EVENT_INTERVAL,
     geo: {
