@@ -289,9 +289,6 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
             chart.getZr().on('mouseup', () => {
                 prevMoveCoord.current = null
             })
-            chart.getZr().on('mousewheel', (params) => {
-                scaleForWheel(params.event as unknown as WheelEvent)
-            })
 
             chartCurrent.addEventListener('touchmove', scaleForTouch)
             chartCurrent.addEventListener('touchend', scaleForTouchEnd)
