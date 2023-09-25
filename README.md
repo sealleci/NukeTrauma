@@ -2,7 +2,7 @@
 
 ## Introduction
 
-You will act as the captain of a submarine, and launch nukes all over the world with secretaries.
+You will act as a captain of submarine, and launch nukes all over the world with secretaries.
 
 ## Tech Supports
 

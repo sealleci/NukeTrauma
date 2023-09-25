@@ -55,7 +55,6 @@ const geoOption: EChartsOption = {
         easing: undefined
     },
     geo: {
-        // animation: false,
         show: true,
         roam: false,
         map: 'world',
@@ -159,7 +158,6 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
         if (event.targetTouches.length < 2 || !chartRef.current || !touchScaleThrottlingSignal.current) { return }
 
         const chart = getInstanceByDom(chartRef.current)!
-
         const touch1 = event.targetTouches[0]
         const touch2 = event.targetTouches[1]
         const p1: Coordinate = {
@@ -218,7 +216,6 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
         }
 
         scaleCoef.current = Math.min(Math.max(scaleCoef.current, SCALE_MIN), SCALE_MAX)
-
         chart.setOption({
             geo: {
                 zoom: scaleCoef.current
@@ -316,7 +313,6 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
             chart?.getZr()?.off('mousedown')
             chart?.dispose()
             window.removeEventListener('resize', resizeChart)
-
         }
     }, [theme, setRegionList, scaleForTouch, scaleForTouchEnd, scaleForWheel, handleBlankMove])
 
@@ -324,6 +320,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
         if (!chartRef.current) { return }
 
         const chart = getInstanceByDom(chartRef.current)!
+
         chart.setOption(geoOption, settings)
     }, [settings, theme])
 
@@ -364,7 +361,6 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
 
     useEffect(() => {
         if (!relocateSignal || !chartRef.current) { return }
-
 
         const chart = getInstanceByDom(chartRef.current)!
 
