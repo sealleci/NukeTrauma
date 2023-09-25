@@ -49,7 +49,13 @@ const geoOption: EChartsOption = {
     backgroundColor: 'transparent',
     animationDelayUpdate: 0,
     animationDurationUpdate: EVENT_INTERVAL,
+    stateAnimation: {
+        duration: 0,
+        delay: 0,
+        easing: undefined
+    },
     geo: {
+        // animation: false,
         show: true,
         roam: false,
         map: 'world',
@@ -74,7 +80,7 @@ const geoOption: EChartsOption = {
                 fontFamily: 'Times New Roman'
             },
             itemStyle: {
-                areaColor: '#E25E3E'
+                areaColor: '#E25E3E',
             }
         },
         select: {
