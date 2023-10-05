@@ -2,9 +2,9 @@ import { useEffect, useState, memo } from 'react'
 import useCounterStore from '../store/counter_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
 import useWidthStore from '../store/width_stroe.ts'
-import GeoChart from './GeoChart.tsx'
+import LanguageSelect from './LanguageSelect'
+import GeoChart from './GeoChart'
 import Icon from '@mui/material/Icon'
-import LanguageSelect from './LanguageSelect.tsx'
 import DeathIcon from '../assets/icon/death.svg'
 import CloudImage from '../assets/img/cloud.svg'
 import '../css/WorldMap.css'
@@ -38,6 +38,8 @@ function DeathCnt() {
         setTmpCount(prev => prev + remain)
         setTimeout(() => tick(0), interval)
     }, [count, prevCount])
+
+
 
     return (
         <div className='death_cnt'>

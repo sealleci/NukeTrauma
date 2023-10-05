@@ -4,12 +4,12 @@ import { init, getInstanceByDom, registerMap, use } from 'echarts/core'
 import { MapChart } from 'echarts/charts'
 import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
-import { getRangeRandom } from '../utils/tool.ts'
 import type { EChartsType, ElementEvent, SetOptionOpts } from 'echarts/core'
 import type { EChartsOption, GeoOption } from 'echarts/types/dist/shared.d.ts'
 import useRegionStore from '../store/region_store'
 import useLaunchStore from '../store/launch_store.ts'
 import useCounterStore from '../store/counter_store.ts'
+import { getRangeRandom } from '../utils/tool.ts'
 import world from '../assets/map/world.json'
 
 interface ReactEChartsProps {
@@ -322,7 +322,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
         const chart = getInstanceByDom(chartRef.current)!
 
         chart.setOption(geoOption, settings)
-    }, [settings, theme])
+    }, [settings])
 
     useEffect(() => {
         if (!chartRef.current) { return }
@@ -334,7 +334,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
         } else {
             chart.hideLoading()
         }
-    }, [loading, theme])
+    }, [loading])
 
     useEffect(() => {
         if (!chartRef.current || (!launchSignal && !cancelSignal)) {

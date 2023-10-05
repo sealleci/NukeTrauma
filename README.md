@@ -11,7 +11,7 @@ You will act as a captain of submarine, and launch nukes all over the world with
 - TypeScript
 - Sass
 - Zustand
-- Echarts
+- Apache ECharts
 - Material UI
 - Material Icons Font
 - Google Web Fonts

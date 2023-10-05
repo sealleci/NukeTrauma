@@ -1,4 +1,4 @@
 node_modules
 draft
 tmp
-src/assets/map/world.json
+src/assets/map/*
