@@ -6,7 +6,7 @@ import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
 import type { EChartsType, ElementEvent, SetOptionOpts } from 'echarts/core'
 import type { EChartsOption, GeoOption } from 'echarts/types/dist/shared.d.ts'
-import useRegionStore from '../store/region_store'
+import useRegionStore from '../store/region_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
 import useCounterStore from '../store/counter_store.ts'
 import { getRangeRandom } from '../utils/tool.ts'
@@ -146,6 +146,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const prevMoveCoord = useRef<Coordinate | null>(null)
     const regionList = useRegionStore((state) => state.regionList)
     const setRegionList = useRegionStore((state) => state.setRegionList)
+    const getRegionList = useRegionStore((state) => state.getRegionList)
     const launchSignal = useLaunchStore((state) => state.launchSignal)
     const setLaunchSignal = useLaunchStore((state) => state.setLaunchSignal)
     const cancelSignal = useLaunchStore((state) => state.cancelSignal)
@@ -282,6 +283,13 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
             chart.on('geoselectchanged', (params) => {
                 setRegionList((params as GeoSelectChangedEvent).allSelected[0].name)
             })
+            chart.on('mouseout', (params) => {
+                const curRegionList = getRegionList()
+
+                if (curRegionList.includes(params.name)) {
+                    chart?.resize()
+                }
+            })
             chart.getZr().on('mousemove', handleBlankMove)
             chart.getZr().on('mousedown', (params) => {
                 prevMoveCoord.current = {
@@ -314,7 +322,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
             chart?.dispose()
             window.removeEventListener('resize', resizeChart)
         }
-    }, [theme, setRegionList, scaleForTouch, scaleForTouchEnd, scaleForWheel, handleBlankMove])
+    }, [theme, setRegionList, getRegionList, scaleForTouch, scaleForTouchEnd, scaleForWheel, handleBlankMove])
 
     useEffect(() => {
         if (!chartRef.current) { return }
