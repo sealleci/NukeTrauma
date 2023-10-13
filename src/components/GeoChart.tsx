@@ -132,7 +132,7 @@ function getIncrement(regionList: string[]): number {
 }
 
 function getDistance(p1: Coordinate, p2: Coordinate): number {
-    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
 }
 
 const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) => {
