@@ -114,7 +114,64 @@ function getIncrement(regionList: string[]): number {
     regionList.forEach((region) => {
         switch (region) {
             case 'Russia':
+                value += getRangeRandom(0, 10000)
+                break
+            case 'United States':
+                value += getRangeRandom(50, 25000)
+                break
+            case 'China':
+                value += getRangeRandom(150, 50000)
+                break
+            case 'Japan':
+                value += getRangeRandom(5000, 70000)
+                break
+            case 'Korea':
+                value += getRangeRandom(4000, 60000)
+                break
+            case 'United Kingdom':
+                value += getRangeRandom(1000, 15000)
+                break
+            case 'France':
+                value += getRangeRandom(1500, 20000)
+                break
+            case 'Italy':
+                value += getRangeRandom(2000, 25000)
+                break
+            case 'Germany':
+                value += getRangeRandom(1200, 18000)
+                break
+            case 'Spain':
+                value += getRangeRandom(1100, 16000)
+                break
+            case 'Poland':
+                value += getRangeRandom(1300, 17000)
+                break
+            case 'Ethiopia':
+                value += getRangeRandom(800, 8000)
+                break
+            case 'India':
+                value += getRangeRandom(8000, 100000)
+                break
+            case 'Iran':
+                value += getRangeRandom(700, 9000)
+                break
+            case 'Malaysia':
+                value += getRangeRandom(2000, 20000)
+                break
+            case 'Australia':
+                value += getRangeRandom(10, 9000)
+                break
+            case 'Mexico':
+                value += getRangeRandom(4000, 40000)
+                break
+            case 'Canada':
                 value += getRangeRandom(0, 5000)
+                break
+            case 'Brazil':
+                value += getRangeRandom(50, 60000)
+                break
+            case 'Argentina':
+                value += getRangeRandom(25, 10000)
                 break
             case 'Greenland':
                 value += 0
@@ -123,7 +180,7 @@ function getIncrement(regionList: string[]): number {
                 value += 666
                 break
             default:
-                value += getRangeRandom(5000, 20000)
+                value += getRangeRandom(25, 8000)
                 break
         }
     })
