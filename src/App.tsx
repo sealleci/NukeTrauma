@@ -2,6 +2,7 @@ import { useState, useEffect, StrictMode, useCallback } from 'react'
 import CaptainCabin from './components/CaptainCabin'
 import CaptainCabinMobile from './components/CaptainCabinMobile'
 import WorldMap from './components/WorldMap'
+import LoadingSpinner from './components/LoadingSpinner'
 import useLanguageStore from './store/language_store.ts'
 import useWidthStore from './store/width_stroe.ts'
 import uiTranslation from './assets/lang/ui.json'
@@ -80,16 +81,7 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <div className="loading_spinner">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <LoadingSpinner />
     )
   }
 

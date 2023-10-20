@@ -149,11 +149,11 @@ function getIncrement(regionList: string[]): number {
             case 'Ethiopia':
                 value += getRangeRandom(800, 8000)
                 break
-            case 'India':
-                value += getRangeRandom(8000, 100000)
-                break
             case 'Iran':
                 value += getRangeRandom(700, 9000)
+                break
+            case 'India':
+                value += getRangeRandom(8000, 100000)
                 break
             case 'Malaysia':
                 value += getRangeRandom(2000, 20000)
@@ -161,11 +161,11 @@ function getIncrement(regionList: string[]): number {
             case 'Australia':
                 value += getRangeRandom(10, 9000)
                 break
-            case 'Mexico':
-                value += getRangeRandom(4000, 40000)
-                break
             case 'Canada':
                 value += getRangeRandom(0, 5000)
+                break
+            case 'Mexico':
+                value += getRangeRandom(4000, 40000)
                 break
             case 'Brazil':
                 value += getRangeRandom(50, 60000)
