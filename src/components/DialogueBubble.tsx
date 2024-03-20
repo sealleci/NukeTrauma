@@ -6,7 +6,7 @@ import useDialogueStore from '../store/dialogue_store.ts'
 import { shuffle } from '../utils/tool.ts'
 import Icon from '@mui/material/Icon'
 import type { LanguageType, CharacterType } from '../types/data.ts'
-import '../css/DialogueBubble.css'
+import '../scss/DialogueBubble.scss'
 
 export default function DialogueBubble() {
     const bubbleRef = useRef<HTMLDivElement>(null)

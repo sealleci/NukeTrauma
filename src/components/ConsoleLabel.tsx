@@ -1,4 +1,4 @@
-import '../css/ConsoleLabel.css'
+import '../scss/ConsoleLabel.scss'
 
 export default function ConsoleLabel({ text }: { text: string }) {
     return (

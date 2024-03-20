@@ -198,6 +198,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const wheelScaleThrottlingSignal = useRef<boolean>(true)
     const blankMoveThrottlingSignal = useRef<boolean>(true)
     const scaleCoef = useRef<number>(5)
+    const prevScaleCoef = useRef<number>(5)
     const prevDist = useRef<number>(0)
     const chartRef = useRef<HTMLDivElement>(null)
     const prevMoveCoord = useRef<Coordinate | null>(null)
@@ -213,7 +214,10 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const setRelocateSignal = useLaunchStore((state) => state.setRelocateSignal)
 
     const scaleForTouch = useCallback((event: TouchEvent) => {
-        if (event.targetTouches.length < 2 || !chartRef.current || !touchScaleThrottlingSignal.current) { return }
+        if (event.targetTouches.length < 2
+            || !chartRef.current
+            || !touchScaleThrottlingSignal.current
+        ) { return }
 
         const chart = getInstanceByDom(chartRef.current)!
         const touch1 = event.targetTouches[0]
@@ -264,19 +268,30 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const scaleForWheel = useCallback((event: WheelEvent) => {
         if (!chartRef.current || !wheelScaleThrottlingSignal.current) { return }
 
-        const SCALE_PROC: number = 1.4
+        const SCALE_PROC: number = event.deltaY < 0 ? 1.4 : (1.0 / 1.4)
         const chart = getInstanceByDom(chartRef.current)!
-
-        if (event.deltaY < 0) {
-            scaleCoef.current *= SCALE_PROC
-        } else {
-            scaleCoef.current /= SCALE_PROC
+        const logicalChartCenterCoord = chart.convertFromPixel({ geoIndex: 0 }, [
+            chart.getWidth() / 2,
+            chart.getHeight() / 2
+        ])
+        const logicalCursorCoord = chart.convertFromPixel({ geoIndex: 0 }, [
+            event.offsetX,
+            event.offsetY
+        ])
+        const logicalDistance: Coordinate = {
+            x: logicalCursorCoord[0] - logicalChartCenterCoord[0],
+            y: logicalCursorCoord[1] - logicalChartCenterCoord[1]
         }
+        prevScaleCoef.current = scaleCoef.current
+        scaleCoef.current = Math.min(Math.max(scaleCoef.current * SCALE_PROC, SCALE_MIN), SCALE_MAX)
 
-        scaleCoef.current = Math.min(Math.max(scaleCoef.current, SCALE_MIN), SCALE_MAX)
         chart.setOption({
             geo: {
-                zoom: scaleCoef.current
+                zoom: scaleCoef.current,
+                center: [
+                    logicalChartCenterCoord[0] - (logicalDistance.x / (scaleCoef.current / prevScaleCoef.current) - logicalDistance.x),
+                    logicalChartCenterCoord[1] - (logicalDistance.y / (scaleCoef.current / prevScaleCoef.current) - logicalDistance.y)
+                ]
             }
         }, {
             lazyUpdate: true,
@@ -292,7 +307,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const handleBlankMove = useCallback((params: ElementEvent) => {
         if (!chartRef.current || !prevMoveCoord.current || isScaling.current) { return }
 
-        const COMPENSATION: number = 6
+        const COMPENSATION: number = 8
         const chart = getInstanceByDom(chartRef.current)!
         const center = ((chart.getOption() as unknown as EChartsOption).geo as GeoOption[])[0].center as number[]
         const convertedPrevCoord = chart.convertFromPixel({ geoIndex: 0 }, [prevMoveCoord.current.x, prevMoveCoord.current.y])
@@ -302,7 +317,9 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
             { x: prevMoveCoord.current.x, y: prevMoveCoord.current.y }
         )
 
-        if (dist > 1e-6 && blankMoveThrottlingSignal.current) {
+        if (dist > 1e-6
+            && blankMoveThrottlingSignal.current
+        ) {
             chart.setOption({
                 geo: {
                     center: [

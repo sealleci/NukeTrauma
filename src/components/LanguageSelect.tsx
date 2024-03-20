@@ -5,7 +5,7 @@ import Icon from '@mui/material/Icon'
 import Select from '@mui/material/Select'
 import type { SelectChangeEvent } from '@mui/material/Select'
 import type { LanguageType } from '../types/data.ts'
-import '../css/LanguageSelect.css'
+import '../scss/LanguageSelect.scss'
 
 const LanguageSelect = memo(() => {
     const language = useLanguageStore((state) => state.language)

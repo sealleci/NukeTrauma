@@ -10,7 +10,7 @@ import NecoArcIcon from '../assets/icon/neco_arc.svg'
 import LopunnyIcon from '../assets/icon/lopunny.svg'
 import MeowscaradaIcon from '../assets/icon/meowscarada.svg'
 import VaporeonIcon from '../assets/icon/vaporeon.svg'
-import '../css/SecretaryList.css'
+import '../scss/SecretaryList.scss'
 
 interface SecretaryListItem {
     icon: string

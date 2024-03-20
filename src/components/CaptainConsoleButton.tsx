@@ -3,7 +3,7 @@ import useRegionStore from '../store/region_store.ts'
 import ConsoleLabel from './ConsoleLabel'
 import CancelIcon from '../assets/icon/cancel.svg'
 import LaunchIcon from '../assets/icon/launch.svg'
-import '../css/CaptainConsoleButton.css'
+import '../scss/CaptainConsoleButton.scss'
 
 function LaunchCancelBtn({ isWithLabel, text = '' }: { isWithLabel: boolean, text?: string }) {
     const setCancelSignal = useLaunchStore((state) => state.setCancelSignal)

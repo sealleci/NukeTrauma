@@ -9,7 +9,7 @@ import SecretaryList from './SecretaryList'
 import { LaunchCancelBtn, LaunchConfirmBtn } from './CaptainConsoleButton'
 import Icon from '@mui/material/Icon'
 import SecretaryBody from '../assets/img/body.svg'
-import '../css/CaptainCabin.css'
+import '../scss/CaptainCabin.scss'
 
 function Secretary() {
     const headImage = useCharacterStore((state) => state.headImage)

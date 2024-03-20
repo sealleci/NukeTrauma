@@ -4,7 +4,7 @@ import useRegionStore from '../store/region_store.ts'
 import SecretaryList from "./SecretaryList"
 import DialogueBubble from "./DialogueBubble"
 import { LaunchCancelBtn, LaunchConfirmBtn } from "./CaptainConsoleButton"
-import '../css/CaptainCabinMobile.css'
+import '../scss/CaptainCabinMobile.scss'
 
 function CaptainConsoleMobile({ regionListLength }: { regionListLength: number }) {
     return (

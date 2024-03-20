@@ -7,7 +7,7 @@ import GeoChart from './GeoChart'
 import Icon from '@mui/material/Icon'
 import DeathIcon from '../assets/icon/death.svg'
 import CloudImage from '../assets/img/cloud.svg'
-import '../css/WorldMap.css'
+import '../scss/WorldMap.scss'
 
 const animationDuration: number = 3000
 
@@ -82,8 +82,10 @@ function RelocateBtn() {
 }
 
 export default function WorldMap() {
-    // In component GeoChart, when launchSignal is true, 
-    // it will set it to false immediately.
+    /**  
+     * In component GeoChart, when launchSignal is true, 
+     * it will set it to false immediately.
+    */
     const [explosion, setExplosion] = useState<JSX.Element>(<></>)
     const launchSignal = useLaunchStore((state) => state.launchSignal)
     const isSmallScreen = useWidthStore((state) => state.isSmallScreen)
@@ -110,6 +112,12 @@ export default function WorldMap() {
             {isSmallScreen && <LanguageSelect />}
             <RelocateBtn />
             {explosion}
+            {/* <div style={{
+                position: 'absolute',
+                zIndex: 1000,
+                height: '20px', width: '20px', borderRadius: '50%', backgroundColor: 'red',
+                top: 'calc(50% - 10px)', left: 'calc(50% - 10px)',
+            }}></div> */}
             <WorldMapMain />
         </div>
     )
