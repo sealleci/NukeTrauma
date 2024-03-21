@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef, memo } from 'react'
+import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useRef } from 'react'
 import useCharacterStore from '../store/character_store.ts'
 import useDialogueStore from '../store/dialogue_store.ts'
 import type { CharacterType } from '../types/data.ts'
@@ -16,6 +16,10 @@ interface SecretaryListItem {
     icon: string
     name: CharacterType
     headImage: string
+}
+
+interface SecretaryListHandle {
+    getHeight: () => number
 }
 
 const secretaryList: SecretaryListItem[] = [
@@ -38,13 +42,23 @@ const secretaryList: SecretaryListItem[] = [
     }
 ]
 
-const SecretaryList = memo(() => {
+const SecretaryList = memo(forwardRef((_, ref) => {
     const isFirstTime = useRef<boolean>(true)
+    const secretaryListRef = useRef<HTMLDivElement>(null)
     const setCharacter = useCharacterStore((state) => state.setCharacter)
     const prevCharacter = useDialogueStore((state) => state.prevCharacter)
 
     const getImageByName = useCallback((name: CharacterType) => {
         return secretaryList.find((item) => item.name === name)?.headImage
+    }, [])
+
+    useImperativeHandle(ref, (): SecretaryListHandle => {
+        return {
+            getHeight(): number {
+                if (!secretaryListRef.current) { return 0 }
+                return secretaryListRef.current.offsetHeight
+            }
+        }
     }, [])
 
     useEffect(() => {
@@ -64,7 +78,7 @@ const SecretaryList = memo(() => {
     }, [prevCharacter, setCharacter, getImageByName])
 
     return (
-        <div className='secretary_list'>
+        <div className='secretary_list' ref={secretaryListRef}>
             {secretaryList.map((item, index) => (
                 <div className='secretary_list__item' onClick={() => setCharacter(item.name, item.headImage)} key={index}>
                     <img src={item.icon} alt={item.name} />
@@ -72,6 +86,7 @@ const SecretaryList = memo(() => {
             ))}
         </div>
     )
-})
+}))
 
+export type { SecretaryListHandle }
 export default SecretaryList

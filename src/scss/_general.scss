@@ -1,34 +1,35 @@
 $border_white_color: rgba(white, .2);
-$font_white_color: darken(white, 20%);
-$map_bg_color: #F0F0F0;
-$gray_color_light: rgb(178, 178, 178);
-$font_dark_color: lighten(black, 40%);
 $cabin_bg_color_dark: #29323c;
 $cabin_bg_color_light: #485563;
-$map_nav_bg_color: rgba(255, 255, 255, 0.5);
-$captain_console_theme_color: rgb(93, 110, 91);
 $captain_console_dark_color: rgb(29, 33, 36);
+$captain_console_theme_color: rgb(93, 110, 91);
 $font_black_color: rgb(43, 55, 68);
+$font_dark_color: lighten(black, 40%);
+$font_white_color: darken(white, 20%);
+$gray_color_light: rgb(178, 178, 178);
+$map_bg_color: #F0F0F0;
+$map_nav_bg_color: rgba(255, 255, 255, 0.5);
+$captain_cabin_mobile_border_radius: .75rem;
+$captain_cabin_mobile_spacing: .5rem;
+$change_bar_height: 4rem;
+$change_bar_mobile_height: 3rem;
+$console_border_width: 4px;
+$console_mobile_border_width: 3px;
+$dialogue_bubble_switch_height: 2rem;
+$dialogue_bubble_content_min_height: 4rem;
 $language_select_height: 3.5rem;
 $language_select_width: 6.5rem;
 $language_select_mobile_width: 5.5rem;
-$dialogue_bubble_switch_height: 2rem;
-$dialogue_bubble_content_min_height: 4rem;
 $launch_btn_circle_diameter: 4rem;
 $launch_btn_circle_mobile_diameter: 3rem;
 $launch_btn_text_height: 1rem;
 $launch_btn_vertical_margin: .25rem;
-$console_border_width: 4px;
-$console_mobile_border_width: 3px;
-$change_bar_height: 4rem;
-$captain_cabin_mobile_border_radius: .75rem;
 $map_nav_display_margin: .5rem;
-$change_bar_mobile_height: 2.5rem;
-$secretary_scene_mobile_height: 3.5rem;
-$captain_cabin_mobile_spacing: .5rem;
+$secretary_scene_mobile_height: 5rem;
 $captain_cabin_mobile_height: calc($change_bar_mobile_height + $secretary_scene_mobile_height + $captain_cabin_mobile_spacing + $captain_cabin_mobile_border_radius / 2);
-$transition_duration: .15s;
 $small_screen_width : 640px;
+$transition_duration: .15s;
+
 
 @mixin hover_light($is_custom_transition: false) {
     @if $is_custom_transition {

@@ -43,7 +43,7 @@
     @media screen and (max-width: g.$small_screen_width) {
         position: relative;
         flex-grow: 1;
-        width: 50%;
+        // width: 50%;
         top: 0;
 
         & &__switch {
