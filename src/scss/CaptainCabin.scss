@@ -134,7 +134,8 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(15deg, g.$cabin_bg_color_dark 0%, g.$cabin_bg_color_light 100%);
+    // background-image: linear-gradient(15deg, g.$cabin_bg_color_dark 0%, g.$cabin_bg_color_light 100%);
+    background-color: rgba(0, 0, 0, .9);
     z-index: 0;
 }
 
@@ -157,6 +158,7 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     justify-content: flex-end;
     align-items: center;
     width: 256px;
+    // mask-image: radial-gradient(circle, black 50%, transparent 100%);
     user-select: none;
 
     &>div {

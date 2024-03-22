@@ -1,14 +1,14 @@
-import { useRef, useEffect, useCallback, memo } from 'react'
+import { memo, useCallback, useEffect, useRef } from 'react'
 import type { CSSProperties } from 'react'
-import { init, getInstanceByDom, registerMap, use } from 'echarts/core'
 import { MapChart } from 'echarts/charts'
+import { init, getInstanceByDom, registerMap, use } from 'echarts/core'
 import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
 import type { EChartsType, ElementEvent, SetOptionOpts } from 'echarts/core'
 import type { EChartsOption, GeoOption } from 'echarts/types/dist/shared.d.ts'
-import useRegionStore from '../store/region_store.ts'
-import useLaunchStore from '../store/launch_store.ts'
 import useCounterStore from '../store/counter_store.ts'
+import useLaunchStore from '../store/launch_store.ts'
+import useRegionStore from '../store/region_store.ts'
 import { getRangeRandom } from '../utils/tool.ts'
 import world from '../assets/map/world.json'
 
@@ -64,35 +64,39 @@ const geoOption: EChartsOption = {
             max: SCALE_MAX
         },
         itemStyle: {
-            areaColor: '#DAD4B5'
+            // areaColor: '#DAD4B5'
+            areaColor: '#3c3171',
+            borderColor: '#19102'
         },
         label: {
             color: 'white'
         },
         emphasis: {
             label: {
-                color: 'white',
+                color: '#a49eb8',
                 show: true,
-                textBorderWidth: 3,
-                textBorderColor: 'black',
-                fontSize: '1.5rem',
-                fontFamily: 'Times New Roman'
+                textBorderWidth: 2,
+                textBorderColor: '#19102',
+                fontSize: '1.25rem',
+                fontFamily: 'Consolas'
             },
             itemStyle: {
-                areaColor: '#E25E3E',
+                // areaColor: '#E25E3E',
+                areaColor: '#5babf8'
             }
         },
         select: {
             label: {
-                color: 'white',
+                color: '#a49eb8',
                 show: true,
-                textBorderWidth: 3,
-                textBorderColor: 'black',
-                fontSize: '1.5rem',
-                fontFamily: 'Times New Roman'
+                textBorderWidth: 2,
+                textBorderColor: '#19102',
+                fontSize: '1.25rem',
+                fontFamily: 'Consolas'
             },
             itemStyle: {
-                areaColor: '#C63D2F'
+                // areaColor: '#C63D2F'
+                areaColor: '#e84981'
             }
         },
         center: INIT_CENTER,
@@ -213,7 +217,6 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const relocateSignal = useLaunchStore((state) => state.relocateSignal)
     const setRelocateSignal = useLaunchStore((state) => state.setRelocateSignal)
 
-    // TODO: scale center with center of touches
     const scaleForTouch = useCallback((event: TouchEvent) => {
         if (event.targetTouches.length < 2
             || !chartRef.current

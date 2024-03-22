@@ -1,9 +1,9 @@
 import { memo } from 'react'
-import useLanguageStore from '../store/language_store.ts'
-import MenuItem from '@mui/material/MenuItem'
 import Icon from '@mui/material/Icon'
+import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import type { SelectChangeEvent } from '@mui/material/Select'
+import useLanguageStore from '../store/language_store.ts'
 import type { LanguageType } from '../types/data.ts'
 import '../scss/LanguageSelect.scss'
 

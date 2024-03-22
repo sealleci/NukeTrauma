@@ -1,52 +1,49 @@
 @use './general' as g;
 
-.captain_cabin--mobile {
-    $handle_height: 1.5rem;
+$handle_height: 1.5rem;
 
-    position: relative;
+.captain_cabin_mobile {
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     height: g.$captain_cabin_mobile_height;
-    top: 0;
-    // bottom: calc(g.$captain_cabin_mobile_border_radius);
-    // padding-top: calc(g.$captain_cabin_mobile_border_radius);
-    // padding-bottom: calc(g.$captain_cabin_mobile_border_radius / 2);
+    bottom: 0;
     background-color: g.$cabin_bg_color_light;
-    border-radius: g.$captain_cabin_mobile_border_radius g.$captain_cabin_mobile_border_radius 0 0;
-    box-shadow: 0 -2px 4px rgba(black, .25);
     z-index: 1200;
-    transition: top g.$transition_duration;
+    transition: bottom g.$transition_duration;
 
-    &--half-collapsed {
-        top: g.$change_bar_mobile_height;
+    &.captain_cabin_mobile--half-collapsed {
+        bottom: calc(g.$change_bar_mobile_height * -1);
     }
 
-    &--collapsed {
-        top: g.$captain_cabin_mobile_height;
+    &.captain_cabin_mobile--collapsed {
+        bottom: calc(g.$captain_cabin_mobile_height * -1);
     }
 
-    &__handle_wrapper {
+    &__handle {
+
         position: absolute;
         display: flex;
         align-items: center;
         justify-content: center;
-        top: calc(-1 * $handle_height);
         width: 100%;
         height: $handle_height;
-        border: 1px solid red;
-        pointer-events: none;
-    }
+        top: calc(-1 * $handle_height + 1px);
+        border-radius: g.$captain_cabin_mobile_border_radius g.$captain_cabin_mobile_border_radius 0 0;
+        background-color: g.$cabin_bg_color_light;
+        box-shadow: 0 -2px 4px rgba(black, .25);
+        pointer-events: visiblePainted;
 
-    &__handle {
-        height: 100%;
-        width: $handle_height;
-        border-radius: 100% 100% 0 0;
-        background-color: red;
-        cursor: pointer;
-        pointer-events: visible;
+        &__icon {
+            height: 40%;
+            width: 4rem;
+            border-radius: $handle_height;
+            background-color: g.$gray_color_light;
+            cursor: move;
+        }
     }
 }
 
@@ -54,7 +51,7 @@
     $spacing: .25rem;
 
     position: absolute;
-    top: calc(g.$launch_btn_circle_mobile_diameter * -1 - $spacing);
+    top: calc(g.$launch_btn_circle_mobile_diameter * -1 - $spacing - $handle_height);
     opacity: 1;
     z-index: 2000;
     transition: opacity g.$transition_duration,

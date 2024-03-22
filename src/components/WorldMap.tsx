@@ -1,17 +1,17 @@
-import { useEffect, useState, memo } from 'react'
+import { memo, useEffect, useState } from 'react'
+import Icon from '@mui/material/Icon'
 import useCounterStore from '../store/counter_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
 import useWidthStore from '../store/width_stroe.ts'
-import LanguageSelect from './LanguageSelect'
 import GeoChart from './GeoChart'
-import Icon from '@mui/material/Icon'
-import DeathIcon from '../assets/icon/death.svg'
+import LanguageSelect from './LanguageSelect'
 import CloudImage from '../assets/img/cloud.svg'
+import DeathIcon from '../assets/icon/death.svg'
 import '../scss/WorldMap.scss'
 
 const animationDuration: number = 3000
 
-function DeathCnt() {
+function DeathCounter() {
     const [prevCount, setPrevCount] = useState<number>(0)
     const [tmpCount, setTmpCount] = useState<number>(0)
     const count = useCounterStore((state) => state.count)
@@ -19,8 +19,9 @@ function DeathCnt() {
     useEffect(() => {
         if (count <= prevCount) return
 
+        const COMPENSATION: number = 2
         const interval: number = 50
-        const times = Math.floor(animationDuration / interval / 2)
+        const times = Math.floor(animationDuration / interval / COMPENSATION)
         const diff = count - prevCount
         const tmpIncrement = Math.floor(diff / times)
         const remain = diff % times
@@ -38,8 +39,6 @@ function DeathCnt() {
         setTmpCount(prev => prev + remain)
         setTimeout(() => tick(0), interval)
     }, [count, prevCount])
-
-
 
     return (
         <div className='death_cnt'>
@@ -108,7 +107,7 @@ export default function WorldMap() {
 
     return (
         <div className='world_map'>
-            <DeathCnt />
+            <DeathCounter />
             {isSmallScreen && <LanguageSelect />}
             <RelocateBtn />
             {explosion}

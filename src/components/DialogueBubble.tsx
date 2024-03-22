@@ -1,11 +1,11 @@
-import { useRef, useEffect, useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import useCharacterStore from '../store/character_store.ts'
+import useDialogueStore from '../store/dialogue_store.ts'
 import useLanguageStore from '../store/language_store.ts'
 import useRegionStore from '../store/region_store.ts'
-import useDialogueStore from '../store/dialogue_store.ts'
 import { shuffle } from '../utils/tool.ts'
-import Icon from '@mui/material/Icon'
 import type { LanguageType, CharacterType } from '../types/data.ts'
+import Icon from '@mui/material/Icon'
 import '../scss/DialogueBubble.scss'
 
 export default function DialogueBubble() {
