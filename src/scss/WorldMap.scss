@@ -28,8 +28,6 @@
     @media screen and (max-width: g.$small_screen_width) {
         width: 100%;
         min-width: 100vw;
-
-        // height: calc(var(--vh, 1vh) * 100 - g.$captain_cabin_mobile_height);
         height: calc(var(--vh, 1vh) * 100);
         box-shadow: none;
     }
@@ -53,8 +51,7 @@
     background-color: g.$map_nav_bg_color;
     backdrop-filter: blur(2px);
     border-radius: $display_height;
-    // box-shadow: 0 0 g.$map_nav_display_margin g.$map_shadow_color;
-    outline: 2px solid rgba(255, 255, 255, .1);
+    outline: 2px solid g.$border_white_light_color;
     z-index: 1200;
 
     &__icon {
@@ -94,9 +91,9 @@
     }
 }
 
-@keyframes explosion {
-    $color_opacity: .8;
-    $red_color : rgba(#630606, $color_opacity);
+@keyframes exploding {
+    $color_opacity: .75;
+    $red_color: rgba(#931f1f, $color_opacity);
 
     0% {
         background-color: transparent;
@@ -112,20 +109,22 @@
         background-color: $red_color;
     }
 
-    80% {
-        background-color: rgba(white, $color_opacity);
+    90% {
+        background-color: rgba(black, $color_opacity);
+        opacity: 1;
     }
 
     100% {
         background-color: transparent;
-        opacity: 1;
+        opacity: 0;
     }
 }
 
-@keyframes cloud {
+@keyframes mushroom_head_expanding {
     0% {
         height: 90%;
         opacity: 0;
+        filter: brightness(100%);
     }
 
     10% {
@@ -133,11 +132,42 @@
     }
 
     60% {
+        filter: brightness(100%);
+    }
+
+    80% {
         opacity: 1;
+        filter: brightness(0%);
     }
 
     100% {
-        height: 93%;
+        height: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes mushroom_root_expanding {
+    0% {
+        width: min(720px, 90%);
+        opacity: 0;
+        filter: brightness(100%);
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    60% {
+        filter: brightness(100%);
+    }
+
+    80% {
+        opacity: 1;
+        filter: brightness(0%);
+    }
+
+    100% {
+        width: min(1120px, 140%);
         opacity: 0;
     }
 }
@@ -156,13 +186,25 @@
     top: 0;
     z-index: 200;
     opacity: 0;
-    animation: explosion linear $animation_duration 1;
+    animation: exploding linear $animation_duration 1;
 
     img {
-        height: 90%;
+        position: absolute;
         opacity: 0;
         user-select: none;
-        animation: cloud linear $animation_duration 1;
+        filter: brightness(0%);
+    }
+
+    img:nth-child(1) {
+        height: 90%;
+        width: auto;
+        animation: mushroom_head_expanding linear $animation_duration 1;
+    }
+
+    img:nth-child(2) {
+        height: auto;
+        width: 800px;
+        animation: mushroom_root_expanding linear $animation_duration 1;
     }
 }
 
@@ -181,8 +223,7 @@
     border-radius: 50%;
     background-color: g.$map_nav_bg_color;
     backdrop-filter: blur(2px);
-    // box-shadow: 0 0 g.$map_nav_display_margin g.$map_shadow_color;
-    outline: 2px solid rgba(255, 255, 255, .1);
+    outline: 2px solid g.$border_white_light_color;
     cursor: pointer;
     z-index: 1500;
     transition: background-color g.$transition_duration;

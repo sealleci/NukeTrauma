@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use './general' as g;
 
 $handle_height: 1.5rem;
@@ -6,51 +7,50 @@ $handle_height: 1.5rem;
     position: absolute;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
     height: g.$captain_cabin_mobile_height;
     bottom: 0;
-    background-color: g.$cabin_bg_light_color;
+    border-radius: g.$captain_cabin_mobile_border_radius g.$captain_cabin_mobile_border_radius 0 0;
+    background-color: g.$map_nav_bg_color;
+    box-shadow: 0 -2px 0 g.$border_white_color;
+    backdrop-filter: blur(3px);
     z-index: 1200;
     transition: bottom g.$transition_duration;
 
     &.captain_cabin_mobile--half-collapsed {
-        bottom: calc(g.$change_bar_mobile_height * -1);
+        bottom: calc((g.$change_bar_mobile_height + g.$captain_cabin_mobile_glass_line + g.$captain_cabin_mobile_spacing * 2) * -1);
     }
 
     &.captain_cabin_mobile--collapsed {
-        bottom: calc(g.$captain_cabin_mobile_height * -1);
+        bottom: calc((g.$captain_cabin_mobile_height - g.$captain_cabin_mobile_handle_height) * -1);
     }
 
     &__handle {
-        position: absolute;
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: $handle_height;
-        top: calc(-1 * $handle_height + 1px);
-        border-radius: g.$captain_cabin_mobile_border_radius g.$captain_cabin_mobile_border_radius 0 0;
-        background-color: g.$cabin_bg_light_color;
-        box-shadow: 0 -2px 2px rgba(black, .2);
-        pointer-events: visiblePainted;
+        height: g.$captain_cabin_mobile_handle_height;
 
         &__icon {
             height: 40%;
             width: 4rem;
-            border-radius: $handle_height;
-            background-color: g.$gray_light_color;
+            border-radius: g.$captain_cabin_mobile_handle_height;
+            // background-color: color.scale(white, $lightness: -30%);
+            outline: 2px solid g.$border_white_color;
             cursor: move;
         }
     }
 }
 
 .console_wrapper {
-    $spacing: .25rem;
+    $spacing: .4rem;
 
     position: absolute;
-    top: calc(g.$launch_btn_circle_mobile_diameter * -1 - $spacing - $handle_height);
+    top: calc(g.$launch_btn_circle_mobile_diameter * -1 - $spacing);
     opacity: 1;
     z-index: 2000;
     transition: opacity g.$transition_duration,
@@ -102,13 +102,17 @@ $handle_height: 1.5rem;
     align-items: center;
     width: 100%;
     height: g.$secretary_scene_mobile_height;
+    padding-top: g.$captain_cabin_mobile_spacing;
+    padding-bottom: calc(g.$captain_cabin_mobile_spacing * 2);
 
     .secretary__head--mobile {
         position: relative;
         flex-shrink: 0;
         height: 100%;
-        margin-left: .25rem;
+        margin-left: .5rem;
         width: calc(g.$secretary_scene_mobile_height * .95);
+        outline: 2px solid g.$border_white_color;
+        border-radius: 50%;
         overflow: hidden;
 
         img {

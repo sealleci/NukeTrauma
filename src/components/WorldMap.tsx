@@ -5,7 +5,8 @@ import useLaunchStore from '../store/launch_store.ts'
 import useWidthStore from '../store/width_stroe.ts'
 import GeoChart from './GeoChart'
 import LanguageSelect from './LanguageSelect'
-import CloudImage from '../assets/img/cloud.svg'
+import MushroomHeadImage from '../assets/img/mushroom_head.png'
+import MushroomRootImage from '../assets/img/mushroom_root.png'
 import DeathIcon from '../assets/icon/death.svg'
 import '../scss/WorldMap.scss'
 
@@ -61,7 +62,8 @@ const WorldMapMain = memo(() => {
 function ExplosionScene() {
     return (
         <div className='explosion_scene'>
-            <img src={CloudImage} alt="cloud" />
+            <img src={MushroomHeadImage} alt="mushroom head" />
+            <img src={MushroomRootImage} alt="mushroom root" />
         </div>
     )
 }
@@ -102,7 +104,7 @@ export default function WorldMap() {
     //     setExplosion(<ExplosionScene />)
     //     setTimeout(() => {
     //         setExplosion(<></>)
-    //     }, animationDuraion)
+    //     }, animationDuration)
     // }, [])
 
     return (
@@ -111,12 +113,6 @@ export default function WorldMap() {
             {isSmallScreen && <LanguageSelect />}
             <RelocateBtn />
             {explosion}
-            {/* <div style={{
-                position: 'absolute',
-                zIndex: 1000,
-                height: '20px', width: '20px', borderRadius: '50%', backgroundColor: 'red',
-                top: 'calc(50% - 10px)', left: 'calc(50% - 10px)',
-            }}></div> */}
             <WorldMapMain />
         </div>
     )

@@ -1,6 +1,7 @@
 @use 'sass:color';
 
 $border_white_color: rgba(white, .2);
+$border_white_light_color: rgba(white, .1);
 $cabin_bg_color: #23252b;
 $cabin_bg_light_color: #3c4348;
 $captain_console_dark_color: rgb(29, 33, 36);
@@ -13,7 +14,9 @@ $map_bg_color: #19102b;
 $map_nav_bg_color: rgba(0, 0, 0, 0.1);
 $map_shadow_color: color.scale($map_bg_color, $lightness: 20%);
 $captain_cabin_mobile_border_radius: .75rem;
-$captain_cabin_mobile_spacing: .5rem;
+$captain_cabin_mobile_glass_line: 1px;
+$captain_cabin_mobile_handle_height: 1.5rem;
+$captain_cabin_mobile_spacing: .25rem;
 $change_bar_height: 4rem;
 $change_bar_mobile_height: 3rem;
 $console_border_width: 4px;
@@ -29,7 +32,7 @@ $launch_btn_text_height: 1rem;
 $launch_btn_vertical_margin: .25rem;
 $map_nav_display_margin: .5rem;
 $secretary_scene_mobile_height: 5rem;
-$captain_cabin_mobile_height: calc($change_bar_mobile_height + $secretary_scene_mobile_height + $captain_cabin_mobile_spacing + $captain_cabin_mobile_border_radius / 2);
+$captain_cabin_mobile_height: calc($change_bar_mobile_height + $secretary_scene_mobile_height + $captain_cabin_mobile_spacing * 5 + $captain_cabin_mobile_glass_line + $captain_cabin_mobile_handle_height);
 $small_screen_width : 640px;
 $transition_duration: .15s;
 

@@ -75,7 +75,6 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     left: calc(-100% + $bar_icon_width);
     width: 100%;
     height: g.$change_bar_height;
-    // background-color: rgba(#444f5d, $bg_opacity);
     outline: 2px solid g.$border_white_color;
     border-radius: 0 g.$change_bar_height g.$change_bar_height 0;
     transition: left $transition_duration, border-radius $transition_duration;
@@ -198,7 +197,6 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     height: $captain_console_height_percentage;
     min-height: $captain_console_min_height;
     background-color: color.scale(g.$captain_console_theme_color, $lightness: -10%);
-    // box-shadow: 0 -2px 8px rgba(black, .4);
     outline: g.$console_border_width solid g.$captain_console_dark_color;
     outline-offset: (- g.$console_border_width);
     z-index: 500;

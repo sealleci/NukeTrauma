@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use './general' as g;
 
 @keyframes bubble_hide {
@@ -26,7 +27,7 @@
 }
 
 .dialogue_bubble {
-    $bubble_bg_color: g.$cabin_bg_light_color;
+    $bubble_bg_color: color.scale(white, $lightness: -13%);
     $padding_left: 5%;
     $inner_padding_vertical: .25rem;
     $bubble_border_radius: .6rem;
@@ -43,7 +44,6 @@
     @media screen and (max-width: g.$small_screen_width) {
         position: relative;
         flex-grow: 1;
-        // width: 50%;
         top: 0;
 
         & &__switch {
@@ -60,6 +60,8 @@
             scrollbar-color: transparent transparent !important;
             scrollbar-width: none !important;
             border-radius: $bubble_border_radius $bubble_border_radius $bubble_border_radius 0;
+            background-color: transparent;
+            outline: 2px solid g.$border_white_color;
 
             &::-webkit-scrollbar {
                 display: none;
@@ -70,11 +72,12 @@
             }
 
             span {
-                $font_size: .75rem;
+                $font_size: .8rem;
 
+                color: g.$font_white_color;
                 display: inline-block;
                 font-size: $font_size;
-                user-select: none;
+                // user-select: none;
             }
         }
     }
@@ -147,7 +150,7 @@
             display: inline-block;
             min-width: 0%;
             max-width: 100%;
-            color: g.$font_white_color;
+            color: g.$font_dark_color;
             font-family: Georgia, "等线";
             font-size: 1rem;
             word-break: normal;

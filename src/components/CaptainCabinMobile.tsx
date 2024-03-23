@@ -52,6 +52,7 @@ const CaptainCabinMobile = forwardRef((_, ref) => {
     const [curCollapseStatus, setCurCollapseStatus] = useState<CollapseStatus>(CollapseStatus.EXPANDED)
     const [isDragging, setIsDragging] = useState<boolean>(false)
     const captainCabinMobileRef = useRef<HTMLDivElement>(null)
+    const captainCabinMobileHandleRef = useRef<HTMLDivElement>(null)
     const secretaryListRef = useRef<SecretaryListHandle>(null)
 
     const onDragStart = useCallback((y: number) => {
@@ -88,7 +89,10 @@ const CaptainCabinMobile = forwardRef((_, ref) => {
                 curBottom = parseInt(captainCabinMobileRef.current.style.bottom)
             }
 
-            const nextBottom: number = Math.max(Math.min(curBottom - moveHeight, 0), -1 * captainCabinMobileRef.current.offsetHeight)
+            const nextBottom: number = Math.max(Math.min(curBottom - moveHeight, 0),
+                -1 * (captainCabinMobileRef.current.offsetHeight -
+                    (captainCabinMobileHandleRef.current
+                        ? captainCabinMobileHandleRef.current.offsetHeight : 0)))
             captainCabinMobileRef.current.style.bottom = `${nextBottom}px`
             setPrevBottom(nextBottom)
         }
@@ -107,7 +111,8 @@ const CaptainCabinMobile = forwardRef((_, ref) => {
         }
 
         const COLLAPSE_THRESHOLD: number = 0.5
-        const captainCabinMobileHeight: number = captainCabinMobileRef.current ? captainCabinMobileRef.current.offsetHeight : 0
+        const captainCabinMobileHeight: number = (captainCabinMobileRef.current ? captainCabinMobileRef.current.offsetHeight : 0) -
+            (captainCabinMobileHandleRef.current ? captainCabinMobileHandleRef.current.offsetHeight : 0)
         const secretaryListHeight: number = secretaryListRef.current ? secretaryListRef.current.getHeight() : 0
         const curBottom: number = -1 * prevBottom
 
@@ -185,6 +190,7 @@ const CaptainCabinMobile = forwardRef((_, ref) => {
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
+                ref={captainCabinMobileHandleRef}
             >
                 <div className="captain_cabin_mobile__handle__icon"></div>
             </div>

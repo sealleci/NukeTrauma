@@ -289,6 +289,8 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     }, [])
 
     const scaleForWheel = useCallback((event: WheelEvent) => {
+        event.preventDefault()
+
         if (!chartRef.current || !wheelScaleThrottlingSignal.current) { return }
 
         const SCALE_PROC: number = event.deltaY < 0 ? 1.4 : (1.0 / 1.4)

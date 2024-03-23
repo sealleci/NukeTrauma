@@ -9,11 +9,12 @@ import type { CaptainCabinMobileHandle } from './components/CaptainCabinMobile'
 import dialogue from './assets/lang/dialogue.json'
 import uiTranslation from './assets/lang/ui.json'
 import CancelIcon from './assets/icon/cancel.svg'
-import CloudImage from './assets/img/cloud.svg'
 import DeathIcon from './assets/icon/death.svg'
 import LaunchIcon from './assets/icon/launch.svg'
 import LopunnyIcon from './assets/icon/lopunny.svg'
 import LopunnyImage from './assets/img/lopunny.svg'
+import MushroomHeadImage from './assets/img/mushroom_head.png'
+import MushroomRootImage from './assets/img/mushroom_root.png'
 import MeowscaradaIcon from './assets/icon/meowscarada.svg'
 import MeowscaradaImage from './assets/img/meowscarada.svg'
 import NecoArcIcon from './assets/icon/neco_arc.svg'
@@ -55,11 +56,12 @@ export default function App() {
     setLanguage('zh_cn')
     preloadImages([
       CancelIcon,
-      CloudImage,
       DeathIcon,
       LaunchIcon,
       LopunnyIcon,
       LopunnyImage,
+      MushroomHeadImage,
+      MushroomRootImage,
       MeowscaradaIcon,
       MeowscaradaImage,
       NecoArcIcon,

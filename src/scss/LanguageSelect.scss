@@ -51,7 +51,6 @@
         top: 0;
 
         &>span {
-            // color: g.$gray_light_color;
             display: none;
         }
 
@@ -71,8 +70,7 @@
         .MuiSelect-select {
             font-size: .75rem;
             background-color: g.$map_nav_bg_color;
-            // box-shadow: 0 0 g.$map_nav_display_margin g.$map_shadow_color;
-            outline: 2px solid rgba(255, 255, 255, .1) !important;
+            outline: 2px solid g.$border_white_light_color !important;
             backdrop-filter: blur(2px);
         }
     }
@@ -101,14 +99,13 @@
     }
 
     @media screen and (max-width: g.$small_screen_width) {
-        left: calc(100% - g.$map_nav_display_margin - g.$language_select_mobile_width) !important;
+        left: calc(100vw - g.$map_nav_display_margin - g.$language_select_mobile_width) !important;
         background-color: g.$map_nav_bg_color !important;
         outline: 2px solid rgba(255, 255, 255, .1) !important;
 
         li {
             min-height: 2.5rem !important;
             padding-left: 8px;
-            // color: g.$font_dark_color;
             font-size: .75rem;
         }
     }
