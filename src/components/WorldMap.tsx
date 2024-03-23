@@ -13,7 +13,7 @@ const animationDuration: number = 3000
 
 function DeathCounter() {
     const [prevCount, setPrevCount] = useState<number>(0)
-    const [tmpCount, setTmpCount] = useState<number>(0)
+    const [displayCount, setDisplayCount] = useState<number>(0)
     const count = useCounterStore((state) => state.count)
 
     useEffect(() => {
@@ -32,20 +32,20 @@ function DeathCounter() {
                 return
             }
 
-            setTmpCount(prev => prev + tmpIncrement)
+            setDisplayCount(prev => prev + tmpIncrement)
             setTimeout(() => tick(step + 1), interval)
         }
 
-        setTmpCount(prev => prev + remain)
+        setDisplayCount(prev => prev + remain)
         setTimeout(() => tick(0), interval)
     }, [count, prevCount])
 
     return (
         <div className='death_cnt'>
             <div className='death_cnt__icon'>
-                <img src={DeathIcon} alt='death' />
+                <img src={DeathIcon} alt='death' draggable={false} />
             </div>
-            <div className='death_cnt__value'>{tmpCount}</div>
+            <div className='death_cnt__value'>{displayCount}</div>
         </div>
     )
 }

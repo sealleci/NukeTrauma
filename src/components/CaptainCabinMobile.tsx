@@ -31,7 +31,7 @@ function SecretarySceneMobile() {
     return (
         <div className='secretary_scene--mobile'>
             <div className="secretary__head--mobile">
-                <img src={headImage} alt='head' />
+                <img src={headImage} alt='head' draggable={false} />
             </div>
             <DialogueBubble />
         </div>

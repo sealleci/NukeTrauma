@@ -16,7 +16,7 @@ function LaunchCancelBtn({ isWithLabel, text = '' }: { isWithLabel: boolean, tex
         <div className='launch_cancel_btn launch_btn' onClick={handleClick}>
             <div className='launch_btn__circle'>
                 <div>
-                    <img src={CancelIcon} alt='cancel' />
+                    <img src={CancelIcon} alt='cancel' draggable={false} />
                 </div>
             </div>
             {isWithLabel && <ConsoleLabel text={text} />}
@@ -41,7 +41,7 @@ function LaunchConfirmBtn({ isWithLabel, text = '' }: { isWithLabel: boolean, te
         <div className='launch_confirm_btn launch_btn' onClick={handleClick}>
             <div className='launch_btn__circle'>
                 <div>
-                    <img src={LaunchIcon} alt='launch' />
+                    <img src={LaunchIcon} alt='launch' draggable={false} />
                 </div>
             </div>
             {isWithLabel && <ConsoleLabel text={text} />}

@@ -26,7 +26,7 @@
 }
 
 .dialogue_bubble {
-    $bubble_white_color: rgb(233, 242, 248);
+    $bubble_bg_color: g.$cabin_bg_light_color;
     $padding_left: 5%;
     $inner_padding_vertical: .25rem;
     $bubble_border_radius: .6rem;
@@ -80,8 +80,6 @@
     }
 
     &.dialogue_bubble--invisible {
-
-
         .dialogue_bubble__switch {
             flex-direction: row-reverse;
             left: 0;
@@ -135,16 +133,21 @@
         min-height: g.$dialogue_bubble_content_min_height;
         padding: $inner_padding_vertical .5rem;
         box-sizing: border-box;
-        background-color: $bubble_white_color;
+        background-color: $bubble_bg_color;
         border-radius: $bubble_border_radius;
-        transition: opacity calc(g.$transition_duration * 2);
+        transition: opacity calc(g.$transition_duration * 2),
+            width g.$transition_duration;
         animation: bubble_appear linear g.$transition_duration 1;
+
+        &.dialogue_bubble__content--shrink {
+            width: calc(100% - $padding_left * 2.5 - g.$language_select_width);
+        }
 
         span {
             display: inline-block;
             min-width: 0%;
             max-width: 100%;
-            color: g.$font_black_color;
+            color: g.$font_white_color;
             font-family: Georgia, "等线";
             font-size: 1rem;
             word-break: normal;
@@ -161,7 +164,7 @@
             left: calc($bubble_border_radius + 4px);
             height: $bubble_tail_height;
             width: 8px;
-            background-color: $bubble_white_color;
+            background-color: $bubble_bg_color;
             border-radius: 0 0 0 100%;
         }
     }

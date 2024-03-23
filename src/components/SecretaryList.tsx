@@ -22,7 +22,7 @@ interface SecretaryListHandle {
     getHeight: () => number
 }
 
-const secretaryList: SecretaryListItem[] = [
+const secretaries: SecretaryListItem[] = [
     {
         icon: NecoArcIcon,
         name: 'neco_arc',
@@ -49,7 +49,7 @@ const SecretaryList = memo(forwardRef((_, ref) => {
     const prevCharacter = useDialogueStore((state) => state.prevCharacter)
 
     const getImageByName = useCallback((name: CharacterType) => {
-        return secretaryList.find((item) => item.name === name)?.headImage
+        return secretaries.find((item) => item.name === name)?.headImage
     }, [])
 
     useImperativeHandle(ref, (): SecretaryListHandle => {
@@ -69,7 +69,7 @@ const SecretaryList = memo(forwardRef((_, ref) => {
         const curHeadImage = getImageByName(prevCharacter)
 
         if (!curHeadImage) {
-            setCharacter(secretaryList[0].name, secretaryList[0].headImage)
+            setCharacter(secretaries[0].name, secretaries[0].headImage)
         } else {
             setCharacter(prevCharacter, curHeadImage)
         }
@@ -79,7 +79,7 @@ const SecretaryList = memo(forwardRef((_, ref) => {
 
     return (
         <div className='secretary_list' ref={secretaryListRef}>
-            {secretaryList.map((item, index) => (
+            {secretaries.map((item, index) => (
                 <div className='secretary_list__item' onClick={() => setCharacter(item.name, item.headImage)} key={index}>
                     <img src={item.icon} alt={item.name} />
                 </div>

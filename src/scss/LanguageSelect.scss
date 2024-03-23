@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use './general' as g;
 
 .language_select {
@@ -50,7 +51,7 @@
         top: 0;
 
         &>span {
-            // color: g.$gray_color_light;
+            // color: g.$gray_light_color;
             display: none;
         }
 
@@ -63,26 +64,26 @@
             width: g.$language_select_mobile_width;
 
             svg {
-                fill: g.$gray_color_light;
+                fill: g.$gray_light_color;
             }
         }
 
         .MuiSelect-select {
-            color: g.$font_dark_color;
             font-size: .75rem;
             background-color: g.$map_nav_bg_color;
-            box-shadow: 0 0 g.$map_nav_display_margin rgba(142, 142, 142, .4);
+            // box-shadow: 0 0 g.$map_nav_display_margin g.$map_shadow_color;
+            outline: 2px solid rgba(255, 255, 255, .1) !important;
             backdrop-filter: blur(2px);
         }
     }
 }
 
 .MuiPaper-root {
-    background-color: rgba(lighten(g.$cabin_bg_color_light, 5%), .8) !important;
+    background-color: rgba(color.scale(g.$cabin_bg_light_color, $lightness: 7%), .75) !important;
     backdrop-filter: blur(2px);
 
     li {
-        color: darken(white, 5%);
+        color: color.scale(white, $lightness: -10%);
         background-color: transparent;
         transition: background-color g.$transition_duration;
 
@@ -102,11 +103,12 @@
     @media screen and (max-width: g.$small_screen_width) {
         left: calc(100% - g.$map_nav_display_margin - g.$language_select_mobile_width) !important;
         background-color: g.$map_nav_bg_color !important;
+        outline: 2px solid rgba(255, 255, 255, .1) !important;
 
         li {
             min-height: 2.5rem !important;
             padding-left: 8px;
-            color: g.$font_dark_color;
+            // color: g.$font_dark_color;
             font-size: .75rem;
         }
     }

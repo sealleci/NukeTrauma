@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use "sass:math";
 @use './general' as g;
 @import url('https://fonts.cdnfonts.com/css/digital-numbers');
@@ -9,7 +10,7 @@ $secretary_neck_height: math.div($secretary_head_height, 6);
 $secretary_scene_min_height: calc($secretary_head_height + $secretary_body_height - $secretary_neck_height * 2 + g.$dialogue_bubble_content_min_height + g.$dialogue_bubble_switch_height + g.$language_select_height);
 $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_text_height + g.$launch_btn_vertical_margin * 4);
 
-@mixin head_nodding_animation($init_top) {
+@mixin body_shaking_animation($init_top) {
     $name: head_nodding_#{unique-id()};
     $offset: 5px;
 
@@ -134,8 +135,7 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     left: 0;
     width: 100%;
     height: 100%;
-    // background-image: linear-gradient(15deg, g.$cabin_bg_color_dark 0%, g.$cabin_bg_color_light 100%);
-    background-color: rgba(0, 0, 0, .9);
+    background-color: g.$cabin_bg_color;
     z-index: 0;
 }
 
@@ -158,8 +158,9 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     justify-content: flex-end;
     align-items: center;
     width: 256px;
-    // mask-image: radial-gradient(circle, black 50%, transparent 100%);
     user-select: none;
+
+    @include body_shaking_animation(0px);
 
     &>div {
         flex-grow: 0;
@@ -178,14 +179,13 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
         overflow: visible;
         z-index: 100;
 
-        @include head_nodding_animation($secretary_neck_height);
-
         img {
             top: 0;
         }
     }
 
     &__body {
+        position: relative;
         height: $secretary_body_height;
         z-index: 50;
     }
@@ -197,7 +197,7 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     width: 100%;
     height: $captain_console_height_percentage;
     min-height: $captain_console_min_height;
-    background-color: g.$captain_console_theme_color;
+    background-color: color.scale(g.$captain_console_theme_color, $lightness: -10%);
     // box-shadow: 0 -2px 8px rgba(black, .4);
     outline: g.$console_border_width solid g.$captain_console_dark_color;
     outline-offset: (- g.$console_border_width);
@@ -211,7 +211,7 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     align-items: center;
     width: 100%;
     height: 100%;
-    background-color: darken(g.$captain_console_theme_color, 5%);
+    background-color: g.$captain_console_theme_color;
     user-select: none;
 
     &__value {

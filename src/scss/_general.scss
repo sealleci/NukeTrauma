@@ -1,14 +1,17 @@
+@use 'sass:color';
+
 $border_white_color: rgba(white, .2);
-$cabin_bg_color_dark: #29323c;
-$cabin_bg_color_light: #485563;
+$cabin_bg_color: #23252b;
+$cabin_bg_light_color: #3c4348;
 $captain_console_dark_color: rgb(29, 33, 36);
 $captain_console_theme_color: rgb(93, 110, 91);
-$font_black_color: rgb(43, 55, 68);
-$font_dark_color: lighten(black, 40%);
-$font_white_color: darken(white, 20%);
-$gray_color_light: rgb(178, 178, 178);
-$map_bg_color: #F0F0F0;
-$map_nav_bg_color: rgba(255, 255, 255, 0.5);
+$font_dark_color: color.scale(black, $lightness: 40%);
+$font_white_color: color.scale(white, $lightness: -20%);
+$font_map_color: #a49eb8;
+$gray_light_color: rgb(178, 178, 178);
+$map_bg_color: #19102b;
+$map_nav_bg_color: rgba(0, 0, 0, 0.1);
+$map_shadow_color: color.scale($map_bg_color, $lightness: 20%);
 $captain_cabin_mobile_border_radius: .75rem;
 $captain_cabin_mobile_spacing: .5rem;
 $change_bar_height: 4rem;
@@ -29,7 +32,6 @@ $secretary_scene_mobile_height: 5rem;
 $captain_cabin_mobile_height: calc($change_bar_mobile_height + $secretary_scene_mobile_height + $captain_cabin_mobile_spacing + $captain_cabin_mobile_border_radius / 2);
 $small_screen_width : 640px;
 $transition_duration: .15s;
-
 
 @mixin hover_light($is_custom_transition: false) {
     @if $is_custom_transition {

@@ -6,6 +6,7 @@ import { LaunchCancelBtn, LaunchConfirmBtn } from './CaptainConsoleButton'
 import ConsoleLabel from './ConsoleLabel'
 import DialogueBubble from './DialogueBubble'
 import LanguageSelect from './LanguageSelect'
+import SecretaryBackground from './SecretaryBackground'
 import SecretaryList from './SecretaryList'
 import Icon from '@mui/material/Icon'
 import SecretaryBody from '../assets/img/body.svg'
@@ -17,10 +18,10 @@ function Secretary() {
     return (
         <div className='secretary' style={{ opacity: 1 }}>
             <div className='secretary__head'>
-                <img src={headImage} alt='head' />
+                <img src={headImage} alt='head' draggable={false} />
             </div>
             <div className='secretary__body'>
-                <img src={SecretaryBody} alt='body' />
+                <img src={SecretaryBody} alt='body' draggable={false} />
             </div>
         </div>
     )
@@ -36,18 +37,11 @@ function SecretaryMain() {
     )
 }
 
-function SecretaryBg() {
-    return (
-        <div className='secretary_bg'>
-        </div>
-    )
-}
-
 function SecretaryDisplay() {
     return (
         <div className='secretary_display'>
             <SecretaryMain />
-            <SecretaryBg />
+            <SecretaryBackground />
         </div>
     )
 }

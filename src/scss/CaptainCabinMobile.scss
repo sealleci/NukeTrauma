@@ -11,7 +11,7 @@ $handle_height: 1.5rem;
     width: 100%;
     height: g.$captain_cabin_mobile_height;
     bottom: 0;
-    background-color: g.$cabin_bg_color_light;
+    background-color: g.$cabin_bg_light_color;
     z-index: 1200;
     transition: bottom g.$transition_duration;
 
@@ -24,7 +24,6 @@ $handle_height: 1.5rem;
     }
 
     &__handle {
-
         position: absolute;
         display: flex;
         align-items: center;
@@ -33,15 +32,15 @@ $handle_height: 1.5rem;
         height: $handle_height;
         top: calc(-1 * $handle_height + 1px);
         border-radius: g.$captain_cabin_mobile_border_radius g.$captain_cabin_mobile_border_radius 0 0;
-        background-color: g.$cabin_bg_color_light;
-        box-shadow: 0 -2px 4px rgba(black, .25);
+        background-color: g.$cabin_bg_light_color;
+        box-shadow: 0 -2px 2px rgba(black, .2);
         pointer-events: visiblePainted;
 
         &__icon {
             height: 40%;
             width: 4rem;
             border-radius: $handle_height;
-            background-color: g.$gray_color_light;
+            background-color: g.$gray_light_color;
             cursor: move;
         }
     }

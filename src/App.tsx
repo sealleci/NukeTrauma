@@ -18,9 +18,10 @@ import MeowscaradaIcon from './assets/icon/meowscarada.svg'
 import MeowscaradaImage from './assets/img/meowscarada.svg'
 import NecoArcIcon from './assets/icon/neco_arc.svg'
 import NecoArcImage from './assets/img/neco_arc.svg'
+import SecretaryBody from './assets/img/body.svg'
 import VaporeonIcon from './assets/icon/vaporeon.svg'
 import VaporeonImage from './assets/img/vaporeon.svg'
-import SecretaryBody from './assets/img/body.svg'
+import WaveImage from './assets/img/wave.svg'
 
 export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -65,7 +66,8 @@ export default function App() {
       NecoArcImage,
       SecretaryBody,
       VaporeonIcon,
-      VaporeonImage
+      VaporeonImage,
+      WaveImage
     ]).catch(console.error)
   }, [isLoading, setLanguage, setUiTranslation, setDialogue, preloadImages])
 

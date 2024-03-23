@@ -11,5 +11,8 @@
         }
     ],
     "liveSassCompile.settings.compileOnWatch": false,
-    "liveSassCompile.settings.showOutputWindowOn": "Debug"
+    "liveSassCompile.settings.showOutputWindowOn": "Debug",
+    "cSpell.words": [
+        "zustand"
+    ]
 }

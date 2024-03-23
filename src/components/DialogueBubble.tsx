@@ -3,6 +3,8 @@ import useCharacterStore from '../store/character_store.ts'
 import useDialogueStore from '../store/dialogue_store.ts'
 import useLanguageStore from '../store/language_store.ts'
 import useRegionStore from '../store/region_store.ts'
+import useSelectStore from '../store/select_store.ts'
+import useWidthStore from '../store/width_stroe.ts'
 import { shuffle } from '../utils/tool.ts'
 import type { LanguageType, CharacterType } from '../types/data.ts'
 import Icon from '@mui/material/Icon'
@@ -17,6 +19,8 @@ export default function DialogueBubble() {
     const prevSubNumeric = useDialogueStore((state) => state.prevSubNumeric)
     const prevLanguage = useDialogueStore((state) => state.prevLanguage)
     const curSentence = useDialogueStore((state) => state.curSentence)
+    const isSelectOpen = useSelectStore((state) => state.isSelectOpen)
+    const isSmallScreen = useWidthStore((state) => state.isSmallScreen)
     const setPrevCharacter = useDialogueStore((state) => state.setPrevCharacter)
     const setPrevRegion = useDialogueStore((state) => state.setPrevRegion)
     const setPrevSubNumeric = useDialogueStore((state) => state.setPrevSubNumeric)
@@ -119,7 +123,7 @@ export default function DialogueBubble() {
                 <Icon>forward</Icon>
                 <Icon>visibility_off</Icon>
             </div>
-            <div className='dialogue_bubble__content'>
+            <div className={'dialogue_bubble__content' + (isSelectOpen && !isSmallScreen ? ' dialogue_bubble__content--shrink' : '')}>
                 <span>{curSentence}</span>
             </div>
         </div>
