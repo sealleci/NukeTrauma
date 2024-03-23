@@ -43,7 +43,7 @@ const SCALE_MIN: number = 1
 const SCALE_MAX: number = 50
 const INIT_ZOOM: number = 5
 const INIT_CENTER: [number, number] = [37.6175, 55.7519]
-const EVENT_INTERVAL: number = 68
+const EVENT_INTERVAL: number = 17
 
 const geoOption: EChartsOption = {
     backgroundColor: 'transparent',
@@ -64,7 +64,6 @@ const geoOption: EChartsOption = {
             max: SCALE_MAX
         },
         itemStyle: {
-            // areaColor: '#DAD4B5'
             areaColor: '#3c3171',
             borderColor: '#19102'
         },
@@ -81,7 +80,6 @@ const geoOption: EChartsOption = {
                 fontFamily: 'Consolas'
             },
             itemStyle: {
-                // areaColor: '#E25E3E',
                 areaColor: '#5babf8'
             }
         },
@@ -95,7 +93,6 @@ const geoOption: EChartsOption = {
                 fontFamily: 'Consolas'
             },
             itemStyle: {
-                // areaColor: '#C63D2F'
                 areaColor: '#e84981'
             }
         },
@@ -218,6 +215,8 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const setRelocateSignal = useLaunchStore((state) => state.setRelocateSignal)
 
     const scaleForTouch = useCallback((event: TouchEvent) => {
+        event.preventDefault()
+
         if (event.targetTouches.length < 2
             || !chartRef.current
             || !touchScaleThrottlingSignal.current
@@ -262,12 +261,12 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
         if (Math.abs(touchPointDistance - prevDistance.current) > 1e-6) {
             chart.setOption({
                 geo: {
-                    zoom: scaleCoef.current
-                },
-                center: [
-                    logicalChartCenterCoord[0] - (logicalDistance.x / (scaleCoef.current / prevScaleCoef.current) - logicalDistance.x),
-                    logicalChartCenterCoord[1] - (logicalDistance.y / (scaleCoef.current / prevScaleCoef.current) - logicalDistance.y)
-                ]
+                    zoom: scaleCoef.current,
+                    center: [
+                        logicalChartCenterCoord[0] - (logicalDistance.x / (scaleCoef.current / prevScaleCoef.current) - logicalDistance.x),
+                        logicalChartCenterCoord[1] - (logicalDistance.y / (scaleCoef.current / prevScaleCoef.current) - logicalDistance.y)
+                    ]
+                }
             }, {
                 lazyUpdate: true,
                 silent: true
@@ -326,7 +325,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
         wheelScaleThrottlingSignal.current = false
         setTimeout(() => {
             wheelScaleThrottlingSignal.current = true
-        }, 20)
+        }, EVENT_INTERVAL)
     }, [])
 
     const handleBlankMove = useCallback((params: ElementEvent) => {

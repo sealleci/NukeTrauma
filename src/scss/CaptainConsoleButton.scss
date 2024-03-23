@@ -70,6 +70,7 @@ $saturate_percent: 20%;
             background-color: transparent;
             box-shadow: none;
             border: none;
+            cursor: default;
 
             &>div {
                 width: g.$launch_btn_circle_mobile_diameter;
