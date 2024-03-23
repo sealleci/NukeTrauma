@@ -24,12 +24,6 @@ $saturate_percent: 20%;
         background-color: $cancel_btn_bg_color;
 
         @include btn_hover_and_active($cancel_btn_bg_color);
-
-        // @media screen and (max-width: g.$small_screen_width) {
-        //     background-color: color.scale($cancel_btn_bg_color, $saturation: $saturate_percent);
-
-        //     @include btn_hover_and_active(color.scale($cancel_btn_bg_color, $saturation: $saturate_percent));
-        // }
     }
 }
 
@@ -43,12 +37,6 @@ $saturate_percent: 20%;
         background-color: $confirm_btn_bg_color;
 
         @include btn_hover_and_active($confirm_btn_bg_color);
-
-        // @media screen and (max-width: g.$small_screen_width) {
-        //     background-color: color.scale($confirm_btn_bg_color, $saturation: $saturate_percent);
-
-        //     @include btn_hover_and_active(color.scale($confirm_btn_bg_color, $saturation: $saturate_percent));
-        // }
     }
 }
 

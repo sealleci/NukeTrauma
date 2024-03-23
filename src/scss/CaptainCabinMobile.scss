@@ -18,6 +18,7 @@ $handle_height: 1.5rem;
     backdrop-filter: blur(3px);
     z-index: 1200;
     transition: bottom g.$transition_duration;
+    // overflow: hidden;
 
     &.captain_cabin_mobile--half-collapsed {
         bottom: calc((g.$change_bar_mobile_height + g.$captain_cabin_mobile_glass_line + g.$captain_cabin_mobile_spacing * 2) * -1);
@@ -47,15 +48,14 @@ $handle_height: 1.5rem;
 }
 
 .console_wrapper {
-    $spacing: .4rem;
+    $spacing: .5rem;
 
     position: absolute;
-    top: calc(g.$launch_btn_circle_mobile_diameter * -1 - $spacing);
+    top: calc(-1 * g.$launch_btn_circle_mobile_diameter - $spacing);
     opacity: 1;
     z-index: 2000;
-    transition: opacity g.$transition_duration,
-        left g.$transition_duration,
-        right g.$transition_duration;
+    transition: transform calc(g.$transition_duration * 2),
+        opacity calc(g.$transition_duration * 2);
 
     &.console_wrapper__l {
         left: $spacing;
@@ -66,14 +66,17 @@ $handle_height: 1.5rem;
     }
 
     &.console_wrapper--invisible {
+        $rotation_degree: 90deg;
+
         opacity: 0;
+        pointer-events: none;
 
         &.console_wrapper__l {
-            left: (- g.$launch_btn_circle_mobile_diameter);
+            transform: rotateZ($rotation_degree);
         }
 
         &.console_wrapper__r {
-            right: (- g.$launch_btn_circle_mobile_diameter);
+            transform: rotateZ(-1 * $rotation_degree);
         }
     }
 }
@@ -109,7 +112,7 @@ $handle_height: 1.5rem;
         position: relative;
         flex-shrink: 0;
         height: 100%;
-        margin-left: .5rem;
+        margin-left: g.$mobile_secretary_scene_spacing;
         width: calc(g.$secretary_scene_mobile_height * .95);
         outline: 2px solid g.$border_white_color;
         border-radius: 50%;

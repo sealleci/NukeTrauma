@@ -177,27 +177,29 @@ const CaptainCabinMobile = forwardRef((_, ref) => {
     }, [onDragEnd, onDragging, isMouseLeave])
 
     return (
-        <div className={`captain_cabin_mobile${curCollapseStatus === CollapseStatus.HALF_COLLAPSED
-            ? ' captain_cabin_mobile--half-collapsed'
-            : curCollapseStatus === CollapseStatus.COLLAPSED
-                ? ' captain_cabin_mobile--collapsed' : ''}`}
-            ref={captainCabinMobileRef}>
-            <div className="captain_cabin_mobile__handle"
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseLeave}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-                ref={captainCabinMobileHandleRef}
-            >
-                <div className="captain_cabin_mobile__handle__icon"></div>
+        <>
+            <div className={`captain_cabin_mobile${curCollapseStatus === CollapseStatus.HALF_COLLAPSED
+                ? ' captain_cabin_mobile--half-collapsed'
+                : curCollapseStatus === CollapseStatus.COLLAPSED
+                    ? ' captain_cabin_mobile--collapsed' : ''}`}
+                ref={captainCabinMobileRef}>
+                <CaptainConsoleMobile regionListLength={regionList.length} />
+                <div className="captain_cabin_mobile__handle"
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseLeave}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    ref={captainCabinMobileHandleRef}
+                >
+                    <div className="captain_cabin_mobile__handle__icon"></div>
+                </div>
+                <SecretarySceneMobile />
+                <SecretaryList ref={secretaryListRef} />
             </div>
-            <CaptainConsoleMobile regionListLength={regionList.length} />
-            <SecretarySceneMobile />
-            <SecretaryList ref={secretaryListRef} />
-        </div>
+        </>
     )
 })
 
