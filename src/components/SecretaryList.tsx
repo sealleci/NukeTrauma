@@ -81,7 +81,7 @@ const SecretaryList = memo(forwardRef((_, ref) => {
         <div className='secretary_list' ref={secretaryListRef}>
             {secretaries.map((item, index) => (
                 <div className='secretary_list__item' onClick={() => setCharacter(item.name, item.headImage)} key={index}>
-                    <img src={item.icon} alt={item.name} />
+                    <img src={item.icon} alt={item.name} draggable={false} />
                 </div>
             ))}
         </div>

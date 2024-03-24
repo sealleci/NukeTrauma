@@ -48,7 +48,7 @@ const EVENT_INTERVAL: number = 17
 const geoOption: EChartsOption = {
     backgroundColor: 'transparent',
     animationDelayUpdate: 0,
-    animationDurationUpdate: 0,
+    animationDurationUpdate: EVENT_INTERVAL,
     stateAnimation: {
         duration: 0,
         delay: 0,
@@ -68,7 +68,7 @@ const geoOption: EChartsOption = {
             borderColor: '#19102'
         },
         label: {
-            color: 'white'
+            silent: true
         },
         emphasis: {
             label: {
@@ -197,7 +197,7 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const isScaling = useRef<boolean>(false)
     const touchScaleThrottlingSignal = useRef<boolean>(true)
     const wheelScaleThrottlingSignal = useRef<boolean>(true)
-    // const blankMoveThrottlingSignal = useRef<boolean>(true)
+    const blankMoveThrottlingSignal = useRef<boolean>(true)
     const scaleCoef = useRef<number>(5)
     const prevScaleCoef = useRef<number>(5)
     const prevDistance = useRef<number>(0)
@@ -215,12 +215,12 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
     const setRelocateSignal = useLaunchStore((state) => state.setRelocateSignal)
 
     const scaleForTouch = useCallback((event: TouchEvent) => {
-        event.preventDefault()
-
         if (event.targetTouches.length < 2
             || !chartRef.current
             || !touchScaleThrottlingSignal.current
         ) { return }
+
+        event.preventDefault()
 
         const chart = getInstanceByDom(chartRef.current)!
         const touch1 = event.targetTouches[0]
@@ -343,11 +343,9 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
             { x: normalizedCurCoord.x, y: normalizedCurCoord.y },
             { x: prevMoveCoord.current.x, y: prevMoveCoord.current.y }
         )
-        // const COMPENSATION: number = 1
-
 
         if (viewDistance > 1e-6
-            // && blankMoveThrottlingSignal.current
+            && blankMoveThrottlingSignal.current
         ) {
             chart.setOption({
                 geo: {
@@ -360,14 +358,13 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
                 lazyUpdate: true,
                 silent: true
             })
+            prevMoveCoord.current = normalizedCurCoord
 
-            // blankMoveThrottlingSignal.current = false
-            // setTimeout(() => {
-            //     blankMoveThrottlingSignal.current = true
-            // }, EVENT_INTERVAL)
+            blankMoveThrottlingSignal.current = false
+            setTimeout(() => {
+                blankMoveThrottlingSignal.current = true
+            }, EVENT_INTERVAL)
         }
-
-        prevMoveCoord.current = normalizedCurCoord
     }, [])
 
     useEffect(() => {
@@ -383,20 +380,13 @@ const GeoCharts = memo(({ style, settings, loading, theme }: ReactEChartsProps) 
             chart.on('geoselectchanged', (params) => {
                 setRegionList((params as GeoSelectChangedEvent).allSelected[0].name)
             })
-            chart.on('mouseout', (params) => {
-                const curRegionList = getRegionList()
-
-                if (curRegionList.includes(params.name)) {
-                    chart?.resize()
-                }
-            })
-            chart.getZr().on('mousemove', handleBlankMove)
             chart.getZr().on('mousedown', (params) => {
                 prevMoveCoord.current = {
                     x: params.offsetX,
                     y: params.offsetY
                 }
             })
+            chart.getZr().on('mousemove', handleBlankMove)
             chart.getZr().on('mouseup', () => {
                 prevMoveCoord.current = null
             })

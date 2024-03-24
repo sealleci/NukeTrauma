@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useCharacterStore from '../store/character_store.ts'
 import useLanguageStore from '../store/language_store.ts'
 import useRegionStore from '../store/region_store.ts'
@@ -13,17 +13,61 @@ import SecretaryBody from '../assets/img/body.svg'
 import '../scss/CaptainCabin.scss'
 
 function Secretary() {
+    const [prevHeadImage, setPrevHeadImage] = useState<string>('')
+    const timerRef = useRef<number>(-1)
+    const prevSecretaryRef = useRef<HTMLDivElement>(null)
+    const curSecretaryRef = useRef<HTMLDivElement>(null)
     const headImage = useCharacterStore((state) => state.headImage)
 
+    useEffect(() => {
+        if (prevHeadImage === '') {
+            setPrevHeadImage(headImage)
+            return
+        }
+
+        if (prevHeadImage === headImage
+            || prevSecretaryRef.current === null
+            || curSecretaryRef.current === null) { return }
+
+        if (timerRef.current !== -1) {
+            clearTimeout(timerRef.current)
+        }
+
+        curSecretaryRef.current.classList.remove('secretary--moving')
+        prevSecretaryRef.current.classList.remove('secretary--moving')
+
+        curSecretaryRef.current.classList.remove('secretary--shaking')
+        curSecretaryRef.current.classList.add('secretary--moving')
+        prevSecretaryRef.current.classList.add('secretary--moving')
+
+        timerRef.current = setTimeout(() => {
+            curSecretaryRef.current?.classList.remove('secretary--moving')
+            prevSecretaryRef.current?.classList.remove('secretary--moving')
+            curSecretaryRef.current?.classList.add('secretary--shaking')
+
+            setPrevHeadImage(headImage)
+        }, 300)
+    }, [headImage, prevHeadImage])
+
     return (
-        <div className='secretary' style={{ opacity: 1 }}>
-            <div className='secretary__head'>
-                <img src={headImage} alt='head' draggable={false} />
+        <>
+            <div className='secretary secretary--shaking' ref={curSecretaryRef}>
+                <div className='secretary__head'>
+                    <img src={headImage} alt='head' draggable={false} />
+                </div>
+                <div className='secretary__body'>
+                    <img src={SecretaryBody} alt='body' draggable={false} />
+                </div>
             </div>
-            <div className='secretary__body'>
-                <img src={SecretaryBody} alt='body' draggable={false} />
+            <div className='secretary prev_secretary' ref={prevSecretaryRef}>
+                <div className='secretary__head'>
+                    <img src={prevHeadImage} alt='head' draggable={false} />
+                </div>
+                <div className='secretary__body'>
+                    <img src={SecretaryBody} alt='body' draggable={false} />
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

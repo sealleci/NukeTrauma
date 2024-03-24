@@ -16,7 +16,7 @@ $handle_height: 1.5rem;
     background-color: g.$map_nav_bg_color;
     box-shadow: 0 -2px 0 g.$border_white_color;
     backdrop-filter: blur(3px);
-    z-index: 1200;
+    z-index: 2000;
     transition: bottom g.$transition_duration;
     // overflow: hidden;
 
@@ -53,9 +53,10 @@ $handle_height: 1.5rem;
     position: absolute;
     top: calc(-1 * g.$launch_btn_circle_mobile_diameter - $spacing);
     opacity: 1;
-    z-index: 2000;
-    transition: transform calc(g.$transition_duration * 2),
-        opacity calc(g.$transition_duration * 2);
+    z-index: 1500;
+    transition: top calc(g.$transition_duration * 2),
+        opacity calc(g.$transition_duration * 2),
+        transform calc(g.$transition_duration * 2);
 
     &.console_wrapper__l {
         left: $spacing;
@@ -72,10 +73,12 @@ $handle_height: 1.5rem;
         pointer-events: none;
 
         &.console_wrapper__l {
+            top: 0;
             transform: rotateZ($rotation_degree);
         }
 
         &.console_wrapper__r {
+            top: 0;
             transform: rotateZ(-1 * $rotation_degree);
         }
     }
@@ -84,20 +87,67 @@ $handle_height: 1.5rem;
 @keyframes head_swing {
     $swing_angle: 3deg;
 
-    from {
-        transform: rotate(- $swing_angle);
+    0% {
+        transform: rotate(0);
     }
 
-    50% {
+    25% {
         transform: rotate($swing_angle);
     }
 
-    to {
-        transform: rotate(- $swing_angle);
+    50% {
+        transform: rotate(0);
+    }
+
+    75% {
+        transform: rotate(calc(-1 * $swing_angle));
+    }
+
+    100% {
+        transform: rotate(0);
     }
 }
 
-.secretary_scene--mobile {
+@keyframes head_flip_front {
+    from {
+        transform: rotateY(0deg);
+        opacity: 1;
+    }
+
+    99% {
+        transform: rotateY(89deg);
+        opacity: 1;
+    }
+
+    to {
+        transform: rotateY(90deg);
+        opacity: 0;
+    }
+}
+
+@keyframes head_flip_back {
+    from {
+        transform: rotateY(-180deg);
+        opacity: 0;
+    }
+
+    49% {
+        transform: rotateY(-91deg);
+        opacity: 0;
+    }
+
+    50% {
+        transform: rotateY(-90deg);
+        opacity: 1;
+    }
+
+    to {
+        transform: rotateY(0deg);
+        opacity: 1;
+    }
+}
+
+.secretary_scene_mobile {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -108,7 +158,7 @@ $handle_height: 1.5rem;
     padding-top: g.$captain_cabin_mobile_spacing;
     padding-bottom: calc(g.$captain_cabin_mobile_spacing * 2);
 
-    .secretary__head--mobile {
+    .secretary_mobile__head {
         position: relative;
         flex-shrink: 0;
         height: 100%;
@@ -119,11 +169,27 @@ $handle_height: 1.5rem;
         overflow: hidden;
 
         img {
-            position: relative;
+            position: absolute;
             top: 0;
+            left: 0;
             width: 100%;
             user-select: none;
-            animation: head_swing ease-in-out 4s infinite;
+
+            &.secretary_mobile__head--swinging {
+                animation: head_swing linear 4s infinite;
+            }
+
+            &.secretary_mobile__head--flipping-front {
+                animation: head_flip_front ease-in-out .15s 1;
+            }
+
+            &.secretary_mobile__head--flipping-back {
+                animation: head_flip_back ease-in-out .3s 1;
+            }
+
+            &.prev_secretary_mobile__head {
+                opacity: 0;
+            }
         }
     }
 }

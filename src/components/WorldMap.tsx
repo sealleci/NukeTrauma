@@ -62,8 +62,12 @@ const WorldMapMain = memo(() => {
 function ExplosionScene() {
     return (
         <div className='explosion_scene'>
-            <img src={MushroomHeadImage} alt="mushroom head" />
-            <img src={MushroomRootImage} alt="mushroom root" />
+            <img src={MushroomHeadImage}
+                alt='mushroom head'
+                draggable={false} />
+            <img src={MushroomRootImage}
+                alt='mushroom root'
+                draggable={false} />
         </div>
     )
 }
@@ -76,7 +80,7 @@ function RelocateBtn() {
     }
 
     return (
-        <div className="relocate_btn" onClick={handleClick}>
+        <div className='relocate_btn' onClick={handleClick}>
             <Icon>zoom_out_map</Icon>
         </div>
     )

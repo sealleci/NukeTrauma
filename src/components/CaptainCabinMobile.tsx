@@ -1,9 +1,9 @@
-import { forwardRef, MouseEvent, TouchEvent, useCallback, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, MouseEvent, TouchEvent, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import useCharacterStore from '../store/character_store.ts'
 import useRegionStore from '../store/region_store.ts'
-import { LaunchCancelBtn, LaunchConfirmBtn } from "./CaptainConsoleButton"
-import DialogueBubble from "./DialogueBubble"
-import SecretaryList from "./SecretaryList"
+import { LaunchCancelBtn, LaunchConfirmBtn } from './CaptainConsoleButton'
+import DialogueBubble from './DialogueBubble'
+import SecretaryList from './SecretaryList'
 import type { SecretaryListHandle } from './SecretaryList'
 import '../scss/CaptainCabinMobile.scss'
 
@@ -26,12 +26,55 @@ function CaptainConsoleMobile({ regionListLength }: { regionListLength: number }
 }
 
 function SecretarySceneMobile() {
+    const [prevHeadImage, setPrevHeadImage] = useState<string>('')
+    const timerRef = useRef<number>(-1)
+    const prevHeadImageRef = useRef<HTMLImageElement>(null)
+    const curHeadImageRef = useRef<HTMLImageElement>(null)
     const headImage = useCharacterStore((state) => state.headImage)
 
+    useEffect(() => {
+        if (prevHeadImage === '') {
+            setPrevHeadImage(headImage)
+            return
+        }
+
+        if (prevHeadImage === headImage
+            || prevHeadImageRef.current === null
+            || curHeadImageRef.current === null) { return }
+
+        if (timerRef.current !== -1) {
+            clearTimeout(timerRef.current)
+        }
+
+        curHeadImageRef.current.classList.remove('secretary_mobile__head--flipping-back')
+        prevHeadImageRef.current.classList.remove('secretary_mobile__head--flipping-front')
+
+        curHeadImageRef.current.classList.remove('secretary_mobile__head--swinging')
+        curHeadImageRef.current.classList.add('secretary_mobile__head--flipping-back')
+        prevHeadImageRef.current.classList.add('secretary_mobile__head--flipping-front')
+
+        timerRef.current = setTimeout(() => {
+            curHeadImageRef.current?.classList.remove('secretary_mobile__head--flipping-back')
+            prevHeadImageRef.current?.classList.remove('secretary_mobile__head--flipping-front')
+            curHeadImageRef.current?.classList.add('secretary_mobile__head--swinging')
+
+            setPrevHeadImage(headImage)
+        }, 300)
+    }, [headImage, prevHeadImage])
+
     return (
-        <div className='secretary_scene--mobile'>
-            <div className="secretary__head--mobile">
-                <img src={headImage} alt='head' draggable={false} />
+        <div className='secretary_scene_mobile'>
+            <div className='secretary_mobile__head'>
+                <img src={headImage}
+                    alt='head'
+                    className='secretary_mobile__head--swinging'
+                    draggable={false}
+                    ref={curHeadImageRef} />
+                <img src={prevHeadImage}
+                    alt=''
+                    className='prev_secretary_mobile__head'
+                    draggable={false}
+                    ref={prevHeadImageRef} />
             </div>
             <DialogueBubble />
         </div>
@@ -184,7 +227,7 @@ const CaptainCabinMobile = forwardRef((_, ref) => {
                     ? ' captain_cabin_mobile--collapsed' : ''}`}
                 ref={captainCabinMobileRef}>
                 <CaptainConsoleMobile regionListLength={regionList.length} />
-                <div className="captain_cabin_mobile__handle"
+                <div className='captain_cabin_mobile__handle'
                     onMouseDown={handleMouseDown}
                     onMouseMove={handleMouseMove}
                     onMouseUp={handleMouseUp}
@@ -194,7 +237,7 @@ const CaptainCabinMobile = forwardRef((_, ref) => {
                     onTouchEnd={handleTouchEnd}
                     ref={captainCabinMobileHandleRef}
                 >
-                    <div className="captain_cabin_mobile__handle__icon"></div>
+                    <div className='captain_cabin_mobile__handle__icon'></div>
                 </div>
                 <SecretarySceneMobile />
                 <SecretaryList ref={secretaryListRef} />

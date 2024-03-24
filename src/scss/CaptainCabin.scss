@@ -43,7 +43,7 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    width: 320px;
+    width: g.$captain_cabin_width;
     height: calc(var(--vh, 1vh) * 100);
     min-height: calc($secretary_scene_min_height + $captain_console_min_height);
 }
@@ -150,16 +150,46 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
     height: 100%;
 }
 
+$secretary_width: 256px;
+
+@keyframes moving_right {
+    0% {
+        left: calc(-1 * (g.$captain_cabin_width - $secretary_width) / 2 - $secretary_width);
+    }
+
+    100% {
+        left: 0;
+    }
+}
+
+@keyframes prev_moving_right {
+    0% {
+        left: calc((g.$captain_cabin_width - $secretary_width) / 2);
+        visibility: visible;
+    }
+
+    100% {
+        left: g.$captain_cabin_width;
+        visibility: visible;
+    }
+}
+
 .secretary {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    width: 256px;
+    width: $secretary_width;
     user-select: none;
 
-    @include body_shaking_animation(0px);
+    &.secretary--shaking {
+        @include body_shaking_animation(0px);
+    }
+
+    &.secretary--moving {
+        animation: moving_right ease-in-out .3s 1;
+    }
 
     &>div {
         flex-grow: 0;
@@ -187,6 +217,18 @@ $captain_console_min_height: calc(g.$launch_btn_circle_diameter + g.$launch_btn_
         position: relative;
         height: $secretary_body_height;
         z-index: 50;
+    }
+
+
+    &.prev_secretary {
+        position: absolute;
+        bottom: 0;
+        left: g.$captain_cabin_width;
+        visibility: hidden;
+
+        &.secretary--moving {
+            animation: prev_moving_right ease-in-out .3s 1;
+        }
     }
 }
 
