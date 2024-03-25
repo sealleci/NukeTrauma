@@ -101,12 +101,20 @@
     @media screen and (max-width: g.$small_screen_width) {
         left: calc(100vw - g.$map_nav_display_margin - g.$language_select_mobile_width) !important;
         background-color: g.$map_nav_bg_color !important;
-        outline: 2px solid rgba(255, 255, 255, .1) !important;
+        outline: 2px solid g.$border_white_light_color !important;
 
         li {
             min-height: 2.5rem !important;
             padding-left: 8px;
             font-size: .75rem;
+
+            &.Mui-selected,
+            &.Mui-selected:hover,
+            &:active,
+            &:focus,
+            &.Mui-selected:focus {
+                background-color: rgba(#5babf8, .4);
+            }
         }
     }
 }

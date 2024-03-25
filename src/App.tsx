@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, StrictMode, useCallback } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import useLanguageStore from './store/language_store.ts'
 import useWidthStore from './store/width_stroe.ts'
 import CaptainCabin from './components/CaptainCabin'
@@ -107,10 +107,10 @@ export default function App() {
   }
 
   return (
-    <StrictMode>
+    <>
       {!isSmallScreen && <CaptainCabin />}
       <WorldMap />
       {isSmallScreen && <CaptainCabinMobile ref={captainCabinMobileRef} />}
-    </StrictMode>
+    </>
   )
 }

@@ -1,17 +1,4 @@
 {
-    "less.compile": {
-        "out": "../css/"
-    },
-    "liveSassCompile.settings.generateMap": false,
-    "liveSassCompile.settings.formats": [
-        {
-            "format": "compressed",
-            "extensionName": ".css",
-            "savePath": "~/../css"
-        }
-    ],
-    "liveSassCompile.settings.compileOnWatch": false,
-    "liveSassCompile.settings.showOutputWindowOn": "Debug",
     "cSpell.words": [
         "zustand"
     ]

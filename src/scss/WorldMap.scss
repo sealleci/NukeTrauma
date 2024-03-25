@@ -1,6 +1,9 @@
 @use 'sass:color';
 @use './general' as g;
 
+$relocate_icon_size: 1.5rem;
+$select_padding_vertical: 4px;
+
 .world_map {
     $scan_line_color: rgba(255, 255, 255, .05);
 
@@ -33,21 +36,22 @@
     }
 }
 
-.death_cnt {
+.death_counter {
     $display_height: 2.5rem;
-    $padding_horizontal: .75rem;
+    $padding_horizontal: .5rem;
+    $icon_size: 1.25rem;
+    $icon_margin_right: .5rem;
 
     position: absolute;
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    top: g.$map_nav_display_margin;
+    top: calc(g.$map_nav_display_margin + $select_padding_vertical + 1px);
     left: g.$map_nav_display_margin;
-    min-width: 4rem;
+    min-width: calc($icon_size + $icon_margin_right + 2rem);
     padding: 0 $padding_horizontal;
-    height: calc(g.$language_select_height - g.$map_nav_display_margin * 2);
+    height: calc(g.$language_select_height - g.$map_nav_display_margin * 2 - $select_padding_vertical * 2 - 1px);
     background-color: g.$map_nav_bg_color;
     backdrop-filter: blur(2px);
     border-radius: $display_height;
@@ -59,9 +63,10 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        height: 2rem;
-        width: 2rem;
-        margin-right: .5rem;
+        height: $icon_size;
+        width: $icon_size;
+        margin-left: calc(($relocate_icon_size - $icon_size) / 2);
+        margin-right: $icon_margin_right;
 
         img {
             width: 100%;
@@ -77,16 +82,16 @@
     }
 
     @media screen and (max-width: g.$small_screen_width) {
-        min-width: calc(g.$language_select_height - g.$map_nav_display_margin * 2 - $padding_horizontal * 2 + 1rem);
-
-        &__icon {
-            height: 1rem;
-            width: 1rem;
-            margin-right: .25rem;
-        }
+        min-width: calc($icon_size + $icon_margin_right + 1rem);
+        max-width: calc(100% - g.$map_nav_display_margin * 2 - $padding_horizontal * 2 - g.$language_select_width);
+        overflow: hidden;
 
         &__value {
             font-size: .75rem;
+            max-width: calc(100% - $icon_margin_right - $icon_size);
+            overflow-x: auto;
+            scrollbar-color: transparent transparent !important;
+            scrollbar-width: none !important;
         }
     }
 }
@@ -208,6 +213,7 @@
     }
 }
 
+
 .relocate_btn {
     $diameter: 2.5rem;
 
@@ -218,7 +224,7 @@
     align-items: center;
     width: $diameter;
     height: $diameter;
-    top: calc(g.$language_select_height + .5rem);
+    top: calc(g.$language_select_height + .5rem - $select_padding_vertical * 2);
     left: g.$map_nav_display_margin;
     border-radius: 50%;
     background-color: g.$map_nav_bg_color;
@@ -230,7 +236,7 @@
 
     span {
         color: g.$font_map_color;
-        font-size: 1.5rem;
+        font-size: $relocate_icon_size;
     }
 
     &:hover {

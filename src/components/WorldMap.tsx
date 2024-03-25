@@ -42,11 +42,11 @@ function DeathCounter() {
     }, [count, prevCount])
 
     return (
-        <div className='death_cnt'>
-            <div className='death_cnt__icon'>
+        <div className='death_counter'>
+            <div className='death_counter__icon'>
                 <img src={DeathIcon} alt='death' draggable={false} />
             </div>
-            <div className='death_cnt__value'>{displayCount}</div>
+            <div className='death_counter__value'>{displayCount}</div>
         </div>
     )
 }
