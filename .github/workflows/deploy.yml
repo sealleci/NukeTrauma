@@ -9,24 +9,27 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - name: Checkout workplace
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 20
   
       - name: Install dependencies
         run: npm install
   
       - name: Build React app
         run: npm run build
-      
-      - name: Change `dist` directory permission
-        run: chmod -c -R +rX dist
 
       - name: Archive and compress `dist` to `github-pages.tar.gr`
         run: tar -czvf github-pages.tar.gz dist
+      
+      - name: Move `github-pages.tar.gz` to `_site`
+        run: mkdie _site && mv github-pages.tar.gz _site
+
+      - name: Change `_site` directory permission
+        run: chmod -c -R +rX "_site"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
