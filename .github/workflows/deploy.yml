@@ -26,7 +26,7 @@ jobs:
         run: tar -czvf github-pages.tar.gz dist
       
       - name: Move `github-pages.tar.gz` to `_site`
-        run: mkdie _site && mv github-pages.tar.gz _site
+        run: mkdir _site && mv github-pages.tar.gz _site
 
       - name: Change `_site` directory permission
         run: chmod -c -R +rX "_site"
