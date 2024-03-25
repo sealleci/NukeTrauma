@@ -1,0 +1,46 @@
+name: Deploy Static Pages
+run-name: ${{ github.actor }} is deploying static pages.
+on:
+    push:
+      branches:
+        - main
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout workplace
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '20.x'
+  
+      - name: Install dependencies
+        run: npm install
+  
+      - name: Build React app
+        run: npm run build
+      
+      - name: Change `dist` directory permission
+        run: chmod -c -R +rX dist
+
+      - name: Archive and compress `dist` to `github-pages.tar.gr`
+        run: tar -czvf github-pages.tar.gz dist
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+
+    deploy:
+      needs: build
+      permissions:
+        pages: write
+        id-token: write
+      runs-on: ubuntu-latest
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+      steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
