@@ -23,7 +23,7 @@ jobs:
         run: npm run build
 
       - name: Archive and compress `dist` to `github-pages.tar.gr`
-        run: tar -czvf github-pages.tar.gz dist
+        run: tar -czvf github-pages.tar.gz -C dist .
       
       - name: Move `github-pages.tar.gz` to `_site`
         run: mkdir _site && mv github-pages.tar.gz _site
