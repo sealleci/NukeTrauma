@@ -1,52 +1,52 @@
 name: Deploy Static Pages
 run-name: ${{ github.actor }} is deploying static pages.
 on:
-    push:
-      branches:
-        - main
+  push:
+    branches:
+      - main
 jobs:
-    build:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Checkout workplace
-        uses: actions/checkout@v4
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout workplace
+      uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-  
-      - name: Install dependencies
-        run: npm install
-  
-      - name: Build React app
-        run: npm run build
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
 
-      # - name: Archive and compress `dist` to `github-pages.tar.gr`
-      #   run: tar -czvf github-pages.tar.gz -C dist .
-      
-      # - name: Move `github-pages.tar.gz` to `_site`
-      #   run: mkdir _site && mv github-pages.tar.gz _site
+    - name: Install dependencies
+      run: npm install
 
-      - name: Move 'dist' to '_site'
-        run: mkdir _site && mv dist/* _site
+    - name: Build React app
+      run: npm run build
 
-      - name: Change '_site' directory permission
-        run: chmod -c -R +rX "_site"
+    # - name: Archive and compress `dist` to `github-pages.tar.gr`
+    #   run: tar -czvf github-pages.tar.gz -C dist .
+    
+    # - name: Move `github-pages.tar.gz` to `_site`
+    #   run: mkdir _site && mv github-pages.tar.gz _site
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+    - name: Move 'dist' to '_site'
+      run: mkdir _site && mv dist/* _site
 
-    deploy:
-      needs: build
-      permissions:
-        pages: write
-        id-token: write
-      runs-on: ubuntu-latest
-      environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
-      steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    - name: Change '_site' directory permission
+      run: chmod -c -R +rX "_site"
+
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
