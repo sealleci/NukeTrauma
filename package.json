@@ -4,23 +4,24 @@
   "version": "1.2.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "dev": "bunx --bun vite",
+    "build": "bunx --bun tsc && bunx --bun  vite build",
+    "lint": "bunx --bun eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "bunx --bun vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.8",
-    "echarts": "^5.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-simple-maps": "^3.0.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.70",
     "@types/react-dom": "^18.2.7",
+    "@types/react-simple-maps": "^3.0.4",
     "@typescript-eslint/eslint-plugin": "^7.3.1",
     "@typescript-eslint/parser": "^7.3.1",
     "@vitejs/plugin-react": "^4.0.3",

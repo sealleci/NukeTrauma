@@ -12,8 +12,8 @@ export default defineConfig({
         manualChunks: {
           react: ['react', 'react-dom', 'zustand'],
           ui: ['@emotion/react', '@emotion/styled', '@mui/material/Icon', '@mui/material/MenuItem', '@mui/material/Select'],
-          echart: ['echarts'],
-          map: ['./src/assets/map/world.json'],
+          chart: ['react-simple-maps'],
+          map: ['./src/assets/map/features.json'],
           lang: ['./src/assets/lang/dialogue.json', './src/assets/lang/ui.json']
         }
       }

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { CharacterType } from '../types/data.ts'
+import type { CharacterType } from '../types/data.ts'
 
 interface CharacterState {
     type: CharacterType

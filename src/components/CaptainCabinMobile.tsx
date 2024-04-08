@@ -1,4 +1,5 @@
-import { forwardRef, MouseEvent, TouchEvent, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import type { MouseEvent, TouchEvent } from 'react'
 import useCharacterStore from '../store/character_store.ts'
 import useRegionStore from '../store/region_store.ts'
 import { LaunchCancelBtn, LaunchConfirmBtn } from './CaptainConsoleButton'

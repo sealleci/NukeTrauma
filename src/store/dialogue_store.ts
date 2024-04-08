@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { CharacterType, LanguageType } from '../types/data.ts'
+import type { CharacterType, LanguageType } from '../types/data.ts'
 
 interface DialogueState {
     prevCharacter: CharacterType

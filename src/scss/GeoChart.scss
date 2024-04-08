@@ -1,0 +1,37 @@
+@use './general' as g;
+
+.world_map__main>svg {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+
+    .rsm-geography {
+        stroke: g.$map_bg_color;
+        stroke-width: .25;
+        cursor: pointer;
+        transition: fill g.$transition_duration;
+
+        @media screen and (max-width: g.$small_screen_width) {
+            cursor: default;
+        }
+
+        &:hover {
+            fill: #5babf8;
+        }
+    }
+
+    .region_label_text {
+        fill: white;
+        stroke: g.$map_bg_color;
+        stroke-width: .35;
+        font-size: .75rem;
+        font-family: "Consolas";
+        user-select: none;
+        cursor: pointer;
+
+        @media screen and (max-width: g.$small_screen_width) {
+            cursor: default;
+        }
+    }
+}
