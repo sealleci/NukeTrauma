@@ -213,7 +213,7 @@ const GeoChartContent = memo(() => {
                 onClick={() => handleClick(region)}
             >
                 <text
-                    fontSize={`${3.0 / zoomContext.k}rem`}
+                    fontSize={`${2.25 / zoomContext.k}rem`}
                     className='region_label_text'
                 >{region.properties.name}</text>
             </Marker>)
