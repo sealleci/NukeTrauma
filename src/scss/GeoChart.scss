@@ -25,8 +25,8 @@
     }
 
     .region_label_text {
+        text-anchor: middle;
         fill: white;
-        font-size: .75rem;
         font-family: "Consolas";
         outline: none;
         user-select: none;
@@ -36,4 +36,5 @@
             cursor: default;
         }
     }
+
 }

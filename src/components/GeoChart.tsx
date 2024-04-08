@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react'
-import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from 'react-simple-maps'
+// @ts-expect-error lib no types
+import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup, useZoomPanContext } from 'react-simple-maps'
 import useCounterStore from '../store/counter_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
 import useRegionStore from '../store/region_store.ts'
@@ -29,6 +30,13 @@ interface GeoItem<T extends keyof GeometryMappingType = 'Polygon'> {
         type: T
         coordinates: GeometryMappingType[T]
     }
+}
+
+interface ZoomPanContext {
+    x: number
+    y: number
+    k: number
+    transformString: string
 }
 
 function getIncrement(regionList: string[]): number {
@@ -120,6 +128,7 @@ const GeoChartContent = memo(() => {
     const cancelSignal = useLaunchStore((state) => state.cancelSignal)
     const setCancelSignal = useLaunchStore((state) => state.setCancelSignal)
     const increase = useCounterStore((state) => state.increase)
+    const zoomContext = useZoomPanContext() as ZoomPanContext
 
     const handleClick = useCallback((region: GeoItem) => {
         if (curSelectedRegionList.find(curRegion => curRegion.properties.name === region.properties.name) !== undefined) {
@@ -198,14 +207,13 @@ const GeoChartContent = memo(() => {
             }
         </Geographies>
         {
-
             curSelectedRegionList.map(region => <Marker
                 key={region.rsmKey + '-label'}
                 coordinates={calcCenter(region)}
                 onClick={() => handleClick(region)}
             >
                 <text
-                    textAnchor='middle'
+                    fontSize={`${3.0 / zoomContext.k}rem`}
                     className='region_label_text'
                 >{region.properties.name}</text>
             </Marker>)
