@@ -11,11 +11,11 @@ You will act as a captain of submarine, and launch nukes all over the world with
 - TypeScript
 - Sass
 - Zustand
-- Apache ECharts
+- React Simple Maps
 - Material UI
 - Material Icons Font
 - Google Web Fonts
 
 ## Map Data
 
-[World Map JSON](https://github.com/apache/echarts-www/blob/master/asset/map/json/world.json)
+[Geojson](https://www.react-simple-maps.io/docs/map-files/)
