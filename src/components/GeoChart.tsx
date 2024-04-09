@@ -165,13 +165,8 @@ const GeoChartContent = memo(() => {
     const cancelSignal = useLaunchStore((state) => state.cancelSignal)
     const setCancelSignal = useLaunchStore((state) => state.setCancelSignal)
     const increase = useCounterStore((state) => state.increase)
-    const worldMapWidth = useWidthStore((state) => state.worldMapWidth)
-    const fontSize = useMemo(() => `${(worldMapWidth > 1000
-        ? 1.0
-        : worldMapWidth > 640
-            ? 1.5
-            : 2.5) / zoomContext.k}rem`
-        , [zoomContext, worldMapWidth])
+    const fontSize = useMemo(() => `${1.25 / zoomContext.k}rem`
+        , [zoomContext])
 
     const handleClick = useCallback((region: GeoItem) => {
         if (curSelectedRegionList.find(curRegion => curRegion.properties.name === region.properties.name) !== undefined) {
@@ -196,6 +191,7 @@ const GeoChartContent = memo(() => {
         switch (region.geometry.type) {
             case 'Polygon':
                 storedRegionCenters.current[region.properties.name] = calcPolygonCentroid((region as GeoItem<'Polygon'>).geometry.coordinates[0])
+
                 return storedRegionCenters.current[region.properties.name]
             case 'MultiPolygon':
                 totalArea = (region as GeoItem<'MultiPolygon'>).geometry.coordinates
@@ -278,6 +274,8 @@ const GeoChartContent = memo(() => {
 const GeoChart = memo(() => {
     const relocateSignal = useLaunchStore((state) => state.relocateSignal)
     const setRelocateSignal = useLaunchStore((state) => state.setRelocateSignal)
+    const worldMapWidth = useWidthStore((state) => state.worldMapWidth)
+    const worldMapHeight = useWidthStore((state) => state.worldMapHeight)
     // XXX: 
     // this is a trick to trigger re-render when relocate signal changes, 
     // but the signal changes twice at once due to the following useEffect.
@@ -293,7 +291,10 @@ const GeoChart = memo(() => {
         setRelocateSignal(false)
     }, [relocateSignal, setRelocateSignal])
 
-    return <ComposableMap>
+    return <ComposableMap
+        width={worldMapWidth}
+        height={worldMapHeight}
+    >
         <ZoomableGroup
             center={INIT_CENTER}
             zoom={curZoom}

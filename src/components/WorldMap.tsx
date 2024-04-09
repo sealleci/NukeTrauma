@@ -88,6 +88,7 @@ function RelocateBtn() {
 
 interface WorldMapHandle {
     getWidth: () => number
+    getHeight: () => number
 }
 
 const WorldMap = forwardRef((_, ref) => {
@@ -107,7 +108,14 @@ const WorldMap = forwardRef((_, ref) => {
                 }
 
                 return worldMapRef.current.clientWidth
-            }
+            },
+            getHeight() {
+                if (worldMapRef.current === null) {
+                    return 720
+                }
+
+                return worldMapRef.current.clientHeight
+            },
         }
     })
 

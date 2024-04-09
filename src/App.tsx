@@ -33,6 +33,7 @@ export default function App() {
   const setDialogue = useLanguageStore((state) => state.setDialogue)
   const isSmallScreen = useWidthStore((state) => state.isSmallScreen)
   const setWorldMapWidth = useWidthStore((state) => state.setWorldMapWidth)
+  const setWorldMapHeight = useWidthStore((state) => state.setWorldMapHeight)
   const setIsSmallScreen = useWidthStore((state) => state.setIsSmallScreen)
   const captainCabinMobileRef = useRef<CaptainCabinMobileHandle>(null)
   const worldMapRef = useRef<WorldMapHandle>(null)
@@ -56,7 +57,8 @@ export default function App() {
     setIsSmallScreen(document.body.clientWidth <= SMALL_SCREEN_THRESHOLD)
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
     setWorldMapWidth(worldMapRef.current?.getWidth() ?? window.innerWidth)
-  }, [setIsSmallScreen, setWorldMapWidth])
+    setWorldMapHeight(worldMapRef.current?.getHeight() ?? window.innerHeight)
+  }, [setIsSmallScreen, setWorldMapWidth, setWorldMapHeight])
   const mouseUpCb = useCallback(() => {
     captainCabinMobileRef.current?.onMouseUp()
   }, [])
