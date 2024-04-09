@@ -4,6 +4,7 @@ import useWidthStore from './store/width_stroe.ts'
 import CaptainCabin from './components/CaptainCabin'
 import CaptainCabinMobile from './components/CaptainCabinMobile'
 import WorldMap from './components/WorldMap'
+import type { WorldMapHandle } from './components/WorldMap'
 import LoadingSpinner from './components/LoadingSpinner'
 import type { CaptainCabinMobileHandle } from './components/CaptainCabinMobile'
 import dialogue from './assets/lang/dialogue.json'
@@ -25,13 +26,16 @@ import VaporeonImage from './assets/img/vaporeon.svg'
 import WaveImage from './assets/img/wave.svg'
 
 export default function App() {
+  const SMALL_SCREEN_THRESHOLD: number = 640
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const setLanguage = useLanguageStore((state) => state.setLanguage)
   const setUiTranslation = useLanguageStore((state) => state.setUiTranslation)
   const setDialogue = useLanguageStore((state) => state.setDialogue)
   const isSmallScreen = useWidthStore((state) => state.isSmallScreen)
+  const setWorldMapWidth = useWidthStore((state) => state.setWorldMapWidth)
   const setIsSmallScreen = useWidthStore((state) => state.setIsSmallScreen)
   const captainCabinMobileRef = useRef<CaptainCabinMobileHandle>(null)
+  const worldMapRef = useRef<WorldMapHandle>(null)
 
   const preloadImages = useCallback(async (imageFileList: string[]): Promise<void> => {
     const promises = imageFileList.map((src) => {
@@ -46,6 +50,18 @@ export default function App() {
 
     await Promise.all(promises)
     setIsLoading(false)
+  }, [])
+
+  const resizeCb = useCallback(() => {
+    setIsSmallScreen(document.body.clientWidth <= SMALL_SCREEN_THRESHOLD)
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
+    setWorldMapWidth(worldMapRef.current?.getWidth() ?? window.innerWidth)
+  }, [setIsSmallScreen, setWorldMapWidth])
+  const mouseUpCb = useCallback(() => {
+    captainCabinMobileRef.current?.onMouseUp()
+  }, [])
+  const mouseMoveCb = useCallback(function (this: Window, event: globalThis.MouseEvent) {
+    captainCabinMobileRef.current?.onMouseMove(event.clientY)
   }, [])
 
   useEffect(() => {
@@ -74,21 +90,7 @@ export default function App() {
   }, [isLoading, setLanguage, setUiTranslation, setDialogue, preloadImages])
 
   useEffect(() => {
-    const SMALL_SCREEN_THRESHOLD: number = 640
-    const resizeCb = () => {
-      setIsSmallScreen(document.body.clientWidth <= SMALL_SCREEN_THRESHOLD)
-      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
-    }
-    const mouseUpCb = () => {
-      captainCabinMobileRef.current?.onMouseUp()
-    }
-    const mouseMoveCb = function (this: Window, event: globalThis.MouseEvent) {
-      captainCabinMobileRef.current?.onMouseMove(event.clientY)
-    }
-
-    setIsSmallScreen(document.body.clientWidth <= SMALL_SCREEN_THRESHOLD)
-    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
-
+    resizeCb()
     window.addEventListener('resize', resizeCb)
     window.addEventListener('mouseup', mouseUpCb)
     window.addEventListener('mousemove', mouseMoveCb)
@@ -98,7 +100,7 @@ export default function App() {
       window.removeEventListener('mouseup', mouseUpCb)
       window.removeEventListener('mousemove', mouseMoveCb)
     }
-  }, [setIsSmallScreen])
+  }, [setIsSmallScreen, resizeCb, mouseUpCb, mouseMoveCb])
 
   if (isLoading) {
     return (
@@ -109,7 +111,7 @@ export default function App() {
   return (
     <>
       {!isSmallScreen && <CaptainCabin />}
-      <WorldMap />
+      <WorldMap ref={worldMapRef} />
       {isSmallScreen && <CaptainCabinMobile ref={captainCabinMobileRef} />}
     </>
   )

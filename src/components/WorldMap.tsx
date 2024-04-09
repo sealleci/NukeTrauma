@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState, forwardRef, useImperativeHandle, useRef } from 'react'
 import Icon from '@mui/material/Icon'
 import useCounterStore from '../store/counter_store.ts'
 import useLaunchStore from '../store/launch_store.ts'
@@ -86,14 +86,30 @@ function RelocateBtn() {
     )
 }
 
-export default function WorldMap() {
-    /**  
-     * In component GeoChart, when launchSignal is true, 
-     * it will set it to false immediately.
-    */
+interface WorldMapHandle {
+    getWidth: () => number
+}
+
+const WorldMap = forwardRef((_, ref) => {
+    // XXX:
+    // In component GeoChart, when launchSignal is true, 
+    // it will set it to false immediately.
     const [explosion, setExplosion] = useState<JSX.Element>(<></>)
     const launchSignal = useLaunchStore((state) => state.launchSignal)
     const isSmallScreen = useWidthStore((state) => state.isSmallScreen)
+    const worldMapRef = useRef<HTMLDivElement>(null)
+
+    useImperativeHandle(ref, (): WorldMapHandle => {
+        return {
+            getWidth() {
+                if (worldMapRef.current === null) {
+                    return 1024
+                }
+
+                return worldMapRef.current.clientWidth
+            }
+        }
+    })
 
     useEffect(() => {
         if (!launchSignal) { return }
@@ -112,7 +128,7 @@ export default function WorldMap() {
     // }, [])
 
     return (
-        <div className='world_map'>
+        <div className='world_map' ref={worldMapRef}>
             <DeathCounter />
             {isSmallScreen && <LanguageSelect />}
             <RelocateBtn />
@@ -120,4 +136,7 @@ export default function WorldMap() {
             <WorldMapMain />
         </div>
     )
-}
+})
+
+export type { WorldMapHandle }
+export default WorldMap
