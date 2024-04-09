@@ -1,4 +1,8 @@
-function calcPolygonArea(coords: [number, number][]): number {
+/**
+ * Shoelace formula. 
+ * https://en.wikipedia.org/wiki/Shoelace_formula
+ */
+function calcPolygonArea(coords: [number, number][], isRawResult: boolean = false): number {
     let result: number = 0
     const minY: number = coords.reduce((min, coord) => Math.min(min, coord[1]), Infinity)
 
@@ -12,15 +16,22 @@ function calcPolygonArea(coords: [number, number][]): number {
             )
     }
 
-    return result / 2
+    // XXX:
+    // Area value could be negative,
+    // which is determined by the clock direction of the traversal.
+    return isRawResult ? result / 2 : Math.abs(result / 2)
 }
 
+/**
+ * Polygon centroid formula.
+ * https://mathworld.wolfram.com/PolygonCentroid.html
+ */
 function calcPolygonCentroid(coords: [number, number][]): [number, number] {
-    const area = calcPolygonArea(coords)
+    const area = calcPolygonArea(coords, true)
     const minX = coords.reduce((min, coord) => Math.min(min, coord[0]), Infinity)
     const minY = coords.reduce((min, coord) => Math.min(min, coord[1]), Infinity)
-    let x: number = 0
-    let y: number = 0
+    let centerX: number = 0
+    let centerY: number = 0
 
     for (let i = 0; i < coords.length; i += 1) {
         const factor = (
@@ -30,19 +41,19 @@ function calcPolygonCentroid(coords: [number, number][]): [number, number] {
             * (coords[i][1] - minY)
         )
 
-        x += (
+        centerX += (
             coords[i][0]
             + coords[(i + 1) % coords.length][0]
             - minX * 2
         ) * factor
-        y += (
+        centerY += (
             coords[i][1]
             + coords[(i + 1) % coords.length][1]
             - minY * 2
         ) * factor
     }
 
-    return [x / (6 * area) + minX, y / (6 * area) + minY]
+    return [centerX / (6 * area) + minX, centerY / (6 * area) + minY]
 }
 
 export { calcPolygonArea, calcPolygonCentroid }

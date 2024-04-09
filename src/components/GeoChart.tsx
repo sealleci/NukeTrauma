@@ -182,10 +182,10 @@ const GeoChartContent = memo(() => {
         }
 
         let tmpArea: number = 0
-        let totalArea: number = 0
-        let multiX: number = 0
-        let multiY: number = 0
         let tmpCenter: [number, number] = [0, 0]
+        let totalArea: number = 0
+        let multiCenterX: number = 0
+        let multiCenterY: number = 0
         let isHasBigPart: boolean = false
 
         switch (region.geometry.type) {
@@ -195,28 +195,28 @@ const GeoChartContent = memo(() => {
                 return storedRegionCenters.current[region.properties.name]
             case 'MultiPolygon':
                 totalArea = (region as GeoItem<'MultiPolygon'>).geometry.coordinates
-                    .reduce((sum, k) => sum + Math.abs(calcPolygonArea(k[0])), 0);
+                    .reduce((sum, l) => sum + calcPolygonArea(l[0]), 0);
                 (region as GeoItem<'MultiPolygon'>).geometry.coordinates
-                    .forEach((k) => {
+                    .forEach((l) => {
                         if (isHasBigPart) {
                             return
                         }
 
-                        tmpArea = Math.abs(calcPolygonArea(k[0]))
-                        tmpCenter = calcPolygonCentroid(k[0])
+                        tmpArea = calcPolygonArea(l[0])
+                        tmpCenter = calcPolygonCentroid(l[0])
 
                         if (tmpArea / totalArea > 0.5) {
-                            multiX = tmpCenter[0]
-                            multiY = tmpCenter[1]
+                            multiCenterX = tmpCenter[0]
+                            multiCenterY = tmpCenter[1]
                             isHasBigPart = true
                             return
                         } else {
-                            multiX += tmpCenter[0] / totalArea * tmpArea
-                            multiY += tmpCenter[1] / totalArea * tmpArea
+                            multiCenterX += tmpCenter[0] / totalArea * tmpArea
+                            multiCenterY += tmpCenter[1] / totalArea * tmpArea
                         }
                     })
 
-                storedRegionCenters.current[region.properties.name] = [multiX, multiY]
+                storedRegionCenters.current[region.properties.name] = [multiCenterX, multiCenterY]
                 return storedRegionCenters.current[region.properties.name]
             default:
                 return [0, 0]
