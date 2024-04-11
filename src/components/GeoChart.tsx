@@ -163,6 +163,7 @@ const GeoChartContent = memo(() => {
     const cancelSignal = useLaunchStore((state) => state.cancelSignal)
     const setCancelSignal = useLaunchStore((state) => state.setCancelSignal)
     const increase = useCounterStore((state) => state.increase)
+    const worldMapWidth = useWidthStore((state) => state.worldMapWidth)
 
     const handleClick = useCallback((region: GeographyItem) => {
         if (curSelectedRegionList.find(curRegion => curRegion.properties.name === region.properties.name) !== undefined) {
@@ -224,8 +225,8 @@ const GeoChartContent = memo(() => {
     }, [curSelectedRegionList, setRegionList])
 
     useEffect(() => {
-        document.documentElement.style.setProperty('--label-font-size', `${1.25 / zoomContext.k}rem`)
-    }, [zoomContext])
+        document.documentElement.style.setProperty('--label-font-size', `${(0.8 + 0.4 / 1024 * worldMapWidth) / zoomContext.k}rem`)
+    }, [zoomContext, worldMapWidth])
 
     useEffect(() => {
         if (!launchSignal && !cancelSignal) {

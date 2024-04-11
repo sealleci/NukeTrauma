@@ -24,6 +24,11 @@
         }
     }
 
+    .rsm-marker {
+        padding: 5rem;
+        position: relative;
+    }
+
     .region_label_text {
         font-size: var(--label-font-size, 1.25rem);
         text-anchor: middle;
@@ -32,6 +37,7 @@
         outline: none;
         user-select: none;
         cursor: pointer;
+        transform: translateY(calc(var(--label-font-size, 1.25rem) / 4));
 
         @media screen and (max-width: g.$small_screen_width) {
             cursor: default;
