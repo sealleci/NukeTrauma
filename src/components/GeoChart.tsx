@@ -17,12 +17,12 @@ const MAX_ZOOM: number = 25
 const NORMAL_COLOR: string = '#3c3171'
 const ACTIVE_COLOR: string = '#e84981'
 
-interface GeometryMappingType {
+interface GeometryMapping {
     'Polygon': [number, number][][]
     'MultiPolygon': [number, number][][][]
 }
 
-interface GeoItem<T extends keyof GeometryMappingType = 'Polygon'> {
+interface GeographyItem<T extends keyof GeometryMapping = 'Polygon'> {
     type: string
     id: string
     rsmKey: string
@@ -30,7 +30,7 @@ interface GeoItem<T extends keyof GeometryMappingType = 'Polygon'> {
     properties: { name: string }
     geometry: {
         type: T
-        coordinates: GeometryMappingType[T]
+        coordinates: GeometryMapping[T]
     }
 }
 
@@ -42,7 +42,7 @@ interface ZoomPanContext {
 }
 
 interface RegionAreaProps {
-    geo: GeoItem
+    geography: GeographyItem
     onClick: () => void
     isSelected: boolean
 }
@@ -50,7 +50,6 @@ interface RegionAreaProps {
 interface RegionLabelProps {
     coordinates: [number, number]
     onClick: () => void
-    fontSize: string
     textContent: string
 }
 
@@ -134,28 +133,27 @@ function getIncrement(regionList: string[]): number {
     return sum
 }
 
-const RegionArea = memo(({ geo, onClick, isSelected }: RegionAreaProps) => {
+const RegionArea = memo(({ geography, onClick, isSelected }: RegionAreaProps) => {
     return <Geography
-        geography={geo}
+        geography={geography}
         onClick={onClick}
         fill={isSelected ? ACTIVE_COLOR : NORMAL_COLOR}
     />
 })
 
-const RegionLabel = memo(({ coordinates, onClick, fontSize, textContent }: RegionLabelProps) => {
+const RegionLabel = memo(({ coordinates, onClick, textContent }: RegionLabelProps) => {
     return <Marker
         coordinates={coordinates}
         onClick={onClick}
     >
         <text
-            fontSize={fontSize}
             className='region_label_text'
         >{textContent}</text>
     </Marker>
 })
 
 const GeoChartContent = memo(() => {
-    const [curSelectedRegionList, setCurSelectedRegionList] = useState<GeoItem[]>([])
+    const [curSelectedRegionList, setCurSelectedRegionList] = useState<GeographyItem[]>([])
     const storedRegionCenters = useRef<Record<string, [number, number]>>({})
     const zoomContext = useZoomPanContext() as ZoomPanContext
     const regionList = useRegionStore((state) => state.regionList)
@@ -165,10 +163,8 @@ const GeoChartContent = memo(() => {
     const cancelSignal = useLaunchStore((state) => state.cancelSignal)
     const setCancelSignal = useLaunchStore((state) => state.setCancelSignal)
     const increase = useCounterStore((state) => state.increase)
-    const fontSize = useMemo(() => `${1.25 / zoomContext.k}rem`
-        , [zoomContext])
 
-    const handleClick = useCallback((region: GeoItem) => {
+    const handleClick = useCallback((region: GeographyItem) => {
         if (curSelectedRegionList.find(curRegion => curRegion.properties.name === region.properties.name) !== undefined) {
             setCurSelectedRegionList(prev => prev.filter((curRegion) => curRegion.properties.name !== region.properties.name))
         } else {
@@ -176,7 +172,7 @@ const GeoChartContent = memo(() => {
         }
     }, [curSelectedRegionList])
 
-    const getCenter = useCallback(<T extends keyof GeometryMappingType = 'Polygon'>(region: GeoItem<T>): [number, number] => {
+    const getCenter = useCallback(<T extends keyof GeometryMapping = 'Polygon'>(region: GeographyItem<T>): [number, number] => {
         if (region.properties.name in storedRegionCenters.current) {
             return storedRegionCenters.current[region.properties.name]
         }
@@ -190,13 +186,13 @@ const GeoChartContent = memo(() => {
 
         switch (region.geometry.type) {
             case 'Polygon':
-                storedRegionCenters.current[region.properties.name] = calcPolygonCentroid((region as GeoItem<'Polygon'>).geometry.coordinates[0])
+                storedRegionCenters.current[region.properties.name] = calcPolygonCentroid((region as GeographyItem<'Polygon'>).geometry.coordinates[0])
 
                 return storedRegionCenters.current[region.properties.name]
             case 'MultiPolygon':
-                totalArea = (region as GeoItem<'MultiPolygon'>).geometry.coordinates
+                totalArea = (region as GeographyItem<'MultiPolygon'>).geometry.coordinates
                     .reduce((sum, l) => sum + calcPolygonArea(l[0]), 0);
-                (region as GeoItem<'MultiPolygon'>).geometry.coordinates
+                (region as GeographyItem<'MultiPolygon'>).geometry.coordinates
                     .forEach((l) => {
                         if (isHasBigPart) {
                             return
@@ -228,6 +224,10 @@ const GeoChartContent = memo(() => {
     }, [curSelectedRegionList, setRegionList])
 
     useEffect(() => {
+        document.documentElement.style.setProperty('--label-font-size', `${1.25 / zoomContext.k}rem`)
+    }, [zoomContext])
+
+    useEffect(() => {
         if (!launchSignal && !cancelSignal) {
             return
         }
@@ -250,12 +250,12 @@ const GeoChartContent = memo(() => {
             geography={worldMapData}
         >
             {
-                ({ geographies }: { geographies: GeoItem[] }) =>
-                    geographies.map((region) => <RegionArea
-                        key={region.rsmKey}
-                        geo={region}
-                        onClick={() => handleClick(region)}
-                        isSelected={curSelectedRegionList.find(curRegion => curRegion.properties.name === region.properties.name) !== undefined}
+                ({ geographies }: { geographies: GeographyItem[] }) =>
+                    geographies.map((geography) => <RegionArea
+                        key={geography.rsmKey}
+                        geography={geography}
+                        onClick={() => handleClick(geography)}
+                        isSelected={curSelectedRegionList.find(curRegion => curRegion.properties.name === geography.properties.name) !== undefined}
                     />)
             }
         </Geographies>
@@ -264,7 +264,6 @@ const GeoChartContent = memo(() => {
                 key={region.rsmKey + '-label'}
                 coordinates={getCenter(region)}
                 onClick={() => handleClick(region)}
-                fontSize={fontSize}
                 textContent={region.properties.name}
             />)
         }

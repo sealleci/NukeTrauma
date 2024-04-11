@@ -25,6 +25,7 @@
     }
 
     .region_label_text {
+        font-size: var(--label-font-size, 1.25rem);
         text-anchor: middle;
         fill: white;
         font-family: "Consolas";
