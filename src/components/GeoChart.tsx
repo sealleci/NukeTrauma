@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 // @ts-expect-error lib no types
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup, useZoomPanContext } from 'react-simple-maps'
 import useCounterStore from '../store/counter_store.ts'
@@ -271,23 +271,27 @@ const GeoChartContent = memo(() => {
     </>
 })
 
+interface TransformProps {
+    coordinates: [number, number]
+    zoom: number
+}
+
 const GeoChart = memo(() => {
     const relocateSignal = useLaunchStore((state) => state.relocateSignal)
     const setRelocateSignal = useLaunchStore((state) => state.setRelocateSignal)
     const worldMapWidth = useWidthStore((state) => state.worldMapWidth)
     const worldMapHeight = useWidthStore((state) => state.worldMapHeight)
-    // XXX: 
-    // this is a trick to trigger re-render when relocate signal changes, 
-    // but the signal changes twice at once due to the following useEffect.
-    const curZoom = useMemo(() => {
-        return INIT_ZOOM + (relocateSignal ? 0.01 : 0)
-    }, [relocateSignal])
+    const [curTransform, setCurTransform] = useState<TransformProps>({ coordinates: INIT_CENTER, zoom: INIT_ZOOM })
+    const handleMoveEnd = useCallback((transform: TransformProps) => {
+        setCurTransform(transform)
+    }, [])
 
     useEffect(() => {
         if (!relocateSignal) {
             return
         }
 
+        setCurTransform({ coordinates: INIT_CENTER, zoom: INIT_ZOOM })
         setRelocateSignal(false)
     }, [relocateSignal, setRelocateSignal])
 
@@ -296,10 +300,11 @@ const GeoChart = memo(() => {
         height={worldMapHeight}
     >
         <ZoomableGroup
-            center={INIT_CENTER}
-            zoom={curZoom}
+            center={curTransform.coordinates}
+            zoom={curTransform.zoom}
             minZoom={MIN_ZOOM}
             maxZoom={MAX_ZOOM}
+            onMoveEnd={handleMoveEnd}
         >
             <GeoChartContent />
         </ZoomableGroup>
